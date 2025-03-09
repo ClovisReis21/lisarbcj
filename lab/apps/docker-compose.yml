@@ -6,6 +6,12 @@ services:
     container_name: mysql
     ports:
       - '3306:3306'
+    healthcheck:
+      test: ['CMD', 'mysql', '-h127.0.0.1', '-P3306', '-uroot', '-proot']
+      interval: 10s
+      retries: 5
+      start_period: 10s
+      timeout: 10s
     expose:
       - '3306'
     networks:
@@ -35,7 +41,8 @@ services:
     command: npm run start
     restart: always
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
       # - kafka
     links:
       - mysql
