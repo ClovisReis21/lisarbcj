@@ -16,9 +16,9 @@ services:
       - ./mysql/data:/mysql/data
       - ./mysql/schema.sql:/docker-entrypoint-initdb.d/schema.sql
   loja_simulada:
-    buld:
-      context: ./loja_simulada
     image: loja_simulada_image
+    build:
+      context: loja_simulada
     hostname: loja_simulada
     container_name: loja_simulada
     ports:
@@ -40,3 +40,6 @@ services:
     links:
       - mysql
       # - kafka
+networks:
+  loja:
+    driver: bridge
