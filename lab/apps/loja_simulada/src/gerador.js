@@ -65,26 +65,26 @@ const venda = async () => {
         desconto: Number(((getValidRandomInt([1,10]) / 100) * precoTotal).toFixed(2)),
     }
     const idItemVenda = await db.insereItemVenda(itemVenda);
-    // kafka.Publicar([
-    //     JSON.stringify({
-    //         id_vendedor: venda.id_vendedor,
-    //         id_cliente: venda.id_cliente,
-    //         id_produto: itemVenda.id_produto,
-    //         id_venda: itemVenda.id_venda,
-    //         quantidade: itemVenda.quantidade,
-    //         valor_unitario: itemVenda.valor_unitario,
-    //         valor_total: itemVenda.valor_total,
-    //         desconto: itemVenda.desconto,
-    //         data: venda.data,
-    //     }),
-    // ]);
+    kafka.Publicar([
+        JSON.stringify({
+            id_vendedor: venda.id_vendedor,
+            id_cliente: venda.id_cliente,
+            id_produto: itemVenda.id_produto,
+            id_venda: itemVenda.id_venda,
+            quantidade: itemVenda.quantidade,
+            valor_unitario: itemVenda.valor_unitario,
+            valor_total: itemVenda.valor_total,
+            desconto: itemVenda.desconto,
+            data: venda.data,
+        }),
+    ]);
     return {
         venda: idVenda,
         itemVenda: idItemVenda,
     };
 }
 
-const autoGenVendas = (newValue = 3) => {
+const autoGenVendas = (newValue = 12) => {
     clearInterval(loopInterval)
     loopInterval = setInterval(() => {
         venda();

@@ -6,6 +6,12 @@ services:
     container_name: zookeeper
     ports:
       - '2181:2181'
+    healthcheck:
+      test: ['CMD', 'zkCli.sh', 'status']
+      interval: 10s
+      retries: 5
+      start_period: 60s
+      timeout: 10s
     networks:
       - loja
     environment:
@@ -35,7 +41,8 @@ services:
     volumes:
       - ./kafka/data/kafka/data:/var/lib/kafka/data
     depends_on:
-      - zookeeper
+      zookeeper:
+        condition: service_healthy
   kafdrop:
     image: obsidiandynamics/kafdrop
     restart: 'no'
@@ -54,7 +61,7 @@ services:
     ports:
       - '3306:3306'
     healthcheck:
-      test: ['CMD', 'mysql', '-h127.0.0.1', '-P3306', '-uroot', '-proot']
+      test: ['CMD', 'mysqladmin', 'ping', '-h127.0.0.1', '-P3306', '-uroot', '-proot']
       interval: 10s
       retries: 5
       start_period: 10s
@@ -88,9 +95,10 @@ services:
     command: npm run start
     restart: always
     depends_on:
-      - mysql:
+      mysql:
         condition: service_healthy
-      - kafka
+      kafka:
+        condition: service_started
     links:
       - mysql
       - kafka
