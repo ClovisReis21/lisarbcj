@@ -69,16 +69,17 @@ delimiter //
 
 CREATE PROCEDURE USER_INFO(IN LAST_DATE DATETIME, IN TB_NAME VARCHAR(50))
 BEGIN
+  SET @ID = CASE
+			WHEN TB_NAME = "vendedores" THEN "id_vendedor"
+			WHEN TB_NAME = "produtos" THEN "id_produto"
+			WHEN TB_NAME = "clientes" THEN "id_cliente"
+			ELSE "id_venda" END;
+
 	SET @q = CONCAT('SELECT * FROM
 		(SELECT max_user_connections AS MAX_CONN FROM mysql.user WHERE user = SUBSTRING_INDEX(USER(),"@",1)) AS MAX_CONN,',
-		'(SELECT COUNT(*) AS "QTD LINHAS" FROM ', TB_NAME, ' WHERE criacao > "', LAST_DATE,'" OR atualizacao > "', LAST_DATE,'") AS QTD,',
-		'(SELECT CASE
-			WHEN "',TB_NAME,'" = "vendedores" THEN 174
-            WHEN "',TB_NAME,'" = "produtos" THEN 134
- 			WHEN "',TB_NAME,'" = "clientes" THEN 225
-     		WHEN "',TB_NAME,'" = "vendas" THEN 41
-            ELSE 59 END AS "BYTES POR LINHA"
-		) AS TABELA;'
+		'(SELECT MIN(',@ID,') AS "LOW_BOUND" FROM ', TB_NAME, ' WHERE criacao > "', LAST_DATE,'" OR atualizacao > "', LAST_DATE,'") AS LOW_BOUND,',
+		'(SELECT MAX(',@ID,') AS "UPPER_BOUND" FROM ', TB_NAME, ' WHERE criacao > "', LAST_DATE,'" OR atualizacao > "', LAST_DATE,'") AS UPPER_BOUND,',
+		'(SELECT COUNT(*) AS "QTD_LINHAS" FROM ', TB_NAME, ' WHERE criacao > "', LAST_DATE,'" OR atualizacao > "', LAST_DATE,'") AS QTD_LINHAS;'
 	);
     PREPARE stmt FROM @q;
     EXECUTE stmt;
