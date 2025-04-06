@@ -1,13 +1,14 @@
 import sys, os, findspark, mysql.connector
 import pyspark.sql.functions as F
 from src.notificador import Notificador
+from pyspark.sql.types import StructType, StructField, StringType, DoubleType, IntegerType, DateType, TimestampType
 
 findspark.add_packages('mysql:mysql-connector-java:8.0.11')
 
 class Extrator:
     def __init__(self, sparkSession):
         self.sparkSession = sparkSession
-        self.firstDatetime = '2025-03-01 00:00:00.000'
+        self.baseDatetime = '2025-03-01 00:00:00.000'
         self.actors_id = {
             "vendedores": "id_vendedor",
             "vendas": "id_venda",
@@ -16,19 +17,36 @@ class Extrator:
             "itens_venda": "id_venda"
         }
         self.pathNewData = './lab/jobs/new_data'
+        self.pathNewDataMap = f'{self.pathNewData}/new_data_map'
         self.notificador = Notificador()
 
     def GetLastIngestaDatetime(self, tabela):
         fullPath = f'{self.pathNewData}/{tabela}'
-        os.makedirs(fullPath, exist_ok=True)
-        ingestas = os.listdir(fullPath)
-        if len(ingestas) < 1:
-            self.notificador.Mostrar('info', f'Datetime considerado: {self.firstDatetime} para: "{fullPath}"')
-            return '2025-03-01 00:00:00.000'
-        ingestas.sort(reverse=True)
-        last_ingesta = ingestas[0]
-        self.notificador.Mostrar('info', f'Datetime considerado: {last_ingesta} para: "{fullPath}"')
-        return last_ingesta
+        temp_df = None
+        try:
+            temp_df = (self.sparkSession.spark.read.parquet(self.pathNewDataMap)
+                       .where(F.col("table") == tabela)
+                       .sort("date", ascending=False))
+            temp_df.show(truncate=False)
+            row = temp_df.collect()[0]
+            return f'{row[1]}'
+        except Exception as e:
+            self.notificador.Mostrar('info', f'Datetime considerado: {self.baseDatetime} para: "{fullPath}" - {e}')
+            return self.baseDatetime
+    
+    def SetLastIngestaDatetime(self, tabela, last_date):
+        path_data = f'{self.pathNewData}/{tabela}/{last_date}'
+        newData_df = self.sparkSession.spark.createDataFrame(
+            [(tabela, last_date, path_data,)],
+            schema=StructType([
+                StructField("table", StringType(), False),
+                StructField("date", StringType(), False),
+                StructField("path", StringType(), False)
+            ])
+        )
+        newData_df.show(truncate=False)
+        newData_df.printSchema()
+        newData_df.write.mode("append").parquet(self.pathNewDataMap)
 
     def GetUserInfo(self, lastDate, tabela): # Read from MySQL procedure
         sql_host=sys.argv[2]
@@ -56,7 +74,11 @@ class Extrator:
         return results
 
     def GetData(self, maxConn, lowBound, upperBound, lastDate, tabela): # Read from MySQL Table
-        query = f"(SELECT * FROM {tabela} WHERE criacao > '{lastDate}' OR atualizacao > '{lastDate}') as subq"
+        query = ""
+        if tabela in ['itens_venda', 'vendas']:
+            query = f"(SELECT * FROM {tabela} WHERE criacao > '{lastDate}') as subq"
+        else:
+            query = f"(SELECT * FROM {tabela} WHERE criacao > '{lastDate}' OR atualizacao > '{lastDate}') as subq"
         try:
             return (self.sparkSession.spark.read
                     .format("jdbc")
@@ -76,20 +98,22 @@ class Extrator:
             return None
 
     def SaveData(self, df, tabela):
+        valid_columns = list(set(df.columns) & set(['atualizacao', 'criacao']))
+        print('valid_columns:', valid_columns)
         last_datetime = (df
-            .select('atualizacao', 'criacao')
-            .withColumn('date', F.coalesce(F.col('atualizacao'),F.col('criacao')).cast('timestamp'))
-            .drop('atualizacao', 'criacao')
+            .select(valid_columns)
+            .withColumn('date', F.coalesce(valid_columns[0], valid_columns[-1]).cast('timestamp'))
+            .drop(*valid_columns)
             .select(F.max(F.col('date')))
         ).collect()[0][0]
         strTableDir = f'{self.pathNewData}/{tabela}/{last_datetime}'
         try:
             df.write.mode("overwrite").parquet(strTableDir)
             self.notificador.Mostrar('info', f'"{strTableDir}" salvo com sucesso!')
-            return 0
+            return f'{last_datetime}'
         except Exception as e:
             self.notificador.Mostrar('error', f'Não foi possível salvar: "{strTableDir}" -> {e}')
-            return 1
+            return self.baseDatetime
 
     def Run(self):
         tabelas = list(self.actors_id.keys())
@@ -104,11 +128,11 @@ class Extrator:
             MAX_CONN=userInfo[0][0]
             LOW_BOUND=userInfo[0][1]
             UPPER_BOUND=userInfo[0][2]
-            print(MAX_CONN,LOW_BOUND,UPPER_BOUND)
             df = self.GetData(MAX_CONN, LOW_BOUND, UPPER_BOUND, last_date, tabela)
             if df == None:
                 self.notificador.Mostrar('error', f'Registros não encontrados em: {tabela}')
                 continue
             df.show(1)
-            self.SaveData(df, tabela)
+            last_date = self.SaveData(df, tabela)
+            self.SetLastIngestaDatetime(tabela, last_date)
             self.notificador.Mostrar('info', f'Extração da tabela: "{tabela}" concluída!\n')
