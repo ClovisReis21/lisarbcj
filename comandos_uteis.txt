@@ -1,0 +1,24 @@
+INICIAR PROJETO CRIANDO IMAGENS
+$ sudo docker compose up --build
+
+INICIAR PROJETO CRIANDO IMAGENS - salvar saida (log)
+$ docker-compose up --build 2>&1 | tee output.log
+
+LIMPAR IMAGENS E VOLUMES ANTIGOS
+$ sudo docker compose down --volumes --rmi all
+
+ACESSAR O MySQL DB
+$ sudo mysql -h127.0.0.1 -P3306 -uroot -proot
+$ sudo mysql -h127.0.0.1 -P3306 -ubig_data_importer -pbig_data_importer
+
+INSTALAÇÃO DO DOCKER VERSÃO 26.1.4-1
+$ sudo apt-get install -y docker-ce=5:26.1.4-1~ubuntu.22.04~jammy
+
+REINICIAR DOCKER
+sudo systemctl restart docker
+
+DOCKER STATUS
+docker info
+
+VERIFICAR PORTA EM USO
+sudo fuser 9000/tcp
