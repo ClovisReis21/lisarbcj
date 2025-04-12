@@ -1,0 +1,55 @@
+****************************************************************
+Iniciando ingesta - sáb 12 abr 2025 01:00:01 -03
+Warning: Ignoring non-Spark config property: packages
+25/04/12 01:00:03 WARN Utils: Your hostname, cj-OptiPlex-3020 resolves to a loopback address: 127.0.1.1; using 172.18.0.1 instead (on interface br-1602a4c2a591)
+25/04/12 01:00:03 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/home/cj/.local/lib/python3.10/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/cj/.ivy2/cache
+The jars for the packages stored in: /home/cj/.ivy2/jars
+mysql#mysql-connector-java added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-c760111d-5818-4341-b9c9-d08c8cec174f;1.0
+	confs: [default]
+	found mysql#mysql-connector-java;8.0.11 in spark-list
+	found com.google.protobuf#protobuf-java;2.6.0 in central
+:: resolution report :: resolve 114ms :: artifacts dl 5ms
+	:: modules in use:
+	com.google.protobuf#protobuf-java;2.6.0 from central in [default]
+	mysql#mysql-connector-java;8.0.11 from spark-list in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   2   |   0   |   0   |   0   ||   2   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-c760111d-5818-4341-b9c9-d08c8cec174f
+	confs: [default]
+	0 artifacts copied, 2 already retrieved (0kB/4ms)
+25/04/12 01:00:03 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/04/12 01:00:04 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+2025-04-12 01:00:05 - INFO - Iniciando ingestão da tabela "vendedores"
+[Stage 0:>                                                          (0 + 1) / 1]                                                                                2025-04-12 01:00:09 - INFO - Maior data encontrada no Master Dataset 2025-04-05 20:25:31
+[Stage 5:=======================>                                  (4 + 4) / 10]                                                                                [Stage 7:>                                                          (0 + 4) / 4]                                                                                2025-04-12 01:00:12 - INFO - 0 registros encontrados para base "vendedores"
+2025-04-12 01:00:12 - INFO - Iniciando ingestão da tabela "vendas"
+2025-04-12 01:00:12 - INFO - Maior data encontrada no Master Dataset 2025-04-09 23:00:17
+2025-04-12 01:00:15 - INFO - 5261 registros encontrados para base "vendas"
+[Stage 32:============================>                            (8 + 4) / 16]                                                                                2025-04-12 01:00:16 - INFO - Master Dataset "vendas" salvo com sucesso
+
+2025-04-12 01:00:16 - INFO - Iniciando ingestão da tabela "produtos"
+2025-04-12 01:00:16 - INFO - Maior data encontrada no Master Dataset 2025-04-05 20:25:31
+2025-04-12 01:00:17 - INFO - 0 registros encontrados para base "produtos"
+2025-04-12 01:00:17 - INFO - Iniciando ingestão da tabela "clientes"
+2025-04-12 01:00:17 - INFO - Maior data encontrada no Master Dataset 2025-04-05 20:25:31
+2025-04-12 01:00:18 - INFO - 0 registros encontrados para base "clientes"
+2025-04-12 01:00:18 - INFO - Iniciando ingestão da tabela "itens_venda"
+2025-04-12 01:00:19 - INFO - Maior data encontrada no Master Dataset 2025-04-09 23:00:27
+2025-04-12 01:00:20 - INFO - 5259 registros encontrados para base "itens_venda"
+2025-04-12 01:00:21 - INFO - Master Dataset "itens_venda" salvo com sucesso
+
+2025-04-12 01:00:21 - INFO - Closing down clientserver connection
+Finalizando ingesta - sáb 12 abr 2025 01:00:01 -03
+****************************************************************
+
+
+

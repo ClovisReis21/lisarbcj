@@ -1,0 +1,572 @@
+****************************************************************
+Iniciando extração - sex 11 abr 2025 22:00:01 -03
+Warning: Ignoring non-Spark config property: packages
+25/04/11 22:00:03 WARN Utils: Your hostname, cj-OptiPlex-3020 resolves to a loopback address: 127.0.1.1; using 192.168.15.34 instead (on interface enp2s0)
+25/04/11 22:00:03 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/home/cj/.local/lib/python3.10/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/cj/.ivy2/cache
+The jars for the packages stored in: /home/cj/.ivy2/jars
+mysql#mysql-connector-java added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-6292cd3a-9608-4bc2-a93c-4587c2099f29;1.0
+	confs: [default]
+	found mysql#mysql-connector-java;8.0.11 in spark-list
+	found com.google.protobuf#protobuf-java;2.6.0 in central
+:: resolution report :: resolve 115ms :: artifacts dl 6ms
+	:: modules in use:
+	com.google.protobuf#protobuf-java;2.6.0 from central in [default]
+	mysql#mysql-connector-java;8.0.11 from spark-list in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   2   |   0   |   0   |   0   ||   2   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-6292cd3a-9608-4bc2-a93c-4587c2099f29
+	confs: [default]
+	0 artifacts copied, 2 already retrieved (0kB/5ms)
+25/04/11 22:00:04 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/04/11 22:00:05 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+2025-04-11 22:00:05 - INFO - Iniciando extração da tabela "vendedores"
+
+[Stage 0:>                                                          (0 + 1) / 1]
+
+                                                                                
+
+[Stage 1:=================>                                        (3 + 4) / 10]
+
+                                                                                
+2025-04-11 22:00:10 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-11 22:00:10 - INFO - Não ha novos registros em "vendedores"
+
+2025-04-11 22:00:10 - INFO - Iniciando extração da tabela "vendas"
+2025-04-11 22:00:12 - INFO - USER_INFO: Max conn: 3 | Low bound: 13727 | Upper bound: 15164 | Linhas: 1438
+2025-04-11 22:00:13 - INFO - "./lab/jobs/new_data/vendas/2025-04-11 22:00:07" salvo com sucesso!
+
+[Stage 14:>                                                         (0 + 4) / 4]
+
+[Stage 14:=============================>                            (2 + 2) / 4]
+
+                                                                                
+2025-04-11 22:00:14 - INFO - Extração da tabela "vendas" concluída!
+
+2025-04-11 22:00:14 - INFO - Iniciando extração da tabela "produtos"
+2025-04-11 22:00:15 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-11 22:00:15 - INFO - Não ha novos registros em "produtos"
+
+2025-04-11 22:00:15 - INFO - Iniciando extração da tabela "clientes"
+2025-04-11 22:00:15 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-11 22:00:15 - INFO - Não ha novos registros em "clientes"
+
+2025-04-11 22:00:15 - INFO - Iniciando extração da tabela "itens_venda"
+2025-04-11 22:00:16 - INFO - USER_INFO: Max conn: 3 | Low bound: 13728 | Upper bound: 15165 | Linhas: 1438
+2025-04-11 22:00:16 - INFO - "./lab/jobs/new_data/itens_venda/2025-04-11 22:00:12" salvo com sucesso!
+2025-04-11 22:00:17 - INFO - Extração da tabela "itens_venda" concluída!
+
+2025-04-11 22:00:17 - INFO - Iniciando atualização da base "new_data_map"!
+2025-04-11 22:00:18 - INFO - Erro ao limpar MAP TABLE - [Errno 2] No such file or directory: './lab/jobs/new_data/itens_venda/2025-03-01 00:00:00.000'
+2025-04-11 22:00:18 - INFO - Base "new_data_map" atualizada!
+
+2025-04-11 22:00:18 - INFO - Closing down clientserver connection
+Finalizando extração - sex 11 abr 2025 22:00:01 -03
+****************************************************************
+
+
+
+****************************************************************
+Iniciando extração - sex 11 abr 2025 23:00:01 -03
+Warning: Ignoring non-Spark config property: packages
+25/04/11 23:00:02 WARN Utils: Your hostname, cj-OptiPlex-3020 resolves to a loopback address: 127.0.1.1; using 172.18.0.1 instead (on interface br-1602a4c2a591)
+25/04/11 23:00:02 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/home/cj/.local/lib/python3.10/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/cj/.ivy2/cache
+The jars for the packages stored in: /home/cj/.ivy2/jars
+mysql#mysql-connector-java added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-6a2a25c5-096e-4a70-bc12-b093573d2a05;1.0
+	confs: [default]
+	found mysql#mysql-connector-java;8.0.11 in spark-list
+	found com.google.protobuf#protobuf-java;2.6.0 in central
+:: resolution report :: resolve 107ms :: artifacts dl 4ms
+	:: modules in use:
+	com.google.protobuf#protobuf-java;2.6.0 from central in [default]
+	mysql#mysql-connector-java;8.0.11 from spark-list in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   2   |   0   |   0   |   0   ||   2   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-6a2a25c5-096e-4a70-bc12-b093573d2a05
+	confs: [default]
+	0 artifacts copied, 2 already retrieved (0kB/4ms)
+25/04/11 23:00:03 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/04/11 23:00:04 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+2025-04-11 23:00:04 - INFO - Iniciando extração da tabela "vendedores"
+[Stage 1:=================>                                        (3 + 4) / 10][Stage 1:==================================>                       (6 + 4) / 10]                                                                                2025-04-11 23:00:10 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-11 23:00:10 - INFO - Não ha novos registros em "vendedores"
+
+2025-04-11 23:00:10 - INFO - Iniciando extração da tabela "vendas"
+2025-04-11 23:00:11 - INFO - USER_INFO: Max conn: 3 | Low bound: 15165 | Upper bound: 15884 | Linhas: 720
+2025-04-11 23:00:12 - INFO - "./lab/jobs/new_data/vendas/2025-04-11 23:00:10" salvo com sucesso!
+[Stage 14:>                                                         (0 + 4) / 4]                                                                                2025-04-11 23:00:13 - INFO - Extração da tabela "vendas" concluída!
+
+2025-04-11 23:00:13 - INFO - Iniciando extração da tabela "produtos"
+2025-04-11 23:00:14 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-11 23:00:14 - INFO - Não ha novos registros em "produtos"
+
+2025-04-11 23:00:14 - INFO - Iniciando extração da tabela "clientes"
+2025-04-11 23:00:15 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-11 23:00:15 - INFO - Não ha novos registros em "clientes"
+
+2025-04-11 23:00:15 - INFO - Iniciando extração da tabela "itens_venda"
+2025-04-11 23:00:15 - INFO - USER_INFO: Max conn: 3 | Low bound: 15166 | Upper bound: 15885 | Linhas: 720
+2025-04-11 23:00:16 - INFO - "./lab/jobs/new_data/itens_venda/2025-04-11 23:00:15" salvo com sucesso!
+2025-04-11 23:00:16 - INFO - Extração da tabela "itens_venda" concluída!
+
+2025-04-11 23:00:16 - INFO - Iniciando atualização da base "new_data_map"!
+2025-04-11 23:00:17 - INFO - Erro ao limpar MAP TABLE - [Errno 2] No such file or directory: './lab/jobs/new_data/itens_venda/2025-03-01 00:00:00.000'
+2025-04-11 23:00:17 - INFO - Base "new_data_map" atualizada!
+
+2025-04-11 23:00:17 - INFO - Closing down clientserver connection
+Finalizando extração - sex 11 abr 2025 23:00:01 -03
+****************************************************************
+
+
+
+****************************************************************
+Iniciando extração - sáb 12 abr 2025 00:00:01 -03
+Warning: Ignoring non-Spark config property: packages
+25/04/12 00:00:03 WARN Utils: Your hostname, cj-OptiPlex-3020 resolves to a loopback address: 127.0.1.1; using 172.18.0.1 instead (on interface br-1602a4c2a591)
+25/04/12 00:00:03 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/home/cj/.local/lib/python3.10/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/cj/.ivy2/cache
+The jars for the packages stored in: /home/cj/.ivy2/jars
+mysql#mysql-connector-java added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-94b72dee-b809-42f8-8c41-860348a3bc41;1.0
+	confs: [default]
+	found mysql#mysql-connector-java;8.0.11 in spark-list
+	found com.google.protobuf#protobuf-java;2.6.0 in central
+:: resolution report :: resolve 106ms :: artifacts dl 5ms
+	:: modules in use:
+	com.google.protobuf#protobuf-java;2.6.0 from central in [default]
+	mysql#mysql-connector-java;8.0.11 from spark-list in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   2   |   0   |   0   |   0   ||   2   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-94b72dee-b809-42f8-8c41-860348a3bc41
+	confs: [default]
+	0 artifacts copied, 2 already retrieved (0kB/5ms)
+25/04/12 00:00:03 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/04/12 00:00:04 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+2025-04-12 00:00:05 - INFO - Iniciando extração da tabela "vendedores"
+[Stage 1:=================>                                        (3 + 4) / 10][Stage 1:==================================>                       (6 + 4) / 10]                                                                                2025-04-12 00:00:10 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-12 00:00:10 - INFO - Não ha novos registros em "vendedores"
+
+2025-04-12 00:00:10 - INFO - Iniciando extração da tabela "vendas"
+2025-04-12 00:00:11 - INFO - USER_INFO: Max conn: 3 | Low bound: 15885 | Upper bound: 16603 | Linhas: 719
+2025-04-12 00:00:12 - INFO - "./lab/jobs/new_data/vendas/2025-04-12 00:00:08" salvo com sucesso!
+[Stage 14:>                                                         (0 + 4) / 4]                                                                                2025-04-12 00:00:13 - INFO - Extração da tabela "vendas" concluída!
+
+2025-04-12 00:00:13 - INFO - Iniciando extração da tabela "produtos"
+2025-04-12 00:00:14 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-12 00:00:14 - INFO - Não ha novos registros em "produtos"
+
+2025-04-12 00:00:14 - INFO - Iniciando extração da tabela "clientes"
+2025-04-12 00:00:15 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-12 00:00:15 - INFO - Não ha novos registros em "clientes"
+
+2025-04-12 00:00:15 - INFO - Iniciando extração da tabela "itens_venda"
+2025-04-12 00:00:16 - INFO - USER_INFO: Max conn: 3 | Low bound: 15886 | Upper bound: 16604 | Linhas: 719
+2025-04-12 00:00:16 - INFO - "./lab/jobs/new_data/itens_venda/2025-04-12 00:00:13" salvo com sucesso!
+2025-04-12 00:00:16 - INFO - Extração da tabela "itens_venda" concluída!
+
+2025-04-12 00:00:16 - INFO - Iniciando atualização da base "new_data_map"!
+2025-04-12 00:00:17 - INFO - Erro ao limpar MAP TABLE - [Errno 2] No such file or directory: './lab/jobs/new_data/itens_venda/2025-03-01 00:00:00.000'
+2025-04-12 00:00:17 - INFO - Base "new_data_map" atualizada!
+
+2025-04-12 00:00:17 - INFO - Closing down clientserver connection
+Finalizando extração - sáb 12 abr 2025 00:00:01 -03
+****************************************************************
+
+
+
+****************************************************************
+Iniciando extração - sáb 12 abr 2025 02:00:01 -03
+Warning: Ignoring non-Spark config property: packages
+25/04/12 02:00:03 WARN Utils: Your hostname, cj-OptiPlex-3020 resolves to a loopback address: 127.0.1.1; using 172.18.0.1 instead (on interface br-1602a4c2a591)
+25/04/12 02:00:03 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/home/cj/.local/lib/python3.10/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/cj/.ivy2/cache
+The jars for the packages stored in: /home/cj/.ivy2/jars
+mysql#mysql-connector-java added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-4b250953-bff4-41cc-b373-73bb328c552b;1.0
+	confs: [default]
+	found mysql#mysql-connector-java;8.0.11 in spark-list
+	found com.google.protobuf#protobuf-java;2.6.0 in central
+:: resolution report :: resolve 119ms :: artifacts dl 5ms
+	:: modules in use:
+	com.google.protobuf#protobuf-java;2.6.0 from central in [default]
+	mysql#mysql-connector-java;8.0.11 from spark-list in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   2   |   0   |   0   |   0   ||   2   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-4b250953-bff4-41cc-b373-73bb328c552b
+	confs: [default]
+	0 artifacts copied, 2 already retrieved (0kB/5ms)
+25/04/12 02:00:03 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/04/12 02:00:04 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+2025-04-12 02:00:05 - INFO - Iniciando extração da tabela "vendedores"
+[Stage 1:>                                                         (0 + 4) / 10][Stage 1:=================>                                        (3 + 4) / 10][Stage 1:==================================>                       (6 + 4) / 10]                                                                                2025-04-12 02:00:10 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-12 02:00:10 - INFO - Não ha novos registros em "vendedores"
+
+2025-04-12 02:00:10 - INFO - Iniciando extração da tabela "vendas"
+[Stage 6:==============================================>           (8 + 2) / 10]                                                                                2025-04-12 02:00:12 - INFO - USER_INFO: Max conn: 3 | Low bound: 16604 | Upper bound: 18042 | Linhas: 1439
+2025-04-12 02:00:13 - INFO - "./lab/jobs/new_data/vendas/2025-04-12 02:00:09" salvo com sucesso!
+[Stage 14:>                                                         (0 + 4) / 4]                                                                                2025-04-12 02:00:14 - INFO - Extração da tabela "vendas" concluída!
+
+2025-04-12 02:00:14 - INFO - Iniciando extração da tabela "produtos"
+2025-04-12 02:00:15 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-12 02:00:15 - INFO - Não ha novos registros em "produtos"
+
+2025-04-12 02:00:15 - INFO - Iniciando extração da tabela "clientes"
+2025-04-12 02:00:15 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-12 02:00:15 - INFO - Não ha novos registros em "clientes"
+
+2025-04-12 02:00:15 - INFO - Iniciando extração da tabela "itens_venda"
+2025-04-12 02:00:16 - INFO - USER_INFO: Max conn: 3 | Low bound: 16605 | Upper bound: 18043 | Linhas: 1439
+2025-04-12 02:00:17 - INFO - "./lab/jobs/new_data/itens_venda/2025-04-12 02:00:14" salvo com sucesso!
+2025-04-12 02:00:17 - INFO - Extração da tabela "itens_venda" concluída!
+
+2025-04-12 02:00:17 - INFO - Iniciando atualização da base "new_data_map"!
+2025-04-12 02:00:18 - INFO - Erro ao limpar MAP TABLE - [Errno 2] No such file or directory: './lab/jobs/new_data/itens_venda/2025-03-01 00:00:00.000'
+2025-04-12 02:00:18 - INFO - Base "new_data_map" atualizada!
+
+2025-04-12 02:00:18 - INFO - Closing down clientserver connection
+Finalizando extração - sáb 12 abr 2025 02:00:01 -03
+****************************************************************
+
+
+
+****************************************************************
+Iniciando extração - sáb 12 abr 2025 03:00:01 -03
+Warning: Ignoring non-Spark config property: packages
+25/04/12 03:00:03 WARN Utils: Your hostname, cj-OptiPlex-3020 resolves to a loopback address: 127.0.1.1; using 172.18.0.1 instead (on interface br-1602a4c2a591)
+25/04/12 03:00:03 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/home/cj/.local/lib/python3.10/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/cj/.ivy2/cache
+The jars for the packages stored in: /home/cj/.ivy2/jars
+mysql#mysql-connector-java added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-2f5d3ce1-ecb9-40d1-b9bc-fef1949c61e4;1.0
+	confs: [default]
+	found mysql#mysql-connector-java;8.0.11 in spark-list
+	found com.google.protobuf#protobuf-java;2.6.0 in central
+:: resolution report :: resolve 106ms :: artifacts dl 5ms
+	:: modules in use:
+	com.google.protobuf#protobuf-java;2.6.0 from central in [default]
+	mysql#mysql-connector-java;8.0.11 from spark-list in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   2   |   0   |   0   |   0   ||   2   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-2f5d3ce1-ecb9-40d1-b9bc-fef1949c61e4
+	confs: [default]
+	0 artifacts copied, 2 already retrieved (0kB/4ms)
+25/04/12 03:00:03 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/04/12 03:00:04 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+2025-04-12 03:00:05 - INFO - Iniciando extração da tabela "vendedores"
+[Stage 1:=================>                                        (3 + 4) / 10]                                                                                2025-04-12 03:00:10 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-12 03:00:10 - INFO - Não ha novos registros em "vendedores"
+
+2025-04-12 03:00:10 - INFO - Iniciando extração da tabela "vendas"
+2025-04-12 03:00:11 - INFO - USER_INFO: Max conn: 3 | Low bound: 18043 | Upper bound: 18761 | Linhas: 719
+2025-04-12 03:00:12 - INFO - "./lab/jobs/new_data/vendas/2025-04-12 03:00:07" salvo com sucesso!
+[Stage 14:>                                                         (0 + 4) / 4]                                                                                2025-04-12 03:00:13 - INFO - Extração da tabela "vendas" concluída!
+
+2025-04-12 03:00:13 - INFO - Iniciando extração da tabela "produtos"
+2025-04-12 03:00:14 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-12 03:00:14 - INFO - Não ha novos registros em "produtos"
+
+2025-04-12 03:00:14 - INFO - Iniciando extração da tabela "clientes"
+2025-04-12 03:00:15 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-12 03:00:15 - INFO - Não ha novos registros em "clientes"
+
+2025-04-12 03:00:15 - INFO - Iniciando extração da tabela "itens_venda"
+2025-04-12 03:00:16 - INFO - USER_INFO: Max conn: 3 | Low bound: 18044 | Upper bound: 18762 | Linhas: 719
+2025-04-12 03:00:16 - INFO - "./lab/jobs/new_data/itens_venda/2025-04-12 03:00:12" salvo com sucesso!
+2025-04-12 03:00:16 - INFO - Extração da tabela "itens_venda" concluída!
+
+2025-04-12 03:00:16 - INFO - Iniciando atualização da base "new_data_map"!
+2025-04-12 03:00:17 - INFO - Erro ao limpar MAP TABLE - [Errno 2] No such file or directory: './lab/jobs/new_data/itens_venda/2025-03-01 00:00:00.000'
+2025-04-12 03:00:17 - INFO - Base "new_data_map" atualizada!
+
+2025-04-12 03:00:17 - INFO - Closing down clientserver connection
+Finalizando extração - sáb 12 abr 2025 03:00:01 -03
+****************************************************************
+
+
+
+****************************************************************
+Iniciando extração - sáb 12 abr 2025 04:00:01 -03
+Warning: Ignoring non-Spark config property: packages
+25/04/12 04:00:03 WARN Utils: Your hostname, cj-OptiPlex-3020 resolves to a loopback address: 127.0.1.1; using 172.18.0.1 instead (on interface br-1602a4c2a591)
+25/04/12 04:00:03 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/home/cj/.local/lib/python3.10/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/cj/.ivy2/cache
+The jars for the packages stored in: /home/cj/.ivy2/jars
+mysql#mysql-connector-java added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-106477ad-6d5f-4158-a442-9b42ea23cc88;1.0
+	confs: [default]
+	found mysql#mysql-connector-java;8.0.11 in spark-list
+	found com.google.protobuf#protobuf-java;2.6.0 in central
+:: resolution report :: resolve 143ms :: artifacts dl 6ms
+	:: modules in use:
+	com.google.protobuf#protobuf-java;2.6.0 from central in [default]
+	mysql#mysql-connector-java;8.0.11 from spark-list in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   2   |   0   |   0   |   0   ||   2   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-106477ad-6d5f-4158-a442-9b42ea23cc88
+	confs: [default]
+	0 artifacts copied, 2 already retrieved (0kB/5ms)
+25/04/12 04:00:04 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/04/12 04:00:05 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+2025-04-12 04:00:05 - INFO - Iniciando extração da tabela "vendedores"
+[Stage 1:=====>                                                    (1 + 5) / 11][Stage 1:===============>                                          (3 + 4) / 11][Stage 1:==========================================>               (8 + 3) / 11]                                                                                [Stage 2:===================================================>     (10 + 1) / 11]                                                                                2025-04-12 04:00:10 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-12 04:00:10 - INFO - Não ha novos registros em "vendedores"
+
+2025-04-12 04:00:10 - INFO - Iniciando extração da tabela "vendas"
+2025-04-12 04:00:12 - INFO - USER_INFO: Max conn: 3 | Low bound: 18762 | Upper bound: 19481 | Linhas: 720
+2025-04-12 04:00:13 - INFO - "./lab/jobs/new_data/vendas/2025-04-12 04:00:10" salvo com sucesso!
+[Stage 14:>                                                         (0 + 4) / 4][Stage 14:===========================================>              (3 + 1) / 4]                                                                                2025-04-12 04:00:14 - INFO - Extração da tabela "vendas" concluída!
+
+2025-04-12 04:00:14 - INFO - Iniciando extração da tabela "produtos"
+2025-04-12 04:00:15 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-12 04:00:15 - INFO - Não ha novos registros em "produtos"
+
+2025-04-12 04:00:15 - INFO - Iniciando extração da tabela "clientes"
+2025-04-12 04:00:15 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-12 04:00:15 - INFO - Não ha novos registros em "clientes"
+
+2025-04-12 04:00:15 - INFO - Iniciando extração da tabela "itens_venda"
+2025-04-12 04:00:16 - INFO - USER_INFO: Max conn: 3 | Low bound: 18763 | Upper bound: 19482 | Linhas: 720
+2025-04-12 04:00:17 - INFO - "./lab/jobs/new_data/itens_venda/2025-04-12 04:00:15" salvo com sucesso!
+2025-04-12 04:00:17 - INFO - Extração da tabela "itens_venda" concluída!
+
+2025-04-12 04:00:17 - INFO - Iniciando atualização da base "new_data_map"!
+2025-04-12 04:00:18 - INFO - Erro ao limpar MAP TABLE - [Errno 2] No such file or directory: './lab/jobs/new_data/itens_venda/2025-03-01 00:00:00.000'
+2025-04-12 04:00:18 - INFO - Base "new_data_map" atualizada!
+
+2025-04-12 04:00:18 - INFO - Closing down clientserver connection
+Finalizando extração - sáb 12 abr 2025 04:00:01 -03
+****************************************************************
+
+
+
+****************************************************************
+Iniciando extração - sáb 12 abr 2025 05:00:01 -03
+Warning: Ignoring non-Spark config property: packages
+25/04/12 05:00:03 WARN Utils: Your hostname, cj-OptiPlex-3020 resolves to a loopback address: 127.0.1.1; using 172.18.0.1 instead (on interface br-1602a4c2a591)
+25/04/12 05:00:03 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/home/cj/.local/lib/python3.10/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/cj/.ivy2/cache
+The jars for the packages stored in: /home/cj/.ivy2/jars
+mysql#mysql-connector-java added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-7baa091d-a92f-4fbd-8d9a-ab78878d4fae;1.0
+	confs: [default]
+	found mysql#mysql-connector-java;8.0.11 in spark-list
+	found com.google.protobuf#protobuf-java;2.6.0 in central
+:: resolution report :: resolve 115ms :: artifacts dl 5ms
+	:: modules in use:
+	com.google.protobuf#protobuf-java;2.6.0 from central in [default]
+	mysql#mysql-connector-java;8.0.11 from spark-list in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   2   |   0   |   0   |   0   ||   2   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-7baa091d-a92f-4fbd-8d9a-ab78878d4fae
+	confs: [default]
+	0 artifacts copied, 2 already retrieved (0kB/5ms)
+25/04/12 05:00:03 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/04/12 05:00:04 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+2025-04-12 05:00:05 - INFO - Iniciando extração da tabela "vendedores"
+[Stage 1:>                                                         (0 + 4) / 11][Stage 1:===============>                                          (3 + 4) / 11][Stage 1:===============================>                          (6 + 4) / 11]                                                                                [Stage 2:=====================>                                    (4 + 4) / 11]                                                                                2025-04-12 05:00:10 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-12 05:00:10 - INFO - Não ha novos registros em "vendedores"
+
+2025-04-12 05:00:10 - INFO - Iniciando extração da tabela "vendas"
+2025-04-12 05:00:11 - INFO - USER_INFO: Max conn: 3 | Low bound: 19482 | Upper bound: 20200 | Linhas: 719
+2025-04-12 05:00:13 - INFO - "./lab/jobs/new_data/vendas/2025-04-12 05:00:08" salvo com sucesso!
+[Stage 14:>                                                         (0 + 4) / 4][Stage 14:===========================================>              (3 + 1) / 4]                                                                                2025-04-12 05:00:13 - INFO - Extração da tabela "vendas" concluída!
+
+2025-04-12 05:00:13 - INFO - Iniciando extração da tabela "produtos"
+2025-04-12 05:00:14 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-12 05:00:14 - INFO - Não ha novos registros em "produtos"
+
+2025-04-12 05:00:14 - INFO - Iniciando extração da tabela "clientes"
+2025-04-12 05:00:15 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-12 05:00:15 - INFO - Não ha novos registros em "clientes"
+
+2025-04-12 05:00:15 - INFO - Iniciando extração da tabela "itens_venda"
+2025-04-12 05:00:16 - INFO - USER_INFO: Max conn: 3 | Low bound: 19483 | Upper bound: 20201 | Linhas: 719
+2025-04-12 05:00:16 - INFO - "./lab/jobs/new_data/itens_venda/2025-04-12 05:00:13" salvo com sucesso!
+2025-04-12 05:00:17 - INFO - Extração da tabela "itens_venda" concluída!
+
+2025-04-12 05:00:17 - INFO - Iniciando atualização da base "new_data_map"!
+2025-04-12 05:00:18 - INFO - Erro ao limpar MAP TABLE - [Errno 2] No such file or directory: './lab/jobs/new_data/itens_venda/2025-03-01 00:00:00.000'
+2025-04-12 05:00:18 - INFO - Base "new_data_map" atualizada!
+
+2025-04-12 05:00:18 - INFO - Closing down clientserver connection
+Finalizando extração - sáb 12 abr 2025 05:00:01 -03
+****************************************************************
+
+
+
+****************************************************************
+Iniciando extração - sáb 12 abr 2025 06:00:01 -03
+Warning: Ignoring non-Spark config property: packages
+25/04/12 06:00:02 WARN Utils: Your hostname, cj-OptiPlex-3020 resolves to a loopback address: 127.0.1.1; using 172.18.0.1 instead (on interface br-1602a4c2a591)
+25/04/12 06:00:02 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/home/cj/.local/lib/python3.10/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/cj/.ivy2/cache
+The jars for the packages stored in: /home/cj/.ivy2/jars
+mysql#mysql-connector-java added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-ac96faa9-90b4-4f75-b351-a1ae918235c3;1.0
+	confs: [default]
+	found mysql#mysql-connector-java;8.0.11 in spark-list
+	found com.google.protobuf#protobuf-java;2.6.0 in central
+:: resolution report :: resolve 108ms :: artifacts dl 5ms
+	:: modules in use:
+	com.google.protobuf#protobuf-java;2.6.0 from central in [default]
+	mysql#mysql-connector-java;8.0.11 from spark-list in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   2   |   0   |   0   |   0   ||   2   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-ac96faa9-90b4-4f75-b351-a1ae918235c3
+	confs: [default]
+	0 artifacts copied, 2 already retrieved (0kB/4ms)
+25/04/12 06:00:03 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/04/12 06:00:04 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+2025-04-12 06:00:04 - INFO - Iniciando extração da tabela "vendedores"
+[Stage 0:>                                                          (0 + 1) / 1]                                                                                [Stage 1:===============>                                          (3 + 4) / 11][Stage 1:===============================>                          (6 + 4) / 11][Stage 1:===================================================>     (10 + 1) / 11]                                                                                2025-04-12 06:00:10 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-12 06:00:10 - INFO - Não ha novos registros em "vendedores"
+
+2025-04-12 06:00:10 - INFO - Iniciando extração da tabela "vendas"
+2025-04-12 06:00:11 - INFO - USER_INFO: Max conn: 3 | Low bound: 20201 | Upper bound: 20919 | Linhas: 719
+2025-04-12 06:00:12 - INFO - "./lab/jobs/new_data/vendas/2025-04-12 06:00:11" salvo com sucesso!
+[Stage 14:>                                                         (0 + 4) / 4]                                                                                2025-04-12 06:00:13 - INFO - Extração da tabela "vendas" concluída!
+
+2025-04-12 06:00:13 - INFO - Iniciando extração da tabela "produtos"
+2025-04-12 06:00:14 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-12 06:00:14 - INFO - Não ha novos registros em "produtos"
+
+2025-04-12 06:00:14 - INFO - Iniciando extração da tabela "clientes"
+2025-04-12 06:00:15 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-12 06:00:15 - INFO - Não ha novos registros em "clientes"
+
+2025-04-12 06:00:15 - INFO - Iniciando extração da tabela "itens_venda"
+2025-04-12 06:00:16 - INFO - USER_INFO: Max conn: 3 | Low bound: 20202 | Upper bound: 20920 | Linhas: 719
+2025-04-12 06:00:16 - INFO - "./lab/jobs/new_data/itens_venda/2025-04-12 06:00:11" salvo com sucesso!
+2025-04-12 06:00:16 - INFO - Extração da tabela "itens_venda" concluída!
+
+2025-04-12 06:00:16 - INFO - Iniciando atualização da base "new_data_map"!
+2025-04-12 06:00:17 - INFO - Erro ao limpar MAP TABLE - [Errno 2] No such file or directory: './lab/jobs/new_data/itens_venda/2025-03-01 00:00:00.000'
+2025-04-12 06:00:17 - INFO - Base "new_data_map" atualizada!
+
+2025-04-12 06:00:17 - INFO - Closing down clientserver connection
+Finalizando extração - sáb 12 abr 2025 06:00:01 -03
+****************************************************************
+
+
+
+****************************************************************
+Iniciando extração - sáb 12 abr 2025 07:00:01 -03
+Warning: Ignoring non-Spark config property: packages
+25/04/12 07:00:03 WARN Utils: Your hostname, cj-OptiPlex-3020 resolves to a loopback address: 127.0.1.1; using 172.18.0.1 instead (on interface br-1602a4c2a591)
+25/04/12 07:00:03 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/home/cj/.local/lib/python3.10/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/cj/.ivy2/cache
+The jars for the packages stored in: /home/cj/.ivy2/jars
+mysql#mysql-connector-java added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-41b34996-d9c9-40f5-bca3-54bd598c55dc;1.0
+	confs: [default]
+	found mysql#mysql-connector-java;8.0.11 in spark-list
+	found com.google.protobuf#protobuf-java;2.6.0 in central
+:: resolution report :: resolve 117ms :: artifacts dl 5ms
+	:: modules in use:
+	com.google.protobuf#protobuf-java;2.6.0 from central in [default]
+	mysql#mysql-connector-java;8.0.11 from spark-list in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   2   |   0   |   0   |   0   ||   2   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-41b34996-d9c9-40f5-bca3-54bd598c55dc
+	confs: [default]
+	0 artifacts copied, 2 already retrieved (0kB/4ms)
+25/04/12 07:00:04 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/04/12 07:00:05 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+2025-04-12 07:00:05 - INFO - Iniciando extração da tabela "vendedores"
+[Stage 1:===============>                                          (3 + 4) / 11][Stage 1:====================================>                     (7 + 4) / 11]                                                                                [Stage 2:==========================================>               (8 + 3) / 11]                                                                                2025-04-12 07:00:11 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-12 07:00:11 - INFO - Não ha novos registros em "vendedores"
+
+2025-04-12 07:00:11 - INFO - Iniciando extração da tabela "vendas"
+2025-04-12 07:00:12 - INFO - USER_INFO: Max conn: 3 | Low bound: 20921 | Upper bound: 21639 | Linhas: 719
+2025-04-12 07:00:13 - INFO - "./lab/jobs/new_data/vendas/2025-04-12 07:00:09" salvo com sucesso!
+[Stage 14:>                                                         (0 + 4) / 4]                                                                                2025-04-12 07:00:14 - INFO - Extração da tabela "vendas" concluída!
+
+2025-04-12 07:00:14 - INFO - Iniciando extração da tabela "produtos"
+2025-04-12 07:00:15 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-12 07:00:15 - INFO - Não ha novos registros em "produtos"
+
+2025-04-12 07:00:15 - INFO - Iniciando extração da tabela "clientes"
+2025-04-12 07:00:16 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-12 07:00:16 - INFO - Não ha novos registros em "clientes"
+
+2025-04-12 07:00:16 - INFO - Iniciando extração da tabela "itens_venda"
+2025-04-12 07:00:16 - INFO - USER_INFO: Max conn: 3 | Low bound: 20921 | Upper bound: 21640 | Linhas: 720
+2025-04-12 07:00:17 - INFO - "./lab/jobs/new_data/itens_venda/2025-04-12 07:00:14" salvo com sucesso!
+2025-04-12 07:00:17 - INFO - Extração da tabela "itens_venda" concluída!
+
+2025-04-12 07:00:17 - INFO - Iniciando atualização da base "new_data_map"!
+2025-04-12 07:00:18 - INFO - Erro ao limpar MAP TABLE - [Errno 2] No such file or directory: './lab/jobs/new_data/itens_venda/2025-03-01 00:00:00.000'
+2025-04-12 07:00:18 - INFO - Base "new_data_map" atualizada!
+
+2025-04-12 07:00:18 - INFO - Closing down clientserver connection
+Finalizando extração - sáb 12 abr 2025 07:00:01 -03
+****************************************************************
+
+
+
