@@ -1,0 +1,64 @@
+Iniciando ingestas...
+Warning: Ignoring non-Spark config property: packages
+25/04/11 21:39:01 WARN Utils: Your hostname, cj-OptiPlex-3020 resolves to a loopback address: 127.0.1.1; using 192.168.15.34 instead (on interface enp2s0)
+25/04/11 21:39:01 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/home/cj/.local/lib/python3.10/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/cj/.ivy2/cache
+The jars for the packages stored in: /home/cj/.ivy2/jars
+mysql#mysql-connector-java added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-c2b2e8bd-fd4b-4183-a339-eb17ea04b881;1.0
+	confs: [default]
+	found mysql#mysql-connector-java;8.0.11 in spark-list
+	found com.google.protobuf#protobuf-java;2.6.0 in central
+:: resolution report :: resolve 117ms :: artifacts dl 7ms
+	:: modules in use:
+	com.google.protobuf#protobuf-java;2.6.0 from central in [default]
+	mysql#mysql-connector-java;8.0.11 from spark-list in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   2   |   0   |   0   |   0   ||   2   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-c2b2e8bd-fd4b-4183-a339-eb17ea04b881
+	confs: [default]
+	0 artifacts copied, 2 already retrieved (0kB/5ms)
+25/04/11 21:39:02 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/04/11 21:39:03 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+2025-04-11 21:39:04 - INFO - Iniciando extração da tabela "vendedores"
+2025-04-11 21:39:05 - INFO - Datetime considerado "2025-03-01 00:00:00.000" para "./lab/jobs/new_data/vendedores" - [PATH_NOT_FOUND] Path does not exist: file:/home/cj/lisarb_jc/lab/jobs/new_data/new_data_map.
+2025-04-11 21:39:05 - INFO - USER_INFO: Max conn: 3 | Low bound: 1 | Upper bound: 10 | Linhas: 10
+[Stage 3:>                                                          (0 + 3) / 3]                                                                                2025-04-11 21:39:08 - INFO - "./lab/jobs/new_data/vendedores/2025-04-05 20:25:31" salvo com sucesso!
+[Stage 4:>                                                          (0 + 4) / 4]                                                                                2025-04-11 21:39:09 - INFO - Extração da tabela "vendedores" concluída!
+
+2025-04-11 21:39:09 - INFO - Iniciando extração da tabela "vendas"
+2025-04-11 21:39:10 - INFO - Datetime considerado "2025-03-01 00:00:00.000" para "./lab/jobs/new_data/vendas" - list index out of range
+2025-04-11 21:39:10 - INFO - USER_INFO: Max conn: 3 | Low bound: 1 | Upper bound: 14912 | Linhas: 14912
+2025-04-11 21:39:11 - INFO - "./lab/jobs/new_data/vendas/2025-04-11 21:39:06" salvo com sucesso!
+2025-04-11 21:39:11 - INFO - Extração da tabela "vendas" concluída!
+
+2025-04-11 21:39:11 - INFO - Iniciando extração da tabela "produtos"
+2025-04-11 21:39:11 - INFO - Datetime considerado "2025-03-01 00:00:00.000" para "./lab/jobs/new_data/produtos" - list index out of range
+2025-04-11 21:39:11 - INFO - USER_INFO: Max conn: 3 | Low bound: 1 | Upper bound: 10 | Linhas: 10
+2025-04-11 21:39:12 - INFO - "./lab/jobs/new_data/produtos/2025-04-05 20:25:31" salvo com sucesso!
+2025-04-11 21:39:12 - INFO - Extração da tabela "produtos" concluída!
+
+2025-04-11 21:39:12 - INFO - Iniciando extração da tabela "clientes"
+2025-04-11 21:39:12 - INFO - Datetime considerado "2025-03-01 00:00:00.000" para "./lab/jobs/new_data/clientes" - list index out of range
+2025-04-11 21:39:12 - INFO - USER_INFO: Max conn: 3 | Low bound: 1 | Upper bound: 250 | Linhas: 250
+2025-04-11 21:39:13 - INFO - "./lab/jobs/new_data/clientes/2025-04-05 20:25:31" salvo com sucesso!
+2025-04-11 21:39:13 - INFO - Extração da tabela "clientes" concluída!
+
+2025-04-11 21:39:13 - INFO - Iniciando extração da tabela "itens_venda"
+2025-04-11 21:39:13 - INFO - Datetime considerado "2025-03-01 00:00:00.000" para "./lab/jobs/new_data/itens_venda" - list index out of range
+2025-04-11 21:39:13 - INFO - USER_INFO: Max conn: 3 | Low bound: 1 | Upper bound: 14913 | Linhas: 14913
+2025-04-11 21:39:14 - INFO - "./lab/jobs/new_data/itens_venda/2025-04-11 21:39:11" salvo com sucesso!
+2025-04-11 21:39:15 - INFO - Extração da tabela "itens_venda" concluída!
+
+2025-04-11 21:39:15 - INFO - Iniciando atualização da base "new_data_map"!
+2025-04-11 21:39:15 - INFO - Base "new_data_map" atualizada!
+
+2025-04-11 21:39:15 - INFO - Closing down clientserver connection
+Atualizacoes concluidas!
