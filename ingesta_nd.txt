@@ -1,0 +1,56 @@
+Iniciando ingestas...
+Warning: Ignoring non-Spark config property: packages
+25/04/11 22:44:11 WARN Utils: Your hostname, cj-OptiPlex-3020 resolves to a loopback address: 127.0.1.1; using 192.168.15.34 instead (on interface enp2s0)
+25/04/11 22:44:11 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/home/cj/.local/lib/python3.10/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/cj/.ivy2/cache
+The jars for the packages stored in: /home/cj/.ivy2/jars
+mysql#mysql-connector-java added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-df34e0f8-1b14-4828-8df6-b21ea63a0501;1.0
+	confs: [default]
+	found mysql#mysql-connector-java;8.0.11 in spark-list
+	found com.google.protobuf#protobuf-java;2.6.0 in central
+:: resolution report :: resolve 237ms :: artifacts dl 15ms
+	:: modules in use:
+	com.google.protobuf#protobuf-java;2.6.0 from central in [default]
+	mysql#mysql-connector-java;8.0.11 from spark-list in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   2   |   0   |   0   |   0   ||   2   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-df34e0f8-1b14-4828-8df6-b21ea63a0501
+	confs: [default]
+	0 artifacts copied, 2 already retrieved (0kB/8ms)
+25/04/11 22:44:12 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/04/11 22:44:13 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+2025-04-11 22:44:14 - INFO - Iniciando ingestão da tabela "vendedores"
+2025-04-11 22:44:15 - INFO - Master Dataset "vendedores" não encontrado - [UNABLE_TO_INFER_SCHEMA] Unable to infer schema for Parquet. It must be specified manually.
+[Stage 7:>                                                          (0 + 4) / 7]                                                                                2025-04-11 22:44:19 - INFO - 10 registros encontrados para base "vendedores"
+2025-04-11 22:44:20 - INFO - Master Dataset "vendedores" salvo com sucesso
+
+2025-04-11 22:44:20 - INFO - Iniciando ingestão da tabela "vendas"
+2025-04-11 22:44:21 - INFO - Master Dataset "vendas" não encontrado - [UNABLE_TO_INFER_SCHEMA] Unable to infer schema for Parquet. It must be specified manually.
+2025-04-11 22:44:21 - INFO - 15659 registros encontrados para base "vendas"
+2025-04-11 22:44:22 - INFO - Master Dataset "vendas" salvo com sucesso
+
+2025-04-11 22:44:22 - INFO - Iniciando ingestão da tabela "produtos"
+2025-04-11 22:44:22 - INFO - Master Dataset "produtos" não encontrado - [UNABLE_TO_INFER_SCHEMA] Unable to infer schema for Parquet. It must be specified manually.
+2025-04-11 22:44:23 - INFO - 10 registros encontrados para base "produtos"
+2025-04-11 22:44:23 - INFO - Master Dataset "produtos" salvo com sucesso
+
+2025-04-11 22:44:23 - INFO - Iniciando ingestão da tabela "clientes"
+2025-04-11 22:44:23 - INFO - Master Dataset "clientes" não encontrado - [UNABLE_TO_INFER_SCHEMA] Unable to infer schema for Parquet. It must be specified manually.
+2025-04-11 22:44:24 - INFO - 250 registros encontrados para base "clientes"
+2025-04-11 22:44:25 - INFO - Master Dataset "clientes" salvo com sucesso
+
+2025-04-11 22:44:25 - INFO - Iniciando ingestão da tabela "itens_venda"
+2025-04-11 22:44:25 - INFO - Master Dataset "itens_venda" não encontrado - [UNABLE_TO_INFER_SCHEMA] Unable to infer schema for Parquet. It must be specified manually.
+2025-04-11 22:44:25 - INFO - 15660 registros encontrados para base "itens_venda"
+2025-04-11 22:44:26 - INFO - Master Dataset "itens_venda" salvo com sucesso
+
+2025-04-11 22:44:26 - INFO - Closing down clientserver connection
+Ingesta concluidas!

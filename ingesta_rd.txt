@@ -1,0 +1,50 @@
+Iniciando ingestas...
+Warning: Ignoring non-Spark config property: packages
+25/04/11 22:45:26 WARN Utils: Your hostname, cj-OptiPlex-3020 resolves to a loopback address: 127.0.1.1; using 192.168.15.34 instead (on interface enp2s0)
+25/04/11 22:45:26 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/home/cj/.local/lib/python3.10/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/cj/.ivy2/cache
+The jars for the packages stored in: /home/cj/.ivy2/jars
+mysql#mysql-connector-java added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-d2bf5f71-10f0-4400-98b0-df6029791722;1.0
+	confs: [default]
+	found mysql#mysql-connector-java;8.0.11 in spark-list
+	found com.google.protobuf#protobuf-java;2.6.0 in central
+:: resolution report :: resolve 112ms :: artifacts dl 4ms
+	:: modules in use:
+	com.google.protobuf#protobuf-java;2.6.0 from central in [default]
+	mysql#mysql-connector-java;8.0.11 from spark-list in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   2   |   0   |   0   |   0   ||   2   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-d2bf5f71-10f0-4400-98b0-df6029791722
+	confs: [default]
+	0 artifacts copied, 2 already retrieved (0kB/4ms)
+25/04/11 22:45:27 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/04/11 22:45:28 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+2025-04-11 22:45:29 - INFO - Iniciando ingestão da tabela "vendedores"
+2025-04-11 22:45:33 - INFO - Maior data encontrada no Master Dataset 2025-04-05 20:25:31
+[Stage 7:>                                                          (0 + 4) / 4]                                                                                2025-04-11 22:45:34 - INFO - 0 registros encontrados para base "vendedores"
+2025-04-11 22:45:35 - INFO - Iniciando ingestão da tabela "vendas"
+2025-04-11 22:45:35 - INFO - Maior data encontrada no Master Dataset 2025-04-11 22:41:24
+2025-04-11 22:45:36 - INFO - 44 registros encontrados para base "vendas"
+[Stage 29:=================================>                        (4 + 3) / 7]                                                                                2025-04-11 22:45:37 - INFO - Master Dataset "vendas" salvo com sucesso
+
+2025-04-11 22:45:37 - INFO - Iniciando ingestão da tabela "produtos"
+2025-04-11 22:45:38 - INFO - Maior data encontrada no Master Dataset 2025-04-05 20:25:31
+2025-04-11 22:45:38 - INFO - 0 registros encontrados para base "produtos"
+2025-04-11 22:45:38 - INFO - Iniciando ingestão da tabela "clientes"
+2025-04-11 22:45:39 - INFO - Maior data encontrada no Master Dataset 2025-04-05 20:25:31
+2025-04-11 22:45:39 - INFO - 0 registros encontrados para base "clientes"
+2025-04-11 22:45:39 - INFO - Iniciando ingestão da tabela "itens_venda"
+2025-04-11 22:45:40 - INFO - Maior data encontrada no Master Dataset 2025-04-11 22:41:29
+2025-04-11 22:45:40 - INFO - 44 registros encontrados para base "itens_venda"
+2025-04-11 22:45:41 - INFO - Master Dataset "itens_venda" salvo com sucesso
+
+2025-04-11 22:45:41 - INFO - Closing down clientserver connection
+Ingesta concluidas!
