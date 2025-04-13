@@ -3,30 +3,30 @@ from pyspark.sql.functions import col, count, sum, avg, round, sha2
 
 # Inicializa Spark
 spark = SparkSession.builder \
-    .appName("TicketMedioClienteAnonimo") \
+    .appName("VendasPorVendedorAnonimo") \
     .getOrCreate()
 
 # Caminhos
 input_path = "/data/vendas"
-output_path = "/output/ticket_medio_cliente_anon"
+output_path = "/output/vendas_por_vendedor_anon"
 
-# Leitura dos dados em Parquet
+# Leitura dos dados
 df_vendas = spark.read.parquet(input_path)
 
-# Garantir que os campos estão no tipo correto
+# Garantir tipos corretos
 df_vendas = df_vendas \
-    .withColumn("id_cliente", col("id_cliente").cast("string")) \
+    .withColumn("id_vendedor", col("id_vendedor").cast("string")) \
     .withColumn("total", col("total").cast("decimal(10,2)"))
 
-# Anonimizar cliente
-df_vendas = df_vendas.withColumn("hash_id_cliente", sha2(col("id_cliente"), 256))
+# Anonimização do identificador
+df_vendas = df_vendas.withColumn("hash_id_vendedor", sha2(col("id_vendedor"), 256))
 
-# Agregação com cliente anonimizado
-ticket_medio_cliente = df_vendas.groupBy("hash_id_cliente").agg(
+# Agregação por vendedor anonimizado
+vendas_por_vendedor = df_vendas.groupBy("hash_id_vendedor").agg(
     count("id_venda").alias("qtd_vendas"),
-    sum("total").alias("total_gasto"),
+    sum("total").alias("total_vendido"),
     round(avg("total"), 2).alias("ticket_medio")
-).orderBy("hash_id_cliente")
+).orderBy("hash_id_vendedor")
 
-# Escrita segura em Parquet
-ticket_medio_cliente.write.mode("overwrite").parquet(output_path)
+# Escrita segura
+vendas_por_vendedor.write.mode("overwrite").parquet(output_path)
