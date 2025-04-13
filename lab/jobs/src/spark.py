@@ -1,9 +1,9 @@
 from pyspark.sql import SparkSession
 
 class Spark:
-    def __init__(self):
+    def __init__(self, appName):
         self.spark = (SparkSession.builder
-           .appName('Ingesta')
+           .appName(appName)
            .config("packages", "org.apache.spark:mysql-connector-java-8.0.13.jar")
            .getOrCreate()
         )

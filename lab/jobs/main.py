@@ -4,7 +4,7 @@ from src.extrator import Extrator
 from src.ingesta import Ingesta
 from src.batchViews import BatchViews
 
-sparkSession = Spark()
+sparkSession = Spark(sys.argv[1])
 
 if sys.argv[1] == 'extrator':
     Extrator(sparkSession).Run()
