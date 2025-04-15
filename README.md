@@ -37,14 +37,9 @@ Certifique-se de que os executaveis possam ser acessados e executados pelo usuá
 
 ### iniciando o projeto
 Tendo dudo dado certo até aqui, é hora de subir o projeto.
-Navegue até a pasta apps
+Digite o seguinte comando:
 ```
-$ cd lab/apps
-```
-
-Execute o comando docker compose up --build **atente-se entre as variações deste comando**, algumas versões do docker funcionam com o comando *docker-compose up* - confira na documentação [Docker](https://www.docker.com/).
-```
-$ sudo docker compose up --build
+$ sudo sh run.sh
 ```
 Aguarde até que os containers subam...
 
@@ -71,3 +66,11 @@ Alguns arquivos de saída são gerados conforme os jobs são executados: saida_e
 * VSCode
 * Postman
 
+
+### parando o projeto
+Tendo dudo dado certo até aqui, é possível parar o projeto.
+Digite o seguinte comando:
+```
+$ sudo sh stop.sh
+```
+Aguarde até que todos os containers estejam parados.
