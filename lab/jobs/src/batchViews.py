@@ -4,7 +4,7 @@ from src.notificador import Notificador
 class BatchViews:
     def __init__(self, sparkSession):
         self.sparkSession = sparkSession
-        self.input_data ='./data/vendas'
+        self.input_data ='lab/jobs/data/vendas'
         self.faturamento_diario = 'faturamento_diario'
         self.ticket_medio_cliente = 'ticket_medio_cliente'
         self.vendas_por_vendedor = 'vendas_por_vendedor'
@@ -27,7 +27,7 @@ class BatchViews:
                 sum('total').alias('total_faturado'),
                 round(avg('total'), 2).alias('ticket_medio')
             ).orderBy('data')
-            faturamento_diario.write.mode('overwrite').parquet(f'./views/batch/{self.faturamento_diario}')
+            faturamento_diario.write.mode('overwrite').parquet(f'lab/jobs//views/batch/{self.faturamento_diario}')
             self.notificador.Mostrar('info', f'Batch view "{self.faturamento_diario}" finalizada com sucesso!\n')
         except Exception as e:
             self.notificador.Mostrar('error', f'"{self.faturamento_diario}" não processada. - {e}\n')
@@ -47,7 +47,7 @@ class BatchViews:
                 round(avg('total'), 2).alias('ticket_medio')
             ).orderBy('hash_id_cliente')
             ticket_medio_cliente.printSchema()
-            ticket_medio_cliente.write.mode('overwrite').parquet(f'./views/batch/{self.ticket_medio_cliente}')
+            ticket_medio_cliente.write.mode('overwrite').parquet(f'lab/jobs//views/batch/{self.ticket_medio_cliente}')
             self.notificador.Mostrar('info', f'Batch view "{self.ticket_medio_cliente}" finalizada com sucesso!\n')
         except Exception as e:
             self.notificador.Mostrar('error', f'"{self.ticket_medio_cliente}" não processada. - {e}\n')
@@ -67,7 +67,7 @@ class BatchViews:
                 sum('total').alias('total_vendido'),
                 round(avg('total'), 2).alias('ticket_medio')
             ).orderBy('hash_id_vendedor')
-            vendas_por_vendedor.write.mode('overwrite').parquet(f"./views/batch/{self.vendas_por_vendedor}")
+            vendas_por_vendedor.write.mode('overwrite').parquet(f"lab/jobs//views/batch/{self.vendas_por_vendedor}")
             self.notificador.Mostrar('info', f'Batch view "{self.vendas_por_vendedor}" finalizada com sucesso!\n')
         except Exception as e:
             self.notificador.Mostrar('error', f'"{self.vendas_por_vendedor}" não processada. - {e}\n')
