@@ -25,7 +25,7 @@ const getValidRandomInt = (numeros, somenteValidos = false) => {
 const getDate = () => {
     const agora = new Date();
     const ano = agora.getFullYear();
-    const mes = agora.getMonth() < 10 ? `0${agora.getMonth()}` : agora.getMonth();
+    const mes = (agora.getMonth() + 1) < 10 ? `0${(agora.getMonth() + 1)}` : (agora.getMonth() + 1);
     const dia = agora.getDate() < 10 ? `0${agora.getDate()}` : agora.getDate();
     return `${ano}-${mes}-${dia}`;
 }

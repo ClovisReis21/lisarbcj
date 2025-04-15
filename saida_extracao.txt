@@ -570,3 +570,1325 @@ Finalizando extração - sáb 12 abr 2025 07:00:01 -03
 
 
 
+****************************************************************
+Iniciando extração - dom 13 abr 2025 18:00:01 -03
+Warning: Ignoring non-Spark config property: packages
+25/04/13 18:00:02 WARN Utils: Your hostname, cj-OptiPlex-3020 resolves to a loopback address: 127.0.1.1; using 172.18.0.1 instead (on interface br-1602a4c2a591)
+25/04/13 18:00:02 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/home/cj/.local/lib/python3.10/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/cj/.ivy2/cache
+The jars for the packages stored in: /home/cj/.ivy2/jars
+org.apache.spark#spark-sql-kafka-0-10_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-fa3f83d0-a0c2-4ed1-8ec1-07c2d83c694a;1.0
+	confs: [default]
+	found org.apache.spark#spark-sql-kafka-0-10_2.12;3.5.1 in central
+	found org.apache.spark#spark-token-provider-kafka-0-10_2.12;3.5.1 in central
+	found org.apache.kafka#kafka-clients;3.4.1 in central
+	found org.lz4#lz4-java;1.8.0 in central
+	found org.xerial.snappy#snappy-java;1.1.10.3 in central
+	found org.slf4j#slf4j-api;2.0.7 in central
+	found org.apache.hadoop#hadoop-client-runtime;3.3.4 in central
+	found org.apache.hadoop#hadoop-client-api;3.3.4 in central
+	found commons-logging#commons-logging;1.1.3 in central
+	found com.google.code.findbugs#jsr305;3.0.0 in central
+	found org.apache.commons#commons-pool2;2.11.1 in central
+:: resolution report :: resolve 375ms :: artifacts dl 12ms
+	:: modules in use:
+	com.google.code.findbugs#jsr305;3.0.0 from central in [default]
+	commons-logging#commons-logging;1.1.3 from central in [default]
+	org.apache.commons#commons-pool2;2.11.1 from central in [default]
+	org.apache.hadoop#hadoop-client-api;3.3.4 from central in [default]
+	org.apache.hadoop#hadoop-client-runtime;3.3.4 from central in [default]
+	org.apache.kafka#kafka-clients;3.4.1 from central in [default]
+	org.apache.spark#spark-sql-kafka-0-10_2.12;3.5.1 from central in [default]
+	org.apache.spark#spark-token-provider-kafka-0-10_2.12;3.5.1 from central in [default]
+	org.lz4#lz4-java;1.8.0 from central in [default]
+	org.slf4j#slf4j-api;2.0.7 from central in [default]
+	org.xerial.snappy#snappy-java;1.1.10.3 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   11  |   0   |   0   |   0   ||   11  |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-fa3f83d0-a0c2-4ed1-8ec1-07c2d83c694a
+	confs: [default]
+	0 artifacts copied, 11 already retrieved (0kB/7ms)
+25/04/13 18:00:03 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/04/13 18:00:04 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+25/04/13 18:00:04 WARN Utils: Service 'SparkUI' could not bind on port 4041. Attempting port 4042.
+2025-04-13 18:00:05 - INFO - Iniciando extração da tabela "vendedores"
+[Stage 0:>                                                          (0 + 1) / 1]                                                                                [Stage 1:==============>                                           (3 + 4) / 12][Stage 1:=================================>                        (7 + 4) / 12]                                                                                2025-04-13 18:00:10 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-13 18:00:10 - INFO - Não ha novos registros em "vendedores"
+
+2025-04-13 18:00:10 - INFO - Iniciando extração da tabela "vendas"
+[Stage 6:====================================================>    (11 + 1) / 12]                                                                                2025-04-13 18:00:12 - INFO - USER_INFO: Max conn: 3 | Low bound: 25849 | Upper bound: 26567 | Linhas: 719
+2025-04-13 18:00:12 - ERROR - Não foi possível se conectar ao MYSQL - tabela "vendas"
+"An error occurred while calling o66.load.
+: java.lang.ClassNotFoundException: com.mysql.cj.jdbc.Driver
+	at java.base/java.net.URLClassLoader.findClass(URLClassLoader.java:476)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:594)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:527)
+	at org.apache.spark.sql.execution.datasources.jdbc.DriverRegistry$.register(DriverRegistry.scala:46)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.$anonfun$driverClass$1(JDBCOptions.scala:103)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.$anonfun$driverClass$1$adapted(JDBCOptions.scala:103)
+	at scala.Option.foreach(Option.scala:407)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.<init>(JDBCOptions.scala:103)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.<init>(JDBCOptions.scala:41)
+	at org.apache.spark.sql.execution.datasources.jdbc.JdbcRelationProvider.createRelation(JdbcRelationProvider.scala:34)
+	at org.apache.spark.sql.execution.datasources.DataSource.resolveRelation(DataSource.scala:346)
+	at org.apache.spark.sql.DataFrameReader.loadV1Source(DataFrameReader.scala:229)
+	at org.apache.spark.sql.DataFrameReader.$anonfun$load$2(DataFrameReader.scala:211)
+	at scala.Option.getOrElse(Option.scala:189)
+	at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:211)
+	at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:172)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+"
+2025-04-13 18:00:12 - ERROR - Registros não encontrados em "vendas"
+
+2025-04-13 18:00:12 - INFO - Iniciando extração da tabela "produtos"
+2025-04-13 18:00:12 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-13 18:00:12 - INFO - Não ha novos registros em "produtos"
+
+2025-04-13 18:00:12 - INFO - Iniciando extração da tabela "clientes"
+2025-04-13 18:00:13 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-13 18:00:13 - INFO - Não ha novos registros em "clientes"
+
+2025-04-13 18:00:13 - INFO - Iniciando extração da tabela "itens_venda"
+2025-04-13 18:00:14 - INFO - USER_INFO: Max conn: 3 | Low bound: 25850 | Upper bound: 26568 | Linhas: 719
+2025-04-13 18:00:14 - ERROR - Não foi possível se conectar ao MYSQL - tabela "itens_venda"
+"An error occurred while calling o117.load.
+: java.lang.ClassNotFoundException: com.mysql.cj.jdbc.Driver
+	at java.base/java.net.URLClassLoader.findClass(URLClassLoader.java:476)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:594)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:527)
+	at org.apache.spark.sql.execution.datasources.jdbc.DriverRegistry$.register(DriverRegistry.scala:46)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.$anonfun$driverClass$1(JDBCOptions.scala:103)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.$anonfun$driverClass$1$adapted(JDBCOptions.scala:103)
+	at scala.Option.foreach(Option.scala:407)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.<init>(JDBCOptions.scala:103)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.<init>(JDBCOptions.scala:41)
+	at org.apache.spark.sql.execution.datasources.jdbc.JdbcRelationProvider.createRelation(JdbcRelationProvider.scala:34)
+	at org.apache.spark.sql.execution.datasources.DataSource.resolveRelation(DataSource.scala:346)
+	at org.apache.spark.sql.DataFrameReader.loadV1Source(DataFrameReader.scala:229)
+	at org.apache.spark.sql.DataFrameReader.$anonfun$load$2(DataFrameReader.scala:211)
+	at scala.Option.getOrElse(Option.scala:189)
+	at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:211)
+	at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:172)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+"
+2025-04-13 18:00:14 - ERROR - Registros não encontrados em "itens_venda"
+
+2025-04-13 18:00:14 - INFO - Iniciando atualização da base "new_data_map"!
+2025-04-13 18:00:15 - INFO - Erro ao limpar MAP TABLE - [Errno 2] No such file or directory: './lab/jobs/new_data/itens_venda/2025-03-01 00:00:00.000'
+2025-04-13 18:00:15 - INFO - Base "new_data_map" atualizada!
+
+2025-04-13 18:00:15 - INFO - Closing down clientserver connection
+Finalizando extração - dom 13 abr 2025 18:00:01 -03
+****************************************************************
+
+
+
+****************************************************************
+Iniciando extração - dom 13 abr 2025 19:00:01 -03
+Warning: Ignoring non-Spark config property: packages
+25/04/13 19:00:04 WARN Utils: Your hostname, cj-OptiPlex-3020 resolves to a loopback address: 127.0.1.1; using 192.168.15.34 instead (on interface enp2s0)
+25/04/13 19:00:04 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/home/cj/.local/lib/python3.10/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/cj/.ivy2/cache
+The jars for the packages stored in: /home/cj/.ivy2/jars
+org.apache.spark#spark-sql-kafka-0-10_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-439f09c7-8ae4-4179-af7d-582f1bc07f5f;1.0
+	confs: [default]
+	found org.apache.spark#spark-sql-kafka-0-10_2.12;3.5.1 in central
+	found org.apache.spark#spark-token-provider-kafka-0-10_2.12;3.5.1 in central
+	found org.apache.kafka#kafka-clients;3.4.1 in central
+	found org.lz4#lz4-java;1.8.0 in central
+	found org.xerial.snappy#snappy-java;1.1.10.3 in central
+	found org.slf4j#slf4j-api;2.0.7 in central
+	found org.apache.hadoop#hadoop-client-runtime;3.3.4 in central
+	found org.apache.hadoop#hadoop-client-api;3.3.4 in central
+	found commons-logging#commons-logging;1.1.3 in central
+	found com.google.code.findbugs#jsr305;3.0.0 in central
+	found org.apache.commons#commons-pool2;2.11.1 in central
+:: resolution report :: resolve 533ms :: artifacts dl 32ms
+	:: modules in use:
+	com.google.code.findbugs#jsr305;3.0.0 from central in [default]
+	commons-logging#commons-logging;1.1.3 from central in [default]
+	org.apache.commons#commons-pool2;2.11.1 from central in [default]
+	org.apache.hadoop#hadoop-client-api;3.3.4 from central in [default]
+	org.apache.hadoop#hadoop-client-runtime;3.3.4 from central in [default]
+	org.apache.kafka#kafka-clients;3.4.1 from central in [default]
+	org.apache.spark#spark-sql-kafka-0-10_2.12;3.5.1 from central in [default]
+	org.apache.spark#spark-token-provider-kafka-0-10_2.12;3.5.1 from central in [default]
+	org.lz4#lz4-java;1.8.0 from central in [default]
+	org.slf4j#slf4j-api;2.0.7 from central in [default]
+	org.xerial.snappy#snappy-java;1.1.10.3 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   11  |   0   |   0   |   0   ||   11  |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-439f09c7-8ae4-4179-af7d-582f1bc07f5f
+	confs: [default]
+	0 artifacts copied, 11 already retrieved (0kB/17ms)
+25/04/13 19:00:05 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/04/13 19:00:06 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+25/04/13 19:00:06 WARN Utils: Service 'SparkUI' could not bind on port 4041. Attempting port 4042.
+25/04/13 19:00:06 WARN Utils: Service 'SparkUI' could not bind on port 4042. Attempting port 4043.
+2025-04-13 19:00:08 - INFO - Iniciando extração da tabela "vendedores"
+[Stage 1:====>                                                     (1 + 5) / 12][Stage 1:========================>                                 (5 + 4) / 12][Stage 1:===========================================>              (9 + 3) / 12]                                                                                2025-04-13 19:00:13 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-13 19:00:13 - INFO - Não ha novos registros em "vendedores"
+
+2025-04-13 19:00:13 - INFO - Iniciando extração da tabela "vendas"
+2025-04-13 19:00:15 - INFO - USER_INFO: Max conn: 3 | Low bound: 25849 | Upper bound: 27288 | Linhas: 1440
+2025-04-13 19:00:15 - ERROR - Não foi possível se conectar ao MYSQL - tabela "vendas"
+"An error occurred while calling o66.load.
+: java.lang.ClassNotFoundException: com.mysql.cj.jdbc.Driver
+	at java.base/java.net.URLClassLoader.findClass(URLClassLoader.java:476)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:594)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:527)
+	at org.apache.spark.sql.execution.datasources.jdbc.DriverRegistry$.register(DriverRegistry.scala:46)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.$anonfun$driverClass$1(JDBCOptions.scala:103)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.$anonfun$driverClass$1$adapted(JDBCOptions.scala:103)
+	at scala.Option.foreach(Option.scala:407)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.<init>(JDBCOptions.scala:103)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.<init>(JDBCOptions.scala:41)
+	at org.apache.spark.sql.execution.datasources.jdbc.JdbcRelationProvider.createRelation(JdbcRelationProvider.scala:34)
+	at org.apache.spark.sql.execution.datasources.DataSource.resolveRelation(DataSource.scala:346)
+	at org.apache.spark.sql.DataFrameReader.loadV1Source(DataFrameReader.scala:229)
+	at org.apache.spark.sql.DataFrameReader.$anonfun$load$2(DataFrameReader.scala:211)
+	at scala.Option.getOrElse(Option.scala:189)
+	at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:211)
+	at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:172)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+"
+2025-04-13 19:00:15 - ERROR - Registros não encontrados em "vendas"
+
+2025-04-13 19:00:15 - INFO - Iniciando extração da tabela "produtos"
+2025-04-13 19:00:16 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-13 19:00:16 - INFO - Não ha novos registros em "produtos"
+
+2025-04-13 19:00:16 - INFO - Iniciando extração da tabela "clientes"
+2025-04-13 19:00:16 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-13 19:00:16 - INFO - Não ha novos registros em "clientes"
+
+2025-04-13 19:00:16 - INFO - Iniciando extração da tabela "itens_venda"
+2025-04-13 19:00:17 - INFO - USER_INFO: Max conn: 3 | Low bound: 25850 | Upper bound: 27288 | Linhas: 1439
+2025-04-13 19:00:17 - ERROR - Não foi possível se conectar ao MYSQL - tabela "itens_venda"
+"An error occurred while calling o117.load.
+: java.lang.ClassNotFoundException: com.mysql.cj.jdbc.Driver
+	at java.base/java.net.URLClassLoader.findClass(URLClassLoader.java:476)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:594)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:527)
+	at org.apache.spark.sql.execution.datasources.jdbc.DriverRegistry$.register(DriverRegistry.scala:46)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.$anonfun$driverClass$1(JDBCOptions.scala:103)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.$anonfun$driverClass$1$adapted(JDBCOptions.scala:103)
+	at scala.Option.foreach(Option.scala:407)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.<init>(JDBCOptions.scala:103)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.<init>(JDBCOptions.scala:41)
+	at org.apache.spark.sql.execution.datasources.jdbc.JdbcRelationProvider.createRelation(JdbcRelationProvider.scala:34)
+	at org.apache.spark.sql.execution.datasources.DataSource.resolveRelation(DataSource.scala:346)
+	at org.apache.spark.sql.DataFrameReader.loadV1Source(DataFrameReader.scala:229)
+	at org.apache.spark.sql.DataFrameReader.$anonfun$load$2(DataFrameReader.scala:211)
+	at scala.Option.getOrElse(Option.scala:189)
+	at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:211)
+	at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:172)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+"
+2025-04-13 19:00:17 - ERROR - Registros não encontrados em "itens_venda"
+
+2025-04-13 19:00:17 - INFO - Iniciando atualização da base "new_data_map"!
+2025-04-13 19:00:19 - INFO - Erro ao limpar MAP TABLE - [Errno 2] No such file or directory: './lab/jobs/new_data/itens_venda/2025-03-01 00:00:00.000'
+2025-04-13 19:00:19 - INFO - Base "new_data_map" atualizada!
+
+2025-04-13 19:00:19 - INFO - Closing down clientserver connection
+Finalizando extração - dom 13 abr 2025 19:00:01 -03
+****************************************************************
+
+
+
+****************************************************************
+Iniciando extração - dom 13 abr 2025 20:00:01 -03
+Warning: Ignoring non-Spark config property: packages
+25/04/13 20:00:03 WARN Utils: Your hostname, cj-OptiPlex-3020 resolves to a loopback address: 127.0.1.1; using 172.18.0.1 instead (on interface br-1602a4c2a591)
+25/04/13 20:00:03 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/home/cj/.local/lib/python3.10/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/cj/.ivy2/cache
+The jars for the packages stored in: /home/cj/.ivy2/jars
+org.apache.spark#spark-sql-kafka-0-10_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-51645e4a-2b3d-47cd-a2bc-f831c55ffd9d;1.0
+	confs: [default]
+	found org.apache.spark#spark-sql-kafka-0-10_2.12;3.5.1 in central
+	found org.apache.spark#spark-token-provider-kafka-0-10_2.12;3.5.1 in central
+	found org.apache.kafka#kafka-clients;3.4.1 in central
+	found org.lz4#lz4-java;1.8.0 in central
+	found org.xerial.snappy#snappy-java;1.1.10.3 in central
+	found org.slf4j#slf4j-api;2.0.7 in central
+	found org.apache.hadoop#hadoop-client-runtime;3.3.4 in central
+	found org.apache.hadoop#hadoop-client-api;3.3.4 in central
+	found commons-logging#commons-logging;1.1.3 in central
+	found com.google.code.findbugs#jsr305;3.0.0 in central
+	found org.apache.commons#commons-pool2;2.11.1 in central
+:: resolution report :: resolve 805ms :: artifacts dl 22ms
+	:: modules in use:
+	com.google.code.findbugs#jsr305;3.0.0 from central in [default]
+	commons-logging#commons-logging;1.1.3 from central in [default]
+	org.apache.commons#commons-pool2;2.11.1 from central in [default]
+	org.apache.hadoop#hadoop-client-api;3.3.4 from central in [default]
+	org.apache.hadoop#hadoop-client-runtime;3.3.4 from central in [default]
+	org.apache.kafka#kafka-clients;3.4.1 from central in [default]
+	org.apache.spark#spark-sql-kafka-0-10_2.12;3.5.1 from central in [default]
+	org.apache.spark#spark-token-provider-kafka-0-10_2.12;3.5.1 from central in [default]
+	org.lz4#lz4-java;1.8.0 from central in [default]
+	org.slf4j#slf4j-api;2.0.7 from central in [default]
+	org.xerial.snappy#snappy-java;1.1.10.3 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   11  |   0   |   0   |   0   ||   11  |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-51645e4a-2b3d-47cd-a2bc-f831c55ffd9d
+	confs: [default]
+	0 artifacts copied, 11 already retrieved (0kB/8ms)
+25/04/13 20:00:05 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/04/13 20:00:06 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+25/04/13 20:00:06 WARN Utils: Service 'SparkUI' could not bind on port 4041. Attempting port 4042.
+25/04/13 20:00:06 WARN Utils: Service 'SparkUI' could not bind on port 4042. Attempting port 4043.
+2025-04-13 20:00:08 - INFO - Iniciando extração da tabela "vendedores"
+[Stage 0:>                                                          (0 + 1) / 1]                                                                                [Stage 1:>                                                         (0 + 4) / 12][Stage 1:>                                                         (0 + 5) / 12][Stage 1:==============>                                           (3 + 4) / 12][Stage 1:========================>                                 (5 + 4) / 12][Stage 1:=============================>                            (6 + 4) / 12][Stage 1:======================================>                   (8 + 4) / 12]                                                                                [Stage 2:=========>                                                (2 + 4) / 12][Stage 2:===================>                                      (4 + 4) / 12][Stage 2:======================================>                   (8 + 4) / 12][Stage 2:===============================================>         (10 + 2) / 12]                                                                                2025-04-13 20:00:18 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-13 20:00:18 - INFO - Não ha novos registros em "vendedores"
+
+2025-04-13 20:00:18 - INFO - Iniciando extração da tabela "vendas"
+[Stage 6:===================>                                      (4 + 4) / 12][Stage 6:======================================>                   (8 + 4) / 12][Stage 6:===============================================>         (10 + 2) / 12]                                                                                [Stage 7:==============>                                           (3 + 4) / 12][Stage 7:=============================>                            (6 + 4) / 12][Stage 7:===============================================>         (10 + 2) / 12]                                                                                2025-04-13 20:00:21 - INFO - USER_INFO: Max conn: 3 | Low bound: 25849 | Upper bound: 28008 | Linhas: 2160
+2025-04-13 20:00:21 - ERROR - Não foi possível se conectar ao MYSQL - tabela "vendas"
+"An error occurred while calling o66.load.
+: java.lang.ClassNotFoundException: com.mysql.cj.jdbc.Driver
+	at java.base/java.net.URLClassLoader.findClass(URLClassLoader.java:476)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:594)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:527)
+	at org.apache.spark.sql.execution.datasources.jdbc.DriverRegistry$.register(DriverRegistry.scala:46)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.$anonfun$driverClass$1(JDBCOptions.scala:103)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.$anonfun$driverClass$1$adapted(JDBCOptions.scala:103)
+	at scala.Option.foreach(Option.scala:407)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.<init>(JDBCOptions.scala:103)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.<init>(JDBCOptions.scala:41)
+	at org.apache.spark.sql.execution.datasources.jdbc.JdbcRelationProvider.createRelation(JdbcRelationProvider.scala:34)
+	at org.apache.spark.sql.execution.datasources.DataSource.resolveRelation(DataSource.scala:346)
+	at org.apache.spark.sql.DataFrameReader.loadV1Source(DataFrameReader.scala:229)
+	at org.apache.spark.sql.DataFrameReader.$anonfun$load$2(DataFrameReader.scala:211)
+	at scala.Option.getOrElse(Option.scala:189)
+	at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:211)
+	at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:172)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+"
+2025-04-13 20:00:21 - ERROR - Registros não encontrados em "vendas"
+
+2025-04-13 20:00:21 - INFO - Iniciando extração da tabela "produtos"
+[Stage 11:=================================>                       (7 + 4) / 12]                                                                                [Stage 12:======================================>                  (8 + 4) / 12]                                                                                2025-04-13 20:00:23 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-13 20:00:23 - INFO - Não ha novos registros em "produtos"
+
+2025-04-13 20:00:23 - INFO - Iniciando extração da tabela "clientes"
+[Stage 16:===================================================>    (11 + 1) / 12]                                                                                [Stage 17:==============================================>         (10 + 2) / 12]                                                                                2025-04-13 20:00:25 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-13 20:00:25 - INFO - Não ha novos registros em "clientes"
+
+2025-04-13 20:00:25 - INFO - Iniciando extração da tabela "itens_venda"
+[Stage 21:======================================>                  (8 + 4) / 12]                                                                                [Stage 22:==============================================>         (10 + 2) / 12]                                                                                2025-04-13 20:00:27 - INFO - USER_INFO: Max conn: 3 | Low bound: 25850 | Upper bound: 28009 | Linhas: 2160
+2025-04-13 20:00:27 - ERROR - Não foi possível se conectar ao MYSQL - tabela "itens_venda"
+"An error occurred while calling o117.load.
+: java.lang.ClassNotFoundException: com.mysql.cj.jdbc.Driver
+	at java.base/java.net.URLClassLoader.findClass(URLClassLoader.java:476)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:594)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:527)
+	at org.apache.spark.sql.execution.datasources.jdbc.DriverRegistry$.register(DriverRegistry.scala:46)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.$anonfun$driverClass$1(JDBCOptions.scala:103)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.$anonfun$driverClass$1$adapted(JDBCOptions.scala:103)
+	at scala.Option.foreach(Option.scala:407)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.<init>(JDBCOptions.scala:103)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.<init>(JDBCOptions.scala:41)
+	at org.apache.spark.sql.execution.datasources.jdbc.JdbcRelationProvider.createRelation(JdbcRelationProvider.scala:34)
+	at org.apache.spark.sql.execution.datasources.DataSource.resolveRelation(DataSource.scala:346)
+	at org.apache.spark.sql.DataFrameReader.loadV1Source(DataFrameReader.scala:229)
+	at org.apache.spark.sql.DataFrameReader.$anonfun$load$2(DataFrameReader.scala:211)
+	at scala.Option.getOrElse(Option.scala:189)
+	at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:211)
+	at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:172)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+"
+2025-04-13 20:00:27 - ERROR - Registros não encontrados em "itens_venda"
+
+2025-04-13 20:00:27 - INFO - Iniciando atualização da base "new_data_map"!
+[Stage 27:============================>                            (6 + 4) / 12]                                                                                [Stage 28:==========================================>              (9 + 3) / 12]                                                                                2025-04-13 20:00:29 - INFO - Erro ao limpar MAP TABLE - [Errno 2] No such file or directory: './lab/jobs/new_data/itens_venda/2025-03-01 00:00:00.000'
+2025-04-13 20:00:29 - INFO - Base "new_data_map" atualizada!
+
+2025-04-13 20:00:29 - INFO - Closing down clientserver connection
+Finalizando extração - dom 13 abr 2025 20:00:01 -03
+****************************************************************
+
+
+
+****************************************************************
+Iniciando extração - dom 13 abr 2025 21:00:01 -03
+Warning: Ignoring non-Spark config property: packages
+25/04/13 21:00:04 WARN Utils: Your hostname, cj-OptiPlex-3020 resolves to a loopback address: 127.0.1.1; using 172.18.0.1 instead (on interface br-1602a4c2a591)
+25/04/13 21:00:04 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/home/cj/.local/lib/python3.10/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/cj/.ivy2/cache
+The jars for the packages stored in: /home/cj/.ivy2/jars
+org.apache.spark#spark-sql-kafka-0-10_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-54e1c914-d9c0-4b25-824b-e25774b0e866;1.0
+	confs: [default]
+	found org.apache.spark#spark-sql-kafka-0-10_2.12;3.5.1 in central
+	found org.apache.spark#spark-token-provider-kafka-0-10_2.12;3.5.1 in central
+	found org.apache.kafka#kafka-clients;3.4.1 in central
+	found org.lz4#lz4-java;1.8.0 in central
+	found org.xerial.snappy#snappy-java;1.1.10.3 in central
+	found org.slf4j#slf4j-api;2.0.7 in central
+	found org.apache.hadoop#hadoop-client-runtime;3.3.4 in central
+	found org.apache.hadoop#hadoop-client-api;3.3.4 in central
+	found commons-logging#commons-logging;1.1.3 in central
+	found com.google.code.findbugs#jsr305;3.0.0 in central
+	found org.apache.commons#commons-pool2;2.11.1 in central
+:: resolution report :: resolve 608ms :: artifacts dl 21ms
+	:: modules in use:
+	com.google.code.findbugs#jsr305;3.0.0 from central in [default]
+	commons-logging#commons-logging;1.1.3 from central in [default]
+	org.apache.commons#commons-pool2;2.11.1 from central in [default]
+	org.apache.hadoop#hadoop-client-api;3.3.4 from central in [default]
+	org.apache.hadoop#hadoop-client-runtime;3.3.4 from central in [default]
+	org.apache.kafka#kafka-clients;3.4.1 from central in [default]
+	org.apache.spark#spark-sql-kafka-0-10_2.12;3.5.1 from central in [default]
+	org.apache.spark#spark-token-provider-kafka-0-10_2.12;3.5.1 from central in [default]
+	org.lz4#lz4-java;1.8.0 from central in [default]
+	org.slf4j#slf4j-api;2.0.7 from central in [default]
+	org.xerial.snappy#snappy-java;1.1.10.3 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   11  |   0   |   0   |   0   ||   11  |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-54e1c914-d9c0-4b25-824b-e25774b0e866
+	confs: [default]
+	0 artifacts copied, 11 already retrieved (0kB/10ms)
+25/04/13 21:00:05 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/04/13 21:00:06 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+25/04/13 21:00:06 WARN Utils: Service 'SparkUI' could not bind on port 4041. Attempting port 4042.
+25/04/13 21:00:06 WARN Utils: Service 'SparkUI' could not bind on port 4042. Attempting port 4043.
+25/04/13 21:00:06 WARN Utils: Service 'SparkUI' could not bind on port 4043. Attempting port 4044.
+2025-04-13 21:00:08 - INFO - Iniciando extração da tabela "vendedores"
+[Stage 0:>                                                          (0 + 1) / 1]                                                                                [Stage 1:>                                                         (0 + 4) / 12][Stage 1:>                                                         (0 + 5) / 12][Stage 1:==============>                                           (3 + 4) / 12][Stage 1:=============================>                            (6 + 4) / 12][Stage 1:===============================================>         (10 + 2) / 12]                                                                                [Stage 2:===================>                                      (4 + 4) / 12][Stage 2:=============================>                            (6 + 4) / 12][Stage 2:===============================================>         (10 + 2) / 12]                                                                                2025-04-13 21:00:16 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-13 21:00:16 - INFO - Não ha novos registros em "vendedores"
+
+2025-04-13 21:00:16 - INFO - Iniciando extração da tabela "vendas"
+[Stage 6:=================================>                        (7 + 4) / 12][Stage 6:===============================================>         (10 + 2) / 12]                                                                                [Stage 7:========================>                                 (5 + 4) / 12][Stage 7:===========================================>              (9 + 3) / 12]                                                                                2025-04-13 21:00:19 - INFO - USER_INFO: Max conn: 3 | Low bound: 25849 | Upper bound: 28727 | Linhas: 2879
+2025-04-13 21:00:19 - ERROR - Não foi possível se conectar ao MYSQL - tabela "vendas"
+"An error occurred while calling o66.load.
+: java.lang.ClassNotFoundException: com.mysql.cj.jdbc.Driver
+	at java.base/java.net.URLClassLoader.findClass(URLClassLoader.java:476)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:594)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:527)
+	at org.apache.spark.sql.execution.datasources.jdbc.DriverRegistry$.register(DriverRegistry.scala:46)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.$anonfun$driverClass$1(JDBCOptions.scala:103)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.$anonfun$driverClass$1$adapted(JDBCOptions.scala:103)
+	at scala.Option.foreach(Option.scala:407)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.<init>(JDBCOptions.scala:103)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.<init>(JDBCOptions.scala:41)
+	at org.apache.spark.sql.execution.datasources.jdbc.JdbcRelationProvider.createRelation(JdbcRelationProvider.scala:34)
+	at org.apache.spark.sql.execution.datasources.DataSource.resolveRelation(DataSource.scala:346)
+	at org.apache.spark.sql.DataFrameReader.loadV1Source(DataFrameReader.scala:229)
+	at org.apache.spark.sql.DataFrameReader.$anonfun$load$2(DataFrameReader.scala:211)
+	at scala.Option.getOrElse(Option.scala:189)
+	at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:211)
+	at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:172)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+"
+2025-04-13 21:00:19 - ERROR - Registros não encontrados em "vendas"
+
+2025-04-13 21:00:19 - INFO - Iniciando extração da tabela "produtos"
+[Stage 12:==============================================>         (10 + 2) / 12]                                                                                2025-04-13 21:00:21 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-13 21:00:21 - INFO - Não ha novos registros em "produtos"
+
+2025-04-13 21:00:21 - INFO - Iniciando extração da tabela "clientes"
+[Stage 16:==========================================>              (9 + 3) / 12]                                                                                [Stage 17:==============================================>         (10 + 2) / 12]                                                                                2025-04-13 21:00:22 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-13 21:00:22 - INFO - Não ha novos registros em "clientes"
+
+2025-04-13 21:00:22 - INFO - Iniciando extração da tabela "itens_venda"
+[Stage 22:======================================>                  (8 + 4) / 12]                                                                                2025-04-13 21:00:24 - INFO - USER_INFO: Max conn: 3 | Low bound: 25850 | Upper bound: 28728 | Linhas: 2879
+2025-04-13 21:00:24 - ERROR - Não foi possível se conectar ao MYSQL - tabela "itens_venda"
+"An error occurred while calling o117.load.
+: java.lang.ClassNotFoundException: com.mysql.cj.jdbc.Driver
+	at java.base/java.net.URLClassLoader.findClass(URLClassLoader.java:476)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:594)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:527)
+	at org.apache.spark.sql.execution.datasources.jdbc.DriverRegistry$.register(DriverRegistry.scala:46)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.$anonfun$driverClass$1(JDBCOptions.scala:103)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.$anonfun$driverClass$1$adapted(JDBCOptions.scala:103)
+	at scala.Option.foreach(Option.scala:407)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.<init>(JDBCOptions.scala:103)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.<init>(JDBCOptions.scala:41)
+	at org.apache.spark.sql.execution.datasources.jdbc.JdbcRelationProvider.createRelation(JdbcRelationProvider.scala:34)
+	at org.apache.spark.sql.execution.datasources.DataSource.resolveRelation(DataSource.scala:346)
+	at org.apache.spark.sql.DataFrameReader.loadV1Source(DataFrameReader.scala:229)
+	at org.apache.spark.sql.DataFrameReader.$anonfun$load$2(DataFrameReader.scala:211)
+	at scala.Option.getOrElse(Option.scala:189)
+	at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:211)
+	at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:172)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+"
+2025-04-13 21:00:24 - ERROR - Registros não encontrados em "itens_venda"
+
+2025-04-13 21:00:24 - INFO - Iniciando atualização da base "new_data_map"!
+[Stage 27:===================================================>    (11 + 1) / 12]                                                                                [Stage 28:======================================>                  (8 + 4) / 12]                                                                                2025-04-13 21:00:26 - INFO - Erro ao limpar MAP TABLE - [Errno 2] No such file or directory: './lab/jobs/new_data/itens_venda/2025-03-01 00:00:00.000'
+2025-04-13 21:00:26 - INFO - Base "new_data_map" atualizada!
+
+2025-04-13 21:00:26 - INFO - Closing down clientserver connection
+Finalizando extração - dom 13 abr 2025 21:00:01 -03
+****************************************************************
+
+
+
+****************************************************************
+Iniciando extração - dom 13 abr 2025 22:00:01 -03
+Warning: Ignoring non-Spark config property: packages
+25/04/13 22:00:04 WARN Utils: Your hostname, cj-OptiPlex-3020 resolves to a loopback address: 127.0.1.1; using 172.18.0.1 instead (on interface br-1602a4c2a591)
+25/04/13 22:00:04 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/home/cj/.local/lib/python3.10/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/cj/.ivy2/cache
+The jars for the packages stored in: /home/cj/.ivy2/jars
+org.apache.spark#spark-sql-kafka-0-10_2.12 added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-e7ac3fdd-43aa-4064-ad40-1b0ed079a96a;1.0
+	confs: [default]
+	found org.apache.spark#spark-sql-kafka-0-10_2.12;3.5.1 in central
+	found org.apache.spark#spark-token-provider-kafka-0-10_2.12;3.5.1 in central
+	found org.apache.kafka#kafka-clients;3.4.1 in central
+	found org.lz4#lz4-java;1.8.0 in central
+	found org.xerial.snappy#snappy-java;1.1.10.3 in central
+	found org.slf4j#slf4j-api;2.0.7 in central
+	found org.apache.hadoop#hadoop-client-runtime;3.3.4 in central
+	found org.apache.hadoop#hadoop-client-api;3.3.4 in central
+	found commons-logging#commons-logging;1.1.3 in central
+	found com.google.code.findbugs#jsr305;3.0.0 in central
+	found org.apache.commons#commons-pool2;2.11.1 in central
+:: resolution report :: resolve 697ms :: artifacts dl 17ms
+	:: modules in use:
+	com.google.code.findbugs#jsr305;3.0.0 from central in [default]
+	commons-logging#commons-logging;1.1.3 from central in [default]
+	org.apache.commons#commons-pool2;2.11.1 from central in [default]
+	org.apache.hadoop#hadoop-client-api;3.3.4 from central in [default]
+	org.apache.hadoop#hadoop-client-runtime;3.3.4 from central in [default]
+	org.apache.kafka#kafka-clients;3.4.1 from central in [default]
+	org.apache.spark#spark-sql-kafka-0-10_2.12;3.5.1 from central in [default]
+	org.apache.spark#spark-token-provider-kafka-0-10_2.12;3.5.1 from central in [default]
+	org.lz4#lz4-java;1.8.0 from central in [default]
+	org.slf4j#slf4j-api;2.0.7 from central in [default]
+	org.xerial.snappy#snappy-java;1.1.10.3 from central in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   11  |   0   |   0   |   0   ||   11  |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-e7ac3fdd-43aa-4064-ad40-1b0ed079a96a
+	confs: [default]
+	0 artifacts copied, 11 already retrieved (0kB/8ms)
+25/04/13 22:00:06 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/04/13 22:00:08 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+25/04/13 22:00:08 WARN Utils: Service 'SparkUI' could not bind on port 4041. Attempting port 4042.
+25/04/13 22:00:08 WARN Utils: Service 'SparkUI' could not bind on port 4042. Attempting port 4043.
+25/04/13 22:00:08 WARN Utils: Service 'SparkUI' could not bind on port 4043. Attempting port 4044.
+2025-04-13 22:00:10 - INFO - Iniciando extração da tabela "vendedores"
+[Stage 0:>                                                          (0 + 1) / 1]                                                                                [Stage 1:>                                                         (0 + 4) / 12][Stage 1:=========>                                                (2 + 4) / 12][Stage 1:==============>                                           (3 + 4) / 12][Stage 1:========================>                                 (5 + 4) / 12][Stage 1:=============================>                            (6 + 4) / 12][Stage 1:===========================================>              (9 + 3) / 12]                                                                                [Stage 2:>                                                         (0 + 4) / 12][Stage 2:===================>                                      (4 + 4) / 12][Stage 2:=============================>                            (6 + 5) / 12][Stage 2:===========================================>              (9 + 3) / 12]                                                                                2025-04-13 22:00:20 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-13 22:00:20 - INFO - Não ha novos registros em "vendedores"
+
+2025-04-13 22:00:20 - INFO - Iniciando extração da tabela "vendas"
+[Stage 6:===================>                                      (4 + 4) / 12][Stage 6:=============================>                            (6 + 4) / 12]                                                                                [Stage 7:===================>                                      (4 + 4) / 12][Stage 7:======================================>                   (8 + 4) / 12]                                                                                2025-04-13 22:00:23 - INFO - USER_INFO: Max conn: 3 | Low bound: 25849 | Upper bound: 29447 | Linhas: 3599
+2025-04-13 22:00:23 - ERROR - Não foi possível se conectar ao MYSQL - tabela "vendas"
+"An error occurred while calling o66.load.
+: java.lang.ClassNotFoundException: com.mysql.cj.jdbc.Driver
+	at java.base/java.net.URLClassLoader.findClass(URLClassLoader.java:476)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:594)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:527)
+	at org.apache.spark.sql.execution.datasources.jdbc.DriverRegistry$.register(DriverRegistry.scala:46)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.$anonfun$driverClass$1(JDBCOptions.scala:103)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.$anonfun$driverClass$1$adapted(JDBCOptions.scala:103)
+	at scala.Option.foreach(Option.scala:407)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.<init>(JDBCOptions.scala:103)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.<init>(JDBCOptions.scala:41)
+	at org.apache.spark.sql.execution.datasources.jdbc.JdbcRelationProvider.createRelation(JdbcRelationProvider.scala:34)
+	at org.apache.spark.sql.execution.datasources.DataSource.resolveRelation(DataSource.scala:346)
+	at org.apache.spark.sql.DataFrameReader.loadV1Source(DataFrameReader.scala:229)
+	at org.apache.spark.sql.DataFrameReader.$anonfun$load$2(DataFrameReader.scala:211)
+	at scala.Option.getOrElse(Option.scala:189)
+	at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:211)
+	at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:172)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+"
+2025-04-13 22:00:23 - ERROR - Registros não encontrados em "vendas"
+
+2025-04-13 22:00:23 - INFO - Iniciando extração da tabela "produtos"
+[Stage 11:======================================>                  (8 + 4) / 12]                                                                                [Stage 12:==============================================>         (10 + 2) / 12]                                                                                2025-04-13 22:00:25 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-13 22:00:25 - INFO - Não ha novos registros em "produtos"
+
+2025-04-13 22:00:25 - INFO - Iniciando extração da tabela "clientes"
+[Stage 17:======================================>                  (8 + 4) / 12]                                                                                2025-04-13 22:00:26 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-13 22:00:26 - INFO - Não ha novos registros em "clientes"
+
+2025-04-13 22:00:26 - INFO - Iniciando extração da tabela "itens_venda"
+[Stage 21:===================>                                     (4 + 4) / 12][Stage 21:==========================================>              (9 + 3) / 12]                                                                                [Stage 22:=======================>                                 (5 + 4) / 12][Stage 22:==============================================>         (10 + 2) / 12]                                                                                2025-04-13 22:00:28 - INFO - USER_INFO: Max conn: 3 | Low bound: 25850 | Upper bound: 29448 | Linhas: 3599
+2025-04-13 22:00:28 - ERROR - Não foi possível se conectar ao MYSQL - tabela "itens_venda"
+"An error occurred while calling o117.load.
+: java.lang.ClassNotFoundException: com.mysql.cj.jdbc.Driver
+	at java.base/java.net.URLClassLoader.findClass(URLClassLoader.java:476)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:594)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:527)
+	at org.apache.spark.sql.execution.datasources.jdbc.DriverRegistry$.register(DriverRegistry.scala:46)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.$anonfun$driverClass$1(JDBCOptions.scala:103)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.$anonfun$driverClass$1$adapted(JDBCOptions.scala:103)
+	at scala.Option.foreach(Option.scala:407)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.<init>(JDBCOptions.scala:103)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCOptions.<init>(JDBCOptions.scala:41)
+	at org.apache.spark.sql.execution.datasources.jdbc.JdbcRelationProvider.createRelation(JdbcRelationProvider.scala:34)
+	at org.apache.spark.sql.execution.datasources.DataSource.resolveRelation(DataSource.scala:346)
+	at org.apache.spark.sql.DataFrameReader.loadV1Source(DataFrameReader.scala:229)
+	at org.apache.spark.sql.DataFrameReader.$anonfun$load$2(DataFrameReader.scala:211)
+	at scala.Option.getOrElse(Option.scala:189)
+	at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:211)
+	at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:172)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:374)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+"
+2025-04-13 22:00:28 - ERROR - Registros não encontrados em "itens_venda"
+
+2025-04-13 22:00:28 - INFO - Iniciando atualização da base "new_data_map"!
+[Stage 27:===================>                                     (4 + 4) / 12][Stage 27:======================================>                  (8 + 4) / 12]                                                                                [Stage 28:==============================================>         (10 + 2) / 12]                                                                                2025-04-13 22:00:31 - INFO - Erro ao limpar MAP TABLE - [Errno 2] No such file or directory: './lab/jobs/new_data/itens_venda/2025-03-01 00:00:00.000'
+2025-04-13 22:00:31 - INFO - Base "new_data_map" atualizada!
+
+2025-04-13 22:00:31 - INFO - Closing down clientserver connection
+Finalizando extração - dom 13 abr 2025 22:00:01 -03
+****************************************************************
+
+
+
+****************************************************************
+Iniciando extração - dom 13 abr 2025 23:00:01 -03
+Traceback (most recent call last):
+  File "/home/cj/lisarb_jc/lab/jobs/main.py", line 3, in <module>
+    from src.extrator import Extrator
+  File "/home/cj/lisarb_jc/lab/jobs/src/extrator.py", line 8, in <module>
+    class Extrator:
+  File "/home/cj/lisarb_jc/lab/jobs/src/extrator.py", line 9, in Extrator
+    print('EEEEEEEEEEEEEEEEEEE:', os.environ['PYSPARK_SUBMIT_ARGS'])
+  File "/usr/lib/python3.10/os.py", line 680, in __getitem__
+    raise KeyError(key) from None
+KeyError: 'PYSPARK_SUBMIT_ARGS'
+Finalizando extração - dom 13 abr 2025 23:00:01 -03
+****************************************************************
+
+
+
+****************************************************************
+Iniciando extração - seg 14 abr 2025 18:00:01 -03
+Warning: Ignoring non-Spark config property: packages
+25/04/14 18:00:04 WARN Utils: Your hostname, cj-OptiPlex-3020 resolves to a loopback address: 127.0.1.1; using 192.168.15.34 instead (on interface enp2s0)
+25/04/14 18:00:04 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/home/cj/.local/lib/python3.10/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/cj/.ivy2/cache
+The jars for the packages stored in: /home/cj/.ivy2/jars
+mysql#mysql-connector-java added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-5f9ebce1-e5b2-4370-8312-c69c14d12d37;1.0
+	confs: [default]
+	found mysql#mysql-connector-java;8.0.11 in spark-list
+	found com.google.protobuf#protobuf-java;2.6.0 in central
+:: resolution report :: resolve 325ms :: artifacts dl 16ms
+	:: modules in use:
+	com.google.protobuf#protobuf-java;2.6.0 from central in [default]
+	mysql#mysql-connector-java;8.0.11 from spark-list in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   2   |   0   |   0   |   0   ||   2   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-5f9ebce1-e5b2-4370-8312-c69c14d12d37
+	confs: [default]
+	0 artifacts copied, 2 already retrieved (0kB/5ms)
+25/04/14 18:00:05 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/04/14 18:00:07 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+25/04/14 18:00:07 WARN Utils: Service 'SparkUI' could not bind on port 4041. Attempting port 4042.
+2025-04-14 18:00:08 - INFO - Iniciando extração da tabela "vendedores"
+2025-04-14 18:00:10 - INFO - Datetime considerado "2025-03-01 00:00:00.000" para "./new_data/vendedores" - [PATH_NOT_FOUND] Path does not exist: file:/home/cj/new_data/new_data_map.
+2025-04-14 18:00:10 - INFO - USER_INFO: Max conn: 3 | Low bound: 1 | Upper bound: 10 | Linhas: 10
+[Stage 0:>                                                          (0 + 2) / 3]                                                                                [Stage 3:>                                                          (0 + 2) / 3][Stage 3:=======================================>                   (2 + 1) / 3]                                                                                2025-04-14 18:00:16 - INFO - "./new_data/vendedores/2025-04-13 22:43:36" salvo com sucesso!
+[Stage 4:>                                                          (0 + 2) / 2]                                                                                2025-04-14 18:00:18 - INFO - Extração da tabela "vendedores" concluída!
+
+2025-04-14 18:00:18 - INFO - Iniciando extração da tabela "vendas"
+2025-04-14 18:00:19 - INFO - Datetime considerado "2025-03-01 00:00:00.000" para "./new_data/vendas" - list index out of range
+2025-04-14 18:00:19 - INFO - USER_INFO: Max conn: 3 | Low bound: 1 | Upper bound: 502 | Linhas: 502
+2025-04-14 18:00:20 - INFO - "./new_data/vendas/2025-04-14 18:00:18" salvo com sucesso!
+2025-04-14 18:00:21 - INFO - Extração da tabela "vendas" concluída!
+
+2025-04-14 18:00:21 - INFO - Iniciando extração da tabela "produtos"
+2025-04-14 18:00:21 - INFO - Datetime considerado "2025-03-01 00:00:00.000" para "./new_data/produtos" - list index out of range
+2025-04-14 18:00:21 - INFO - USER_INFO: Max conn: 3 | Low bound: 1 | Upper bound: 10 | Linhas: 10
+2025-04-14 18:00:22 - INFO - "./new_data/produtos/2025-04-13 22:43:36" salvo com sucesso!
+2025-04-14 18:00:22 - INFO - Extração da tabela "produtos" concluída!
+
+2025-04-14 18:00:22 - INFO - Iniciando extração da tabela "clientes"
+2025-04-14 18:00:23 - INFO - Datetime considerado "2025-03-01 00:00:00.000" para "./new_data/clientes" - list index out of range
+2025-04-14 18:00:23 - INFO - USER_INFO: Max conn: 3 | Low bound: 1 | Upper bound: 250 | Linhas: 250
+2025-04-14 18:00:24 - INFO - "./new_data/clientes/2025-04-13 22:43:36" salvo com sucesso!
+2025-04-14 18:00:24 - INFO - Extração da tabela "clientes" concluída!
+
+2025-04-14 18:00:24 - INFO - Iniciando extração da tabela "itens_venda"
+2025-04-14 18:00:25 - INFO - Datetime considerado "2025-03-01 00:00:00.000" para "./new_data/itens_venda" - list index out of range
+2025-04-14 18:00:25 - INFO - USER_INFO: Max conn: 3 | Low bound: 1 | Upper bound: 503 | Linhas: 503
+2025-04-14 18:00:25 - INFO - "./new_data/itens_venda/2025-04-14 18:00:23" salvo com sucesso!
+2025-04-14 18:00:26 - INFO - Extração da tabela "itens_venda" concluída!
+
+2025-04-14 18:00:26 - INFO - Iniciando atualização da base "new_data_map"!
+2025-04-14 18:00:28 - INFO - Base "new_data_map" atualizada!
+
+2025-04-14 18:00:28 - INFO - Closing down clientserver connection
+Finalizando extração - seg 14 abr 2025 18:00:01 -03
+****************************************************************
+
+
+
+****************************************************************
+Iniciando extração - seg 14 abr 2025 19:00:01 -03
+Warning: Ignoring non-Spark config property: packages
+25/04/14 19:00:04 WARN Utils: Your hostname, cj-OptiPlex-3020 resolves to a loopback address: 127.0.1.1; using 172.17.0.1 instead (on interface docker0)
+25/04/14 19:00:04 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/home/cj/.local/lib/python3.10/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/cj/.ivy2/cache
+The jars for the packages stored in: /home/cj/.ivy2/jars
+mysql#mysql-connector-java added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-eaa1b07c-8bb2-4827-bca3-1f1b201b708d;1.0
+	confs: [default]
+	found mysql#mysql-connector-java;8.0.11 in spark-list
+	found com.google.protobuf#protobuf-java;2.6.0 in central
+:: resolution report :: resolve 221ms :: artifacts dl 12ms
+	:: modules in use:
+	com.google.protobuf#protobuf-java;2.6.0 from central in [default]
+	mysql#mysql-connector-java;8.0.11 from spark-list in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   2   |   0   |   0   |   0   ||   2   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-eaa1b07c-8bb2-4827-bca3-1f1b201b708d
+	confs: [default]
+	0 artifacts copied, 2 already retrieved (0kB/8ms)
+25/04/14 19:00:05 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/04/14 19:00:06 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+25/04/14 19:00:06 WARN Utils: Service 'SparkUI' could not bind on port 4041. Attempting port 4042.
+25/04/14 19:00:06 WARN Utils: Service 'SparkUI' could not bind on port 4042. Attempting port 4043.
+2025-04-14 19:00:07 - INFO - Iniciando extração da tabela "vendedores"
+[Stage 0:>                                                          (0 + 1) / 1]                                                                                [Stage 1:>                                                          (0 + 1) / 1]                                                                                2025-04-14 19:00:15 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-14 19:00:15 - INFO - Não ha novos registros em "vendedores"
+
+2025-04-14 19:00:15 - INFO - Iniciando extração da tabela "vendas"
+2025-04-14 19:00:16 - INFO - USER_INFO: Max conn: 3 | Low bound: 503 | Upper bound: 1220 | Linhas: 718
+[Stage 13:======================================>                   (2 + 1) / 3]                                                                                2025-04-14 19:00:18 - INFO - "./new_data/vendas/2025-04-14 19:00:16" salvo com sucesso!
+[Stage 14:>                                                         (0 + 2) / 2]                                                                                2025-04-14 19:00:19 - INFO - Extração da tabela "vendas" concluída!
+
+2025-04-14 19:00:19 - INFO - Iniciando extração da tabela "produtos"
+2025-04-14 19:00:20 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-14 19:00:20 - INFO - Não ha novos registros em "produtos"
+
+2025-04-14 19:00:20 - INFO - Iniciando extração da tabela "clientes"
+2025-04-14 19:00:21 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-14 19:00:21 - INFO - Não ha novos registros em "clientes"
+
+2025-04-14 19:00:21 - INFO - Iniciando extração da tabela "itens_venda"
+2025-04-14 19:00:21 - INFO - USER_INFO: Max conn: 3 | Low bound: 504 | Upper bound: 1222 | Linhas: 719
+2025-04-14 19:00:22 - INFO - "./new_data/itens_venda/2025-04-14 19:00:21" salvo com sucesso!
+2025-04-14 19:00:23 - INFO - Extração da tabela "itens_venda" concluída!
+
+2025-04-14 19:00:23 - INFO - Iniciando atualização da base "new_data_map"!
+2025-04-14 19:00:24 - INFO - Base "new_data_map" atualizada!
+
+2025-04-14 19:00:24 - INFO - Closing down clientserver connection
+Finalizando extração - seg 14 abr 2025 19:00:01 -03
+****************************************************************
+
+
+
+****************************************************************
+Iniciando extração - seg 14 abr 2025 20:00:01 -03
+Warning: Ignoring non-Spark config property: packages
+25/04/14 20:00:03 WARN Utils: Your hostname, cj-OptiPlex-3020 resolves to a loopback address: 127.0.1.1; using 172.17.0.1 instead (on interface docker0)
+25/04/14 20:00:03 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/home/cj/.local/lib/python3.10/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/cj/.ivy2/cache
+The jars for the packages stored in: /home/cj/.ivy2/jars
+mysql#mysql-connector-java added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-0bda9c4c-c4f7-45ee-b091-1179413a9ced;1.0
+	confs: [default]
+	found mysql#mysql-connector-java;8.0.11 in spark-list
+	found com.google.protobuf#protobuf-java;2.6.0 in central
+:: resolution report :: resolve 116ms :: artifacts dl 5ms
+	:: modules in use:
+	com.google.protobuf#protobuf-java;2.6.0 from central in [default]
+	mysql#mysql-connector-java;8.0.11 from spark-list in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   2   |   0   |   0   |   0   ||   2   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-0bda9c4c-c4f7-45ee-b091-1179413a9ced
+	confs: [default]
+	0 artifacts copied, 2 already retrieved (0kB/5ms)
+25/04/14 20:00:03 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/04/14 20:00:04 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+25/04/14 20:00:04 WARN Utils: Service 'SparkUI' could not bind on port 4041. Attempting port 4042.
+25/04/14 20:00:04 WARN Utils: Service 'SparkUI' could not bind on port 4042. Attempting port 4043.
+2025-04-14 20:00:05 - INFO - Iniciando extração da tabela "vendedores"
+[Stage 0:>                                                          (0 + 1) / 1]                                                                                [Stage 1:=========>                                                (2 + 2) / 12][Stage 1:==============>                                           (3 + 2) / 12][Stage 1:===================>                                      (4 + 2) / 12][Stage 1:=============================>                            (6 + 2) / 12][Stage 1:===========================================>              (9 + 2) / 12]                                                                                2025-04-14 20:00:11 - INFO - USER_INFO: Max conn: 3 | Low bound: 1 | Upper bound: 10 | Linhas: 10
+2025-04-14 20:00:12 - INFO - "./lab/jobs/new_data/vendedores/2025-04-13 22:43:36" salvo com sucesso!
+[Stage 9:>                                                          (0 + 2) / 2]                                                                                2025-04-14 20:00:13 - INFO - Extração da tabela "vendedores" concluída!
+
+2025-04-14 20:00:13 - INFO - Iniciando extração da tabela "vendas"
+2025-04-14 20:00:14 - INFO - USER_INFO: Max conn: 3 | Low bound: 1 | Upper bound: 1940 | Linhas: 1940
+2025-04-14 20:00:15 - INFO - "./lab/jobs/new_data/vendas/2025-04-14 20:00:14" salvo com sucesso!
+2025-04-14 20:00:15 - INFO - Extração da tabela "vendas" concluída!
+
+2025-04-14 20:00:15 - INFO - Iniciando extração da tabela "produtos"
+2025-04-14 20:00:16 - INFO - USER_INFO: Max conn: 3 | Low bound: 1 | Upper bound: 10 | Linhas: 10
+2025-04-14 20:00:17 - INFO - "./lab/jobs/new_data/produtos/2025-04-13 22:43:36" salvo com sucesso!
+2025-04-14 20:00:17 - INFO - Extração da tabela "produtos" concluída!
+
+2025-04-14 20:00:17 - INFO - Iniciando extração da tabela "clientes"
+2025-04-14 20:00:18 - INFO - USER_INFO: Max conn: 3 | Low bound: 1 | Upper bound: 250 | Linhas: 250
+2025-04-14 20:00:18 - INFO - "./lab/jobs/new_data/clientes/2025-04-13 22:43:36" salvo com sucesso!
+2025-04-14 20:00:19 - INFO - Extração da tabela "clientes" concluída!
+
+2025-04-14 20:00:19 - INFO - Iniciando extração da tabela "itens_venda"
+2025-04-14 20:00:20 - INFO - USER_INFO: Max conn: 3 | Low bound: 1 | Upper bound: 1941 | Linhas: 1941
+2025-04-14 20:00:20 - INFO - "./lab/jobs/new_data/itens_venda/2025-04-14 20:00:19" salvo com sucesso!
+2025-04-14 20:00:20 - INFO - Extração da tabela "itens_venda" concluída!
+
+2025-04-14 20:00:20 - INFO - Closing down clientserver connection
+Finalizando extração - seg 14 abr 2025 20:00:01 -03
+****************************************************************
+
+
+
+****************************************************************
+Iniciando extração - seg 14 abr 2025 21:00:01 -03
+Warning: Ignoring non-Spark config property: packages
+25/04/14 21:00:02 WARN Utils: Your hostname, cj-OptiPlex-3020 resolves to a loopback address: 127.0.1.1; using 192.168.15.34 instead (on interface enp2s0)
+25/04/14 21:00:02 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/home/cj/.local/lib/python3.10/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/cj/.ivy2/cache
+The jars for the packages stored in: /home/cj/.ivy2/jars
+mysql#mysql-connector-java added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-9d57be74-286a-4706-bafb-9140268dee95;1.0
+	confs: [default]
+	found mysql#mysql-connector-java;8.0.11 in spark-list
+	found com.google.protobuf#protobuf-java;2.6.0 in central
+:: resolution report :: resolve 155ms :: artifacts dl 14ms
+	:: modules in use:
+	com.google.protobuf#protobuf-java;2.6.0 from central in [default]
+	mysql#mysql-connector-java;8.0.11 from spark-list in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   2   |   0   |   0   |   0   ||   2   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-9d57be74-286a-4706-bafb-9140268dee95
+	confs: [default]
+	0 artifacts copied, 2 already retrieved (0kB/4ms)
+25/04/14 21:00:03 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/04/14 21:00:04 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+25/04/14 21:00:04 WARN Utils: Service 'SparkUI' could not bind on port 4041. Attempting port 4042.
+25/04/14 21:00:04 WARN Utils: Service 'SparkUI' could not bind on port 4042. Attempting port 4043.
+2025-04-14 21:00:05 - INFO - Iniciando extração da tabela "vendedores"
+[Stage 1:==============>                                           (3 + 2) / 12][Stage 1:===================>                                      (4 + 2) / 12][Stage 1:===============================================>         (10 + 2) / 12]                                                                                [Stage 2:====================================================>    (11 + 1) / 12]                                                                                2025-04-14 21:00:10 - INFO - USER_INFO: Max conn: 3 | Low bound: 1 | Upper bound: 10 | Linhas: 10
+2025-04-14 21:00:11 - INFO - "./lab/jobs/new_data/vendedores/2025-04-14 20:55:13" salvo com sucesso!
+[Stage 9:>                                                          (0 + 2) / 2]                                                                                2025-04-14 21:00:12 - INFO - Extração da tabela "vendedores" concluída!
+
+2025-04-14 21:00:12 - INFO - Iniciando extração da tabela "vendas"
+2025-04-14 21:00:13 - INFO - USER_INFO: Max conn: 3 | Low bound: 1 | Upper bound: 291 | Linhas: 291
+2025-04-14 21:00:13 - INFO - "./lab/jobs/new_data/vendas/2025-04-14 21:00:13" salvo com sucesso!
+2025-04-14 21:00:14 - INFO - Extração da tabela "vendas" concluída!
+
+2025-04-14 21:00:14 - INFO - Iniciando extração da tabela "produtos"
+2025-04-14 21:00:15 - INFO - USER_INFO: Max conn: 3 | Low bound: 1 | Upper bound: 10 | Linhas: 10
+2025-04-14 21:00:15 - INFO - "./lab/jobs/new_data/produtos/2025-04-14 20:55:13" salvo com sucesso!
+2025-04-14 21:00:15 - INFO - Extração da tabela "produtos" concluída!
+
+2025-04-14 21:00:15 - INFO - Iniciando extração da tabela "clientes"
+2025-04-14 21:00:16 - INFO - USER_INFO: Max conn: 3 | Low bound: 1 | Upper bound: 250 | Linhas: 250
+2025-04-14 21:00:16 - INFO - "./lab/jobs/new_data/clientes/2025-04-14 20:55:13" salvo com sucesso!
+2025-04-14 21:00:16 - INFO - Extração da tabela "clientes" concluída!
+
+2025-04-14 21:00:16 - INFO - Iniciando extração da tabela "itens_venda"
+2025-04-14 21:00:17 - INFO - USER_INFO: Max conn: 3 | Low bound: 1 | Upper bound: 295 | Linhas: 295
+2025-04-14 21:00:17 - INFO - "./lab/jobs/new_data/itens_venda/2025-04-14 21:00:17" salvo com sucesso!
+2025-04-14 21:00:18 - INFO - Extração da tabela "itens_venda" concluída!
+
+2025-04-14 21:00:18 - INFO - Closing down clientserver connection
+Finalizando extração - seg 14 abr 2025 21:00:01 -03
+****************************************************************
+
+
+
+****************************************************************
+Iniciando extração - seg 14 abr 2025 22:00:01 -03
+Warning: Ignoring non-Spark config property: packages
+25/04/14 22:00:03 WARN Utils: Your hostname, cj-OptiPlex-3020 resolves to a loopback address: 127.0.1.1; using 192.168.15.34 instead (on interface enp2s0)
+25/04/14 22:00:03 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/home/cj/.local/lib/python3.10/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/cj/.ivy2/cache
+The jars for the packages stored in: /home/cj/.ivy2/jars
+mysql#mysql-connector-java added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-71968432-f8c7-44b5-98f2-4b8a5d344086;1.0
+	confs: [default]
+	found mysql#mysql-connector-java;8.0.11 in spark-list
+	found com.google.protobuf#protobuf-java;2.6.0 in central
+:: resolution report :: resolve 111ms :: artifacts dl 5ms
+	:: modules in use:
+	com.google.protobuf#protobuf-java;2.6.0 from central in [default]
+	mysql#mysql-connector-java;8.0.11 from spark-list in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   2   |   0   |   0   |   0   ||   2   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-71968432-f8c7-44b5-98f2-4b8a5d344086
+	confs: [default]
+	0 artifacts copied, 2 already retrieved (0kB/4ms)
+25/04/14 22:00:03 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/04/14 22:00:04 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+25/04/14 22:00:04 WARN Utils: Service 'SparkUI' could not bind on port 4041. Attempting port 4042.
+25/04/14 22:00:04 WARN Utils: Service 'SparkUI' could not bind on port 4042. Attempting port 4043.
+25/04/14 22:00:04 WARN Utils: Service 'SparkUI' could not bind on port 4043. Attempting port 4044.
+25/04/14 22:00:04 WARN Utils: Service 'SparkUI' could not bind on port 4044. Attempting port 4045.
+2025-04-14 22:00:05 - INFO - Iniciando extração da tabela "vendedores"
+[Stage 1:==============>                                           (3 + 2) / 12][Stage 1:===================>                                      (4 + 2) / 12][Stage 1:=================================>                        (7 + 3) / 12]                                                                                2025-04-14 22:00:11 - INFO - USER_INFO: Max conn: 3 | Low bound: 1 | Upper bound: 10 | Linhas: 10
+2025-04-14 22:00:12 - INFO - "./lab/jobs/new_data/vendedores/2025-04-14 21:33:53" salvo com sucesso!
+[Stage 9:>                                                          (0 + 2) / 2]                                                                                2025-04-14 22:00:13 - INFO - Extração da tabela "vendedores" concluída!
+
+2025-04-14 22:00:13 - INFO - Iniciando extração da tabela "vendas"
+2025-04-14 22:00:14 - INFO - USER_INFO: Max conn: 3 | Low bound: 1 | Upper bound: 12851 | Linhas: 12851
+2025-04-14 22:00:15 - INFO - "./lab/jobs/new_data/vendas/2025-04-14 21:50:52" salvo com sucesso!
+2025-04-14 22:00:15 - INFO - Extração da tabela "vendas" concluída!
+
+2025-04-14 22:00:15 - INFO - Iniciando extração da tabela "produtos"
+2025-04-14 22:00:16 - INFO - USER_INFO: Max conn: 3 | Low bound: 1 | Upper bound: 10 | Linhas: 10
+2025-04-14 22:00:16 - INFO - "./lab/jobs/new_data/produtos/2025-04-14 21:33:53" salvo com sucesso!
+2025-04-14 22:00:16 - INFO - Extração da tabela "produtos" concluída!
+
+2025-04-14 22:00:16 - INFO - Iniciando extração da tabela "clientes"
+2025-04-14 22:00:17 - INFO - USER_INFO: Max conn: 3 | Low bound: 1 | Upper bound: 250 | Linhas: 250
+2025-04-14 22:00:18 - INFO - "./lab/jobs/new_data/clientes/2025-04-14 21:33:53" salvo com sucesso!
+2025-04-14 22:00:18 - INFO - Extração da tabela "clientes" concluída!
+
+2025-04-14 22:00:18 - INFO - Iniciando extração da tabela "itens_venda"
+2025-04-14 22:00:19 - INFO - USER_INFO: Max conn: 3 | Low bound: 1 | Upper bound: 12851 | Linhas: 12851
+2025-04-14 22:00:19 - INFO - "./lab/jobs/new_data/itens_venda/2025-04-14 21:50:52" salvo com sucesso!
+2025-04-14 22:00:19 - INFO - Extração da tabela "itens_venda" concluída!
+
+2025-04-14 22:00:19 - INFO - Closing down clientserver connection
+Finalizando extração - seg 14 abr 2025 22:00:01 -03
+****************************************************************
+
+
+
+****************************************************************
+Iniciando extração - seg 14 abr 2025 23:00:01 -03
+Warning: Ignoring non-Spark config property: packages
+25/04/14 23:00:03 WARN Utils: Your hostname, cj-OptiPlex-3020 resolves to a loopback address: 127.0.1.1; using 192.168.15.34 instead (on interface enp2s0)
+25/04/14 23:00:03 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/home/cj/.local/lib/python3.10/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/cj/.ivy2/cache
+The jars for the packages stored in: /home/cj/.ivy2/jars
+mysql#mysql-connector-java added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-dbe46fb3-f90d-48ed-a19b-c8ee87bb2dfa;1.0
+	confs: [default]
+	found mysql#mysql-connector-java;8.0.11 in spark-list
+	found com.google.protobuf#protobuf-java;2.6.0 in central
+:: resolution report :: resolve 119ms :: artifacts dl 5ms
+	:: modules in use:
+	com.google.protobuf#protobuf-java;2.6.0 from central in [default]
+	mysql#mysql-connector-java;8.0.11 from spark-list in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   2   |   0   |   0   |   0   ||   2   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-dbe46fb3-f90d-48ed-a19b-c8ee87bb2dfa
+	confs: [default]
+	0 artifacts copied, 2 already retrieved (0kB/5ms)
+25/04/14 23:00:04 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/04/14 23:00:05 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+25/04/14 23:00:05 WARN Utils: Service 'SparkUI' could not bind on port 4041. Attempting port 4042.
+25/04/14 23:00:05 WARN Utils: Service 'SparkUI' could not bind on port 4042. Attempting port 4043.
+25/04/14 23:00:05 WARN Utils: Service 'SparkUI' could not bind on port 4043. Attempting port 4044.
+25/04/14 23:00:05 WARN Utils: Service 'SparkUI' could not bind on port 4044. Attempting port 4045.
+2025-04-14 23:00:05 - INFO - Iniciando extração da tabela "vendedores"
+[Stage 1:========>                                                 (2 + 2) / 13][Stage 1:=================>                                        (4 + 2) / 13][Stage 1:==========================>                               (6 + 2) / 13][Stage 1:===================================>                      (8 + 2) / 13][Stage 1:===========================================>             (10 + 2) / 13]                                                                                [Stage 2:==========================>                               (6 + 2) / 13][Stage 2:===========================================>             (10 + 2) / 13]                                                                                2025-04-14 23:00:12 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-14 23:00:12 - INFO - Não ha novos registros em "vendedores"
+
+2025-04-14 23:00:12 - INFO - Iniciando extração da tabela "vendas"
+[Stage 6:===========================================>             (10 + 2) / 13]                                                                                [Stage 7:===================================>                      (8 + 2) / 13][Stage 7:================================================>        (11 + 2) / 13]                                                                                2025-04-14 23:00:14 - INFO - USER_INFO: Max conn: 3 | Low bound: 12852 | Upper bound: 12873 | Linhas: 22
+2025-04-14 23:00:16 - INFO - "./lab/jobs/new_data/vendas/2025-04-14 22:39:05" salvo com sucesso!
+[Stage 14:>                                                         (0 + 2) / 2]                                                                                2025-04-14 23:00:17 - INFO - Extração da tabela "vendas" concluída!
+
+2025-04-14 23:00:17 - INFO - Iniciando extração da tabela "produtos"
+2025-04-14 23:00:18 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-14 23:00:18 - INFO - Não ha novos registros em "produtos"
+
+2025-04-14 23:00:18 - INFO - Iniciando extração da tabela "clientes"
+2025-04-14 23:00:19 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-14 23:00:19 - INFO - Não ha novos registros em "clientes"
+
+2025-04-14 23:00:19 - INFO - Iniciando extração da tabela "itens_venda"
+2025-04-14 23:00:20 - INFO - USER_INFO: Max conn: 3 | Low bound: 12852 | Upper bound: 12873 | Linhas: 22
+2025-04-14 23:00:20 - INFO - "./lab/jobs/new_data/itens_venda/2025-04-14 22:39:05" salvo com sucesso!
+2025-04-14 23:00:20 - INFO - Extração da tabela "itens_venda" concluída!
+
+2025-04-14 23:00:20 - INFO - Closing down clientserver connection
+Finalizando extração - seg 14 abr 2025 23:00:01 -03
+****************************************************************
+
+
+
+****************************************************************
+Iniciando extração - ter 15 abr 2025 00:00:01 -03
+Warning: Ignoring non-Spark config property: packages
+25/04/15 00:00:03 WARN Utils: Your hostname, cj-OptiPlex-3020 resolves to a loopback address: 127.0.1.1; using 192.168.15.34 instead (on interface enp2s0)
+25/04/15 00:00:03 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+:: loading settings :: url = jar:file:/home/cj/.local/lib/python3.10/site-packages/pyspark/jars/ivy-2.5.1.jar!/org/apache/ivy/core/settings/ivysettings.xml
+Ivy Default Cache set to: /home/cj/.ivy2/cache
+The jars for the packages stored in: /home/cj/.ivy2/jars
+mysql#mysql-connector-java added as a dependency
+:: resolving dependencies :: org.apache.spark#spark-submit-parent-c26b9438-9958-4a3d-9152-fedad60a3d44;1.0
+	confs: [default]
+	found mysql#mysql-connector-java;8.0.11 in spark-list
+	found com.google.protobuf#protobuf-java;2.6.0 in central
+:: resolution report :: resolve 115ms :: artifacts dl 6ms
+	:: modules in use:
+	com.google.protobuf#protobuf-java;2.6.0 from central in [default]
+	mysql#mysql-connector-java;8.0.11 from spark-list in [default]
+	---------------------------------------------------------------------
+	|                  |            modules            ||   artifacts   |
+	|       conf       | number| search|dwnlded|evicted|| number|dwnlded|
+	---------------------------------------------------------------------
+	|      default     |   2   |   0   |   0   |   0   ||   2   |   0   |
+	---------------------------------------------------------------------
+:: retrieving :: org.apache.spark#spark-submit-parent-c26b9438-9958-4a3d-9152-fedad60a3d44
+	confs: [default]
+	0 artifacts copied, 2 already retrieved (0kB/5ms)
+25/04/15 00:00:04 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+25/04/15 00:00:05 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+25/04/15 00:00:05 WARN Utils: Service 'SparkUI' could not bind on port 4041. Attempting port 4042.
+25/04/15 00:00:05 WARN Utils: Service 'SparkUI' could not bind on port 4042. Attempting port 4043.
+2025-04-15 00:00:05 - INFO - Iniciando extração da tabela "vendedores"
+[Stage 0:>                                                          (0 + 1) / 1]                                                                                [Stage 1:========>                                                 (2 + 2) / 13][Stage 1:======================>                                   (5 + 2) / 13][Stage 1:===================================>                      (8 + 2) / 13][Stage 1:================================================>        (11 + 2) / 13]                                                                                [Stage 2:==========================>                               (6 + 2) / 13][Stage 2:===========================================>             (10 + 2) / 13]                                                                                2025-04-15 00:00:12 - INFO - USER_INFO: Max conn: 3 | Low bound: None | Upper bound: None | Linhas: 0
+2025-04-15 00:00:12 - INFO - Não ha novos registros em "vendedores"
+
+2025-04-15 00:00:12 - INFO - Iniciando extração da tabela "vendas"
+[Stage 6:======================>                                   (5 + 2) / 13][Stage 6:===========================================>             (10 + 2) / 13]                                                                                [Stage 7:================================================>        (11 + 2) / 13]                                                                                2025-04-15 00:00:14 - INFO - USER_INFO: Max conn: 3 | Low bound: 12874 | Upper bound: 12894 | Linhas: 21
+Traceback (most recent call last):
+  File "/home/cj/lisarb_jc/lab/jobs/main.py", line 10, in <module>
+    Extrator(sparkSession).Run()
+  File "/home/cj/lisarb_jc/lab/jobs/src/extrator.py", line 156, in Run
+    last_date = self.SaveData(df, tabela)
+  File "/home/cj/lisarb_jc/lab/jobs/src/extrator.py", line 106, in SaveData
+    ).collect()[0][0]
+  File "/home/cj/.local/lib/python3.10/site-packages/pyspark/sql/dataframe.py", line 1263, in collect
+    sock_info = self._jdf.collectToPython()
+  File "/home/cj/.local/lib/python3.10/site-packages/py4j/java_gateway.py", line 1322, in __call__
+    return_value = get_return_value(
+  File "/home/cj/.local/lib/python3.10/site-packages/pyspark/errors/exceptions/captured.py", line 179, in deco
+    return f(*a, **kw)
+  File "/home/cj/.local/lib/python3.10/site-packages/py4j/protocol.py", line 326, in get_return_value
+    raise Py4JJavaError(
+py4j.protocol.Py4JJavaError: An error occurred while calling o88.collectToPython.
+: org.apache.spark.SparkException: Job aborted due to stage failure: Task 1 in stage 10.0 failed 1 times, most recent failure: Lost task 1.0 in stage 10.0 (TID 57) (192.168.15.34 executor driver): com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:172)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:64)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:862)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:444)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:230)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:226)
+	at org.apache.spark.sql.execution.datasources.jdbc.connection.BasicConnectionProvider.getConnection(BasicConnectionProvider.scala:49)
+	at org.apache.spark.sql.execution.datasources.jdbc.connection.ConnectionProviderBase.create(ConnectionProvider.scala:102)
+	at org.apache.spark.sql.jdbc.JdbcDialect.$anonfun$createConnectionFactory$1(JdbcDialects.scala:161)
+	at org.apache.spark.sql.jdbc.JdbcDialect.$anonfun$createConnectionFactory$1$adapted(JdbcDialects.scala:157)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCRDD.compute(JDBCRDD.scala:258)
+	at org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:367)
+	at org.apache.spark.rdd.RDD.iterator(RDD.scala:331)
+	at org.apache.spark.rdd.MapPartitionsRDD.compute(MapPartitionsRDD.scala:52)
+	at org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:367)
+	at org.apache.spark.rdd.RDD.iterator(RDD.scala:331)
+	at org.apache.spark.rdd.MapPartitionsRDD.compute(MapPartitionsRDD.scala:52)
+	at org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:367)
+	at org.apache.spark.rdd.RDD.iterator(RDD.scala:331)
+	at org.apache.spark.shuffle.ShuffleWriteProcessor.write(ShuffleWriteProcessor.scala:59)
+	at org.apache.spark.scheduler.ShuffleMapTask.runTask(ShuffleMapTask.scala:104)
+	at org.apache.spark.scheduler.ShuffleMapTask.runTask(ShuffleMapTask.scala:54)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:59)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:103)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:149)
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:165)
+	at com.mysql.cj.protocol.a.NativeProtocol.readMessage(NativeProtocol.java:563)
+	at com.mysql.cj.protocol.a.NativeProtocol.readServerCapabilities(NativeProtocol.java:514)
+	at com.mysql.cj.protocol.a.NativeProtocol.beforeHandshake(NativeProtocol.java:401)
+	at com.mysql.cj.protocol.a.NativeProtocol.connect(NativeProtocol.java:1409)
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:165)
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:982)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:852)
+	... 29 more
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.cj.protocol.FullReadInputStream.readFully(FullReadInputStream.java:67)
+	at com.mysql.cj.protocol.a.SimplePacketReader.readHeader(SimplePacketReader.java:63)
+	at com.mysql.cj.protocol.a.SimplePacketReader.readHeader(SimplePacketReader.java:45)
+	at com.mysql.cj.protocol.a.NativeProtocol.readMessage(NativeProtocol.java:557)
+	... 35 more
+
+Driver stacktrace:
+	at org.apache.spark.scheduler.DAGScheduler.failJobAndIndependentStages(DAGScheduler.scala:2856)
+	at org.apache.spark.scheduler.DAGScheduler.$anonfun$abortStage$2(DAGScheduler.scala:2792)
+	at org.apache.spark.scheduler.DAGScheduler.$anonfun$abortStage$2$adapted(DAGScheduler.scala:2791)
+	at scala.collection.mutable.ResizableArray.foreach(ResizableArray.scala:62)
+	at scala.collection.mutable.ResizableArray.foreach$(ResizableArray.scala:55)
+	at scala.collection.mutable.ArrayBuffer.foreach(ArrayBuffer.scala:49)
+	at org.apache.spark.scheduler.DAGScheduler.abortStage(DAGScheduler.scala:2791)
+	at org.apache.spark.scheduler.DAGScheduler.$anonfun$handleTaskSetFailed$1(DAGScheduler.scala:1247)
+	at org.apache.spark.scheduler.DAGScheduler.$anonfun$handleTaskSetFailed$1$adapted(DAGScheduler.scala:1247)
+	at scala.Option.foreach(Option.scala:407)
+	at org.apache.spark.scheduler.DAGScheduler.handleTaskSetFailed(DAGScheduler.scala:1247)
+	at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.doOnReceive(DAGScheduler.scala:3060)
+	at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:2994)
+	at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:2983)
+	at org.apache.spark.util.EventLoop$$anon$1.run(EventLoop.scala:49)
+Caused by: com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:172)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:64)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:862)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:444)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:230)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:226)
+	at org.apache.spark.sql.execution.datasources.jdbc.connection.BasicConnectionProvider.getConnection(BasicConnectionProvider.scala:49)
+	at org.apache.spark.sql.execution.datasources.jdbc.connection.ConnectionProviderBase.create(ConnectionProvider.scala:102)
+	at org.apache.spark.sql.jdbc.JdbcDialect.$anonfun$createConnectionFactory$1(JdbcDialects.scala:161)
+	at org.apache.spark.sql.jdbc.JdbcDialect.$anonfun$createConnectionFactory$1$adapted(JdbcDialects.scala:157)
+	at org.apache.spark.sql.execution.datasources.jdbc.JDBCRDD.compute(JDBCRDD.scala:258)
+	at org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:367)
+	at org.apache.spark.rdd.RDD.iterator(RDD.scala:331)
+	at org.apache.spark.rdd.MapPartitionsRDD.compute(MapPartitionsRDD.scala:52)
+	at org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:367)
+	at org.apache.spark.rdd.RDD.iterator(RDD.scala:331)
+	at org.apache.spark.rdd.MapPartitionsRDD.compute(MapPartitionsRDD.scala:52)
+	at org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:367)
+	at org.apache.spark.rdd.RDD.iterator(RDD.scala:331)
+	at org.apache.spark.shuffle.ShuffleWriteProcessor.write(ShuffleWriteProcessor.scala:59)
+	at org.apache.spark.scheduler.ShuffleMapTask.runTask(ShuffleMapTask.scala:104)
+	at org.apache.spark.scheduler.ShuffleMapTask.runTask(ShuffleMapTask.scala:54)
+	at org.apache.spark.TaskContext.runTaskWithListeners(TaskContext.scala:166)
+	at org.apache.spark.scheduler.Task.run(Task.scala:141)
+	at org.apache.spark.executor.Executor$TaskRunner.$anonfun$run$4(Executor.scala:620)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally(SparkErrorUtils.scala:64)
+	at org.apache.spark.util.SparkErrorUtils.tryWithSafeFinally$(SparkErrorUtils.scala:61)
+	at org.apache.spark.util.Utils$.tryWithSafeFinally(Utils.scala:94)
+	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:623)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:59)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:103)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:149)
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:165)
+	at com.mysql.cj.protocol.a.NativeProtocol.readMessage(NativeProtocol.java:563)
+	at com.mysql.cj.protocol.a.NativeProtocol.readServerCapabilities(NativeProtocol.java:514)
+	at com.mysql.cj.protocol.a.NativeProtocol.beforeHandshake(NativeProtocol.java:401)
+	at com.mysql.cj.protocol.a.NativeProtocol.connect(NativeProtocol.java:1409)
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:165)
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:982)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:852)
+	... 29 more
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.cj.protocol.FullReadInputStream.readFully(FullReadInputStream.java:67)
+	at com.mysql.cj.protocol.a.SimplePacketReader.readHeader(SimplePacketReader.java:63)
+	at com.mysql.cj.protocol.a.SimplePacketReader.readHeader(SimplePacketReader.java:45)
+	at com.mysql.cj.protocol.a.NativeProtocol.readMessage(NativeProtocol.java:557)
+	... 35 more
+
+2025-04-15 00:00:15 - INFO - Closing down clientserver connection
+Finalizando extração - ter 15 abr 2025 00:00:01 -03
+****************************************************************
+
+
+

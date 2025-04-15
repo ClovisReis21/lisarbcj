@@ -18,6 +18,7 @@ class Extrator:
             "itens_venda": "id_venda"
         }
         self.pathNewData = './lab/jobs/new_data'
+                            # /home/cj/lisarb_jc/lab/jobs/new_data/vendas
         self.pathNewDataMap = f'{self.pathNewData}/new_data_map'
         self.notificador = Notificador()
 
@@ -156,6 +157,6 @@ class Extrator:
             self.SetLastIngestaDatetime(tabela, last_date)
             self.notificador.Mostrar('info', f'Extração da tabela "{tabela}" concluída!\n')
         baseNewDataMap = self.pathNewDataMap.split("/")[-1]
-        self.notificador.Mostrar('info', f'Iniciando atualização da base "{baseNewDataMap}"!')
-        self.DropData()
-        self.notificador.Mostrar('info', f'Base "{baseNewDataMap}" atualizada!\n')
+        # self.notificador.Mostrar('info', f'Iniciando atualização da base "{baseNewDataMap}"!')
+        # self.DropData()
+        # self.notificador.Mostrar('info', f'Base "{baseNewDataMap}" atualizada!\n')

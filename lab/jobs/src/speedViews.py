@@ -1,125 +1,143 @@
-from pyspark.sql.functions import col, count, sum, avg, round, sha2
-from src.notificador import Notificador
+import os
+from spark import Spark
+from pyspark.sql.types import StructType, StructField, StringType, DoubleType, IntegerType, DateType, TimestampType, LongType
+from pyspark.sql.functions import col, sum, from_json, unix_timestamp, window
+from pyspark.sql.functions import col, count, sum, avg, max , round, sha2
+from notificador import Notificador
 
-class BatchViews:
+os.environ['PYSPARK_SUBMIT_ARGS'] = '--packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1 pyspark-shell'
+
+class SpeedViews:
     def __init__(self, sparkSession):
         self.sparkSession = sparkSession
-        self.input_data ='./data/vendas'
-        self.faturamento_diario = 'faturamento_diario'
-        self.ticket_medio_cliente = 'ticket_medio_cliente'
-        self.vendas_por_vendedor = 'vendas_por_vendedor'
         self.notificador = Notificador()
-        # self.Run()
+        self.batch_path = "/home/cj/lisarb_jc/lab/jobs/views/batch/faturamento_diario"
 
-    def FaturamentoDiario(self):
-        self.notificador.Mostrar('info', f'Batch view "{self.faturamento_diario}" iniciado.')
+    def GetKafkaSchema(self):
+        return StructType([
+            StructField("id_vendedor", IntegerType(), False),
+            StructField("id_cliente", IntegerType(), False),
+            StructField("id_produto", IntegerType(), False),
+            StructField("id_venda", IntegerType(), False),
+            StructField("quantidade", IntegerType(), False),
+            StructField("valor_unitario", DoubleType(), False),
+            StructField("valor_total", DoubleType(), False),
+            StructField("desconto", DoubleType(), False),
+            StructField("data", DateType(), False)
+        ])
+
+    def GetVwTicketMedioCienteSchema(self):
+        return StructType([
+            StructField("hash_id_cliente", StringType(), True),
+            StructField("qtd_vendas", LongType(), True),
+            StructField("total_gasto", DoubleType(), True),
+            StructField("ticket_medio", DoubleType(), True)
+        ])
+    
+    def ObterMaiorIdVenda(self):
         try:
-            df_vendas = self.sparkSession.spark.read.parquet(self.input_data)
-            df_vendas = df_vendas.withColumn('data', col('data').cast('date'))
-
-            faturamento_diario = df_vendas.groupBy('data').agg(
-                count('id_venda').alias('qtd_vendas'),
-                sum('total').alias('total_faturado'),
-                round(avg('total'), 2).alias('ticket_medio')
-            ).orderBy('data')
-            faturamento_diario.write.mode('overwrite').parquet(f'./views/{self.faturamento_diario}')
-            self.notificador.Mostrar('info', f'Batch view "{self.faturamento_diario}" finalizada com sucesso!\n')
+            if os.path.exists(self.batch_path):
+                df_batch = self.sparkSession.spark.read.parquet(self.batch_path)
+                maior_id = (df_batch
+                    .sort(col('maior_id'), ascending=False)
+                    .limit(1)
+                    .select(col('maior_id'))
+                    .collect()[0][0])
+                print('maior_id:', maior_id)
+                return maior_id
+            else:
+                self.notificador.Mostrar("info", "Nenhum dado batch encontrado. Considerando id_venda = 0.")
+                print('ObterMaiorIdVenda(self) - fim 1')
+                return 0
         except Exception as e:
-            self.notificador.Mostrar('error', f'"{self.faturamento_diario}" não processada. - {e}\n')
-
-    def TicketMedioCliente(self):
-        self.notificador.Mostrar('info', f'Batch view "{self.ticket_medio_cliente}" iniciado.')
-        try:
-            df_vendas = self.sparkSession.spark.read.parquet(self.input_data)
-            df_vendas = df_vendas.withColumn('id_cliente', col('id_cliente').cast('string')) \
-                                .withColumn('total', col('total').cast('decimal(10,2)'))
-
-            df_vendas = df_vendas.withColumn('hash_id_cliente', sha2(col('id_cliente'), 256))
-            ticket_medio_cliente = df_vendas.groupBy('hash_id_cliente').agg(
-                count('id_venda').alias('qtd_vendas'),
-                sum('total').alias('total_gasto'),
-                round(avg('total'), 2).alias('ticket_medio')
-            ).orderBy('hash_id_cliente')
-            ticket_medio_cliente.write.mode('overwrite').parquet(f'./views/{self.ticket_medio_cliente}')
-            self.notificador.Mostrar('info', f'Batch view "{self.ticket_medio_cliente}" finalizada com sucesso!\n')
-        except Exception as e:
-            self.notificador.Mostrar('error', f'"{self.ticket_medio_cliente}" não processada. - {e}\n')
-
-    def VendasPorVendedor(self):
-        self.notificador.Mostrar('info', f'Batch view "{self.vendas_por_vendedor}" iniciado.')
-        try:
-            df_vendas = self.sparkSession.spark.read.parquet(self.input_data)
-            df_vendas = df_vendas \
-                .withColumn("id_vendedor", col("id_vendedor").cast("string")) \
-                .withColumn("total", col("total").cast("decimal(10,2)"))
-
-            df_vendas = df_vendas.withColumn("hash_id_vendedor", sha2(col("id_vendedor"), 256))
-            vendas_por_vendedor = df_vendas.groupBy("hash_id_vendedor").agg(
-                count("id_venda").alias("qtd_vendas"),
-                sum("total").alias("total_vendido"),
-                round(avg("total"), 2).alias("ticket_medio")
-            ).orderBy("hash_id_vendedor")
-            vendas_por_vendedor.write.mode("overwrite").parquet(f'./views/{self.vendas_por_vendedor}')
-            self.notificador.Mostrar('info', f'Batch view "{self.vendas_por_vendedor}" finalizada com sucesso!\n')
-        except Exception as e:
-            self.notificador.Mostrar('error', f'"{self.vendas_por_vendedor}" não processada. - {e}\n')
+            self.notificador.Mostrar("error", f"Erro ao obter maior id_venda da batch: {e}")
+            print('ObterMaiorIdVenda(self) - fim 2')
+            return 0
     
     def Run(self):
-        self.notificador.Mostrar('info', f'Iniciando processo bath view...\n')
-        self.FaturamentoDiario()
-        self.TicketMedioCliente()
-        self.VendasPorVendedor()
-        self.notificador.Mostrar('info', f'Processo bath view finalizado')
+        self.notificador.Mostrar('info', f'Iniciando subcrição no kafka...\n')
 
-# Você lê o stream uma única vez, transforma o DataFrame base, e depois deriva múltiplas agregações a partir dele:
-df_stream = spark.readStream \
-    .format("kafka") \
-    .option("kafka.bootstrap.servers", "kafka:9092") \
-    .option("subscribe", "vendas_stream") \
-    .load()
+        # 1. Obtem maior id_venda da batch
+        maior_id_venda_batch = self.ObterMaiorIdVenda()
 
-# Decodifica e transforma o DataFrame base
-df_base = (
-    df_stream.selectExpr("CAST(value AS STRING)")
-    .select(from_json(col("value"), schema).alias("data"))
-    .select("data.*")
-    .withColumn("hash_id_cliente", sha2(col("id_cliente").cast("string"), 256))
-    .withColumn("hash_id_vendedor", sha2(col("id_vendedor").cast("string"), 256))
-)
+        # return
 
-# Agora você deriva quantas views quiser a partir de df_base:
-# View 1: Ticket médio por cliente
-vw_ticket_medio_cliente = df_base.groupBy("hash_id_cliente").agg(
-    count("id_venda").alias("qtd_vendas"),
-    sum("total").alias("total_gasto"),
-    round(avg("total"), 2).alias("ticket_medio")
-)
+        df_stream = self.sparkSession.spark.readStream \
+            .format("kafka") \
+            .option("kafka.bootstrap.servers", "localhost:9092") \
+            .option("subscribe", "vendas-deshboard-bronze") \
+            .load()
+        
+        df_base = (
+            df_stream.selectExpr("CAST(value AS STRING)", "timestamp")
+            .select(from_json(col("value"), self.GetKafkaSchema()).alias("data"), col("timestamp"))
+            .select("data.*", "timestamp")
+            .withColumn("hash_id_cliente", sha2(col("id_cliente").cast("string"), 256))
+            .withColumn("hash_id_vendedor", sha2(col("id_vendedor").cast("string"), 256))
+            .filter(col("id_venda") > maior_id_venda_batch)
+        )
 
-# View 2: Vendas por vendedor
-vw_vendas_por_vendedor = df_base.groupBy("hash_id_vendedor").agg(
-    count("id_venda").alias("qtd_vendas"),
-    sum("total").alias("total_vendido"),
-    round(avg("total"), 2).alias("ticket_medio")
-)
+        df_base.printSchema()
 
-# View 3: Vendas por estado (assumindo df_base já joinado com clientes)
-vw_vendas_por_estado = df_base.groupBy("estado").agg(
-    count("id_venda").alias("qtd_vendas"),
-    sum("total").alias("total_vendido")
-)
+        # View 2: Faturamento diario
+        faturamento_diario = (df_base
+            .withWatermark("timestamp", "10 seconds")
+            .groupBy(window(col("timestamp"), "10 seconds"), col("data")).agg(
+                max('id_venda').alias('maior_id'),
+                count('id_venda').alias('qtd_vendas'),
+                sum('valor_total').alias('total_faturado'),
+                round(avg('valor_total'), 2).alias('ticket_medio')
+                )
+            )
+        # Cada uma dessas views pode ter sua própria escrita:
+        to_faturamento_diario = (faturamento_diario.writeStream
+            .outputMode("append")
+            .format("parquet")
+            .option("path", "/home/cj/lisarb_jc/lab/jobs/views/speed/faturamento_diario")
+            .option("checkpointLocation", "/home/cj/lisarb_jc/lab/jobs/views/speed/checkpoints_fd")
+            .start())  
 
-# Cada uma dessas views pode ter sua própria escrita:
-vw_ticket_medio_cliente.writeStream \
-    .outputMode("complete") \
-    .format("parquet") \
-    .option("path", "/speed/vw_ticket_medio_cliente") \
-    .option("checkpointLocation", "/checkpoints/tmc") \
-    .start()
+        # Agora você deriva quantas views quiser a partir de df_base:
+        # View 2: Ticket médio por cliente
+        ticket_medio_cliente = (df_base
+            .withWatermark("timestamp", "10 seconds")
+            .groupBy(window(col("timestamp"), "10 seconds"), col("hash_id_cliente")).agg(
+                max('id_venda').alias('maior_id'),
+                count("id_venda").alias("qtd_vendas"),
+                sum("valor_total").alias("total_gasto"),
+                round(avg("valor_total"), 2).alias("ticket_medio")
+                )
+            )
+        # Cada uma dessas views pode ter sua própria escrita:
+        to_ticket_medio_cliente = (ticket_medio_cliente.writeStream
+            .outputMode("append")
+            .format("parquet")
+            .option("path", "/home/cj/lisarb_jc/lab/jobs/views/speed/ticket_medio_cliente")
+            .option("checkpointLocation", "/home/cj/lisarb_jc/lab/jobs/views/speed/checkpoints_tmc")
+            .start())     
 
-vw_vendas_por_vendedor.writeStream \
-    .outputMode("complete") \
-    .format("parquet") \
-    .option("path", "/speed/vw_vendas_por_vendedor") \
-    .option("checkpointLocation", "/checkpoints/vpv") \
-    .start()
 
+        # View 3: Vendas por vendedor
+        vendas_por_vendedor = (df_base
+            .withWatermark("timestamp", "10 seconds")
+            .groupBy(window(col("timestamp"), "10 seconds"), col("hash_id_vendedor")).agg(
+                max('id_venda').alias('maior_id'),
+                count("id_venda").alias("qtd_vendas"),
+                sum("valor_total").alias("total_vendido"),
+                round(avg("valor_total"), 2).alias("ticket_medio")
+                )
+            )
+        # Cada uma dessas views pode ter sua própria escrita:
+        to_vendas_por_vendedor = (vendas_por_vendedor.writeStream
+            .outputMode("append")
+            .format("parquet")
+            .option("path", "/home/cj/lisarb_jc/lab/jobs/views/speed/vendas_por_vendedor")
+            .option("checkpointLocation", "/home/cj/lisarb_jc/lab/jobs/views/speed/checkpoints_vpc")
+            .start())
+        
+        to_faturamento_diario.awaitTermination()
+        to_ticket_medio_cliente.awaitTermination()
+        to_vendas_por_vendedor.awaitTermination()
+
+sparkSession = Spark('speed')
+SpeedViews(sparkSession).Run()
