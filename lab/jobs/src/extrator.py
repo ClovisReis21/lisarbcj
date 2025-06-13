@@ -1,15 +1,20 @@
-import sys, os, findspark, mysql.connector, shutil
+import sys
+import os
+import findspark
+import mysql.connector
 import pyspark.sql.functions as F
+from pyspark.sql.types import (
+    StructType, StructField, StringType, DoubleType,
+    IntegerType, DateType, TimestampType
+)
 from src.notificador import Notificador
-from pyspark.sql.types import StructType, StructField, StringType, DoubleType, IntegerType, DateType, TimestampType
-
-findspark.add_packages('mysql:mysql-connector-java:8.0.11')
 
 class Extrator:
-    def __init__(self, sparkSession):
-        self.sparkSession = sparkSession
-        self.baseDatetime = '2025-03-01 00:00:00.000'
-        self.cleanTime = 30
+    def __init__(self, spark_session):
+        self.spark_session = spark_session
+        self.base_datetime = '2025-03-01 00:00:00'
+        self.clean_time = 30  # dias
+
         self.actors_id = {
             "vendedores": "id_vendedor",
             "vendas": "id_venda",
@@ -17,145 +22,137 @@ class Extrator:
             "clientes": "id_cliente",
             "itens_venda": "id_venda"
         }
-        self.pathNewData = './lab/jobs/new_data'
-        self.pathNewDataMap = f'{self.pathNewData}/new_data_map'
+
+        self.path_new_data = 'nessie.new_data'
+        self.path_new_data_map = f'{self.path_new_data}.new_data_map'
         self.notificador = Notificador()
 
-    def GetLastIngestaDatetime(self, tabela):
-        fullPath = f'{self.pathNewData}/{tabela}'
-        temp_df = None
-        try:
-            temp_df = (self.sparkSession.spark.read.parquet(self.pathNewDataMap)
-                       .where(F.col("table") == tabela)
-                       .sort("date", ascending=False))
-            row = temp_df.collect()[0]
-            return f'{row[1]}'
-        except Exception as e:
-            self.notificador.Mostrar('info', f'Datetime considerado "{self.baseDatetime}" para "{fullPath}" - {e}')
-            return self.baseDatetime
-    
-    def SetLastIngestaDatetime(self, tabela, last_date):
-        path_data = f'{self.pathNewData}/{tabela}/{last_date}'
-        newData_df = self.sparkSession.spark.createDataFrame(
-            [(tabela, last_date, path_data,)],
+        self.spark_session.sql(f"CREATE NAMESPACE IF NOT EXISTS {self.path_new_data}")
+
+    def get_last_ingesta_datetime(self, tabela):
+        if self.spark_session._jsparkSession.catalog().tableExists(self.path_new_data_map):
+            df = self.spark_session.read.table(self.path_new_data_map) \
+                .filter(F.col("table") == tabela) \
+                .orderBy("date", ascending=False)
+            rows = df.collect()
+            if rows:
+                return rows[0]["date"]
+        self.notificador.mostrar('info', f'Datetime padrão "{self.base_datetime}" para base "{tabela}"')
+        return self.base_datetime
+
+    def set_last_ingesta_datetime(self, tabela, last_date):
+        path_data = f'{self.path_new_data}.{tabela}_{last_date}'.replace('-', '').replace(' ', 'T').replace(':', '')
+        df = self.spark_session.createDataFrame(
+            [(tabela, last_date, path_data)],
             schema=StructType([
                 StructField("table", StringType(), False),
                 StructField("date", StringType(), False),
                 StructField("path", StringType(), False)
             ])
         )
-        newData_df.write.mode("append").parquet(self.pathNewDataMap)
 
-    def GetUserInfo(self, lastDate, tabela): # Read from MySQL procedure
-        sql_host=sys.argv[2]
-        sql_user=sys.argv[3]
-        sql_password=sys.argv[4]
-        sql_database=sys.argv[5]
-        results = None
+        if self.spark_session._jsparkSession.catalog().tableExists(self.path_new_data_map):
+            df.writeTo(self.path_new_data_map).append()
+            self.notificador.mostrar('info', f'Metadata "{self.path_new_data_map}" atualizada.')
+        else:
+            df.writeTo(self.path_new_data_map).using("iceberg").createOrReplace()
+            self.notificador.mostrar('info', f'Metadata "{self.path_new_data_map}" criada.')
+
+    def get_user_info(self, last_date, tabela):
+        host = sys.argv[2]
+        user = sys.argv[3]
+        password = sys.argv[4]
+        database = sys.argv[5]
+
         try:
             conn = mysql.connector.connect(
-                host=sql_host,
-                user=sql_user,
-                password=sql_password,
-                database=sql_database
+                host=host, user=user, password=password, database=database
             )
-            cursor=conn.cursor()
-            cursor.callproc('USER_INFO', [lastDate, tabela])
+            cursor = conn.cursor()
+            cursor.callproc('USER_INFO', [last_date, tabela])
             for result in cursor.stored_results():
-                results = result.fetchall()
+                rows = result.fetchall()
             cursor.close()
             conn.close()
+            if rows:
+                info = rows[0]
+                self.notificador.mostrar('info', f'USER_INFO: Max={info[0]}, Low={info[1]}, Up={info[2]}, Linhas={info[3]}')
+                return info
         except Exception as e:
-            self.notificador.Mostrar('error', f'Não foi possível se conectar ao MYSQL - tabela "{tabela}"\n"{e}"')
+            self.notificador.mostrar('error', f'Erro MySQL - tabela "{tabela}": {e}')
+        return None
+
+    def get_data(self, max_conn, low_bound, up_bound, last_date, tabela):
+        partition_col = self.actors_id[tabela]
+
+        condition = "criacao > '{0}'".format(last_date) if tabela in ['itens_venda', 'vendas'] else \
+                    "(criacao > '{0}' OR atualizacao > '{0}')".format(last_date)
+
+        query = f"(SELECT * FROM {tabela} WHERE {condition}) as subq"
+
+        try:
+            return (
+                self.spark_session.read
+                .format("jdbc")
+                .option("driver", "com.mysql.cj.jdbc.Driver")
+                .option("url", "jdbc:mysql://localhost:3306/vendas?allowPublicKeyRetrieval=true&useSSL=false")
+                .option("dbtable", query)
+                .option("user", sys.argv[3])
+                .option("password", sys.argv[4])
+                .option("numPartitions", max_conn)
+                .option("partitionColumn", partition_col)
+                .option("lowerBound", low_bound)
+                .option("upperBound", up_bound)
+                .load()
+            )
+        except Exception as e:
+            self.notificador.mostrar('error', f'Erro ao extrair dados MySQL - "{tabela}": {e}')
             return None
-        self.notificador.Mostrar('info', f'USER_INFO: Max conn: {results[0][0]} | Low bound: {results[0][1]} | Upper bound: {results[0][2]} | Linhas: {results[0][3]}')
-        return results
 
-    def GetData(self, maxConn, lowBound, upperBound, lastDate, tabela): # Read from MySQL Table
-        query = ""
-        if tabela in ['itens_venda', 'vendas']:
-            query = f"(SELECT * FROM {tabela} WHERE criacao > '{lastDate}') as subq"
-        else:
-            query = f"(SELECT * FROM {tabela} WHERE criacao > '{lastDate}' OR atualizacao > '{lastDate}') as subq"
+    def save_data(self, df, tabela):
+        valid_cols = list(set(df.columns) & {"criacao", "atualizacao"})
+        last_date = (
+            df.select(valid_cols)
+            .withColumn("date", F.coalesce(*[F.col(c) for c in valid_cols]).cast("timestamp"))
+            .agg(F.max("date").alias("last_date"))
+            .collect()[0]["last_date"]
+        )
+
+        target_table = f'{self.path_new_data}.{tabela}_{last_date}'.replace('-', '').replace(' ', 'T').replace(':', '')
         try:
-            return (self.sparkSession.spark.read
-                    .format("jdbc")
-                    .option("driver","com.mysql.cj.jdbc.Driver")
-                    .option("url", "jdbc:mysql://localhost:3306/vendas?allowPublicKeyRetrieval=true&useSSL=false")
-                    .option("dbtable", query)
-                    .option("user", sys.argv[3])
-                    .option("password", sys.argv[4])
-                    .option("numPartitions", maxConn)
-                    .option("partitionColumn", self.actors_id[tabela])
-                    .option("lowerBound", lowBound)
-                    .option("upperBound", upperBound)
-                    .load()
-                )
+            df.writeTo(target_table).using("iceberg").createOrReplace()
+            self.notificador.mostrar('info', f'"{target_table}" salvo com sucesso.')
+            return str(last_date)
         except Exception as e:
-            self.notificador.Mostrar('error', f'Não foi possível se conectar ao MYSQL - tabela "{tabela}"\n"{e}"')
-            return None
+            self.notificador.mostrar('error', f'Erro ao salvar "{target_table}": {e}')
+            return self.base_datetime
 
-    def SaveData(self, df, tabela):
-        valid_columns = list(set(df.columns) & set(['atualizacao', 'criacao']))
-        last_datetime = (df
-            .select(valid_columns)
-            .withColumn('date', F.coalesce(valid_columns[0], valid_columns[-1]).cast('timestamp'))
-            .drop(*valid_columns)
-            .select(F.max(F.col('date')))
-        ).collect()[0][0]
-        strTableDir = f'{self.pathNewData}/{tabela}/{last_datetime}'
-        try:
-            df.write.mode("overwrite").parquet(strTableDir)
-            self.notificador.Mostrar('info', f'"{strTableDir}" salvo com sucesso!')
-            return f'{last_datetime}'
-        except Exception as e:
-            self.notificador.Mostrar('error', f'Não foi possível salvar "{strTableDir}" -> {e}')
-            return self.baseDatetime
-    
-    def DropData(self):
-        newDataMap_keep_df = (
-            self.sparkSession.spark.read.parquet(f'{self.pathNewDataMap}')
-                .where(
-                    (F.to_timestamp(F.col('date')).alias('date') > (F.current_date() - self.cleanTime).alias('date')))
-                .sort('date'))
+    def run(self):
+        self.notificador.mostrar('info', 'Iniciando extração de dados.\n')
+        for tabela in self.actors_id:
+            self.notificador.mostrar('info', f'Tabela atual: "{tabela}"')
+            last_date = self.get_last_ingesta_datetime(tabela)
+            user_info = self.get_user_info(last_date, tabela)
 
-        newDataMap_delete_df = (
-            self.sparkSession.spark.read.parquet(f'{self.pathNewDataMap}')
-                .where(
-                    (F.to_timestamp(F.col('date')).alias('date') <= (F.current_date() - self.cleanTime).alias('date')))
-                .sort('date'))
-
-        pathsToDelete = newDataMap_delete_df.collect()
-        try:
-            for pathToDelete in pathsToDelete:
-                shutil.rmtree(pathToDelete['path'])
-
-            newDataMap_keep_df.write.mode("overwrite").parquet(f'{self.pathNewDataMap}')
-
-        except Exception as e:
-            self.notificador.Mostrar('info', f'Erro ao limpar MAP TABLE - {e}')
-
-    def Run(self):
-        tabelas = list(self.actors_id.keys())
-        for tabela in tabelas:
-            self.notificador.Mostrar('info', f'Iniciando extração da tabela "{tabela}"')
-            last_date = self.GetLastIngestaDatetime(tabela)
-            userInfo = self.GetUserInfo(last_date, tabela)
-            QTD_LINHAS=userInfo[0][3]
-            if QTD_LINHAS == 0:
-                self.notificador.Mostrar('info', f'Não ha novos registros em "{tabela}"\n')
+            if not user_info or user_info[3] == 0:
+                self.notificador.mostrar('info', f'Sem dados novos em "{tabela}"\n')
                 continue
-            MAX_CONN=userInfo[0][0]
-            LOW_BOUND=userInfo[0][1]
-            UPPER_BOUND=userInfo[0][2]
-            df = self.GetData(MAX_CONN, LOW_BOUND, UPPER_BOUND, last_date, tabela)
-            if df == None:
-                self.notificador.Mostrar('error', f'Registros não encontrados em "{tabela}"\n')
+
+            df = self.get_data(
+                max_conn=user_info[0],
+                low_bound=user_info[1],
+                up_bound=user_info[2],
+                last_date=last_date,
+                tabela=tabela
+            )
+
+            if df is None or df.count() == 0:
+                self.notificador.mostrar('info', f'Nenhum registro encontrado em "{tabela}"\n')
                 continue
-            last_date = self.SaveData(df, tabela)
-            self.SetLastIngestaDatetime(tabela, last_date)
-            self.notificador.Mostrar('info', f'Extração da tabela "{tabela}" concluída!\n')
-        baseNewDataMap = self.pathNewDataMap.split("/")[-1]
-        self.notificador.Mostrar('info', f'Iniciando atualização da base "{baseNewDataMap}"!')
-        self.DropData()
-        self.notificador.Mostrar('info', f'Base "{baseNewDataMap}" atualizada!\n')
+
+            last_date = self.save_data(df, tabela)
+            self.set_last_ingesta_datetime(tabela, last_date)
+            self.notificador.mostrar('info', f'Extração de "{tabela}" concluída.\n')
+
+        self.notificador.mostrar('info', f'Extração finalizada para todas as tabelas.\n')
+        self.spark_session.stop()

@@ -11,9 +11,50 @@ class SpeedViews:
     def __init__(self, sparkSession):
         self.sparkSession = sparkSession
         self.notificador = Notificador()
-        self.batch_path = "/home/cj/lisarbcj/lab/jobs/views/batch/faturamento_diario"
+        self.batch_path = "nessie.batch.faturamento_diario"
+        # Garante que o namespace exista
+        self.sparkSession.sql(f"CREATE NAMESPACE IF NOT EXISTS nessie.speed")
+        self.sparkSession.sql("""
+            CREATE TABLE IF NOT EXISTS nessie.speed.faturamento_diario (
+                janela_inicio TIMESTAMP,
+                janela_fim TIMESTAMP,
+                data DATE,
+                maior_id BIGINT,
+                qtd_vendas BIGINT,
+                total_faturado DOUBLE,
+                ticket_medio DOUBLE
+            )
+            USING iceberg
+            PARTITIONED BY (days(janela_inicio));
+        """)
+        self.sparkSession.sql("""
+            CREATE TABLE IF NOT EXISTS nessie.speed.ticket_medio_cliente (
+                janela_inicio TIMESTAMP,
+                janela_fim TIMESTAMP,
+                hash_id_cliente STRING,
+                maior_id BIGINT,
+                qtd_vendas BIGINT,
+                total_gasto DOUBLE,
+                ticket_medio DOUBLE
+            )
+            USING iceberg
+            PARTITIONED BY (days(janela_inicio));
+        """)
+        self.sparkSession.sql("""
+            CREATE TABLE IF NOT EXISTS nessie.speed.vendas_por_vendedor (
+                janela_inicio TIMESTAMP,
+                janela_fim TIMESTAMP,
+                hash_id_vendedor STRING,
+                maior_id BIGINT,
+                qtd_vendas BIGINT,
+                total_vendido DOUBLE,
+                ticket_medio DOUBLE
+            )
+            USING iceberg
+            PARTITIONED BY (days(janela_inicio));
+        """)
 
-    def GetKafkaSchema(self):
+    def getKafkaSchema(self):
         return StructType([
             StructField("id_vendedor", IntegerType(), False),
             StructField("id_cliente", IntegerType(), False),
@@ -26,7 +67,7 @@ class SpeedViews:
             StructField("data", DateType(), False)
         ])
 
-    def GetVwTicketMedioCienteSchema(self):
+    def getVwTicketMedioCienteSchema(self):
         return StructType([
             StructField("hash_id_cliente", StringType(), True),
             StructField("qtd_vendas", LongType(), True),
@@ -34,10 +75,10 @@ class SpeedViews:
             StructField("ticket_medio", DoubleType(), True)
         ])
     
-    def ObterMaiorIdVenda(self):
+    def obterMaiorIdVenda(self):
         try:
-            if os.path.exists(self.batch_path):
-                df_batch = self.sparkSession.spark.read.parquet(self.batch_path)
+            if self.sparkSession._jsparkSession.catalog().tableExists(self.batch_path):
+                df_batch = self.sparkSession.read.table(self.batch_path)
                 maior_id = (df_batch
                     .sort(col('maior_id'), ascending=False)
                     .limit(1)
@@ -46,31 +87,31 @@ class SpeedViews:
                 print('maior_id:', maior_id)
                 return maior_id
             else:
-                self.notificador.Mostrar("info", "Nenhum dado batch encontrado. Considerando id_venda = 0.")
+                self.notificador.mostrar("info", "Nenhum dado batch encontrado. Considerando id_venda = 0.")
                 print('ObterMaiorIdVenda(self) - fim 1')
                 return 0
         except Exception as e:
-            self.notificador.Mostrar("error", f"Erro ao obter maior id_venda da batch: {e}")
+            self.notificador.mostrar("error", f"Erro ao obter maior id_venda da batch: {e}")
             print('ObterMaiorIdVenda(self) - fim 2')
-            return 0
+            return 1
     
     def Run(self):
-        self.notificador.Mostrar('info', f'Iniciando subcrição no kafka...\n')
+        self.notificador.mostrar('info', f'Iniciando subcrição no kafka...\n')
 
         # 1. Obtem maior id_venda da batch
-        maior_id_venda_batch = self.ObterMaiorIdVenda()
+        maior_id_venda_batch = self.obterMaiorIdVenda()
 
-        # return
-
-        df_stream = self.sparkSession.spark.readStream \
+        df_stream = self.sparkSession.readStream \
             .format("kafka") \
             .option("kafka.bootstrap.servers", "localhost:9092") \
             .option("subscribe", "vendas-deshboard-bronze") \
+            .option("startingOffsets", "latest") \
+            .option("failOnDataLoss", "false") \
             .load()
         
         df_base = (
             df_stream.selectExpr("CAST(value AS STRING)", "timestamp")
-            .select(from_json(col("value"), self.GetKafkaSchema()).alias("data"), col("timestamp"))
+            .select(from_json(col("value"), self.getKafkaSchema()).alias("data"), col("timestamp"))
             .select("data.*", "timestamp")
             .withColumn("hash_id_cliente", sha2(col("id_cliente").cast("string"), 256))
             .withColumn("hash_id_vendedor", sha2(col("id_vendedor").cast("string"), 256))
@@ -82,22 +123,30 @@ class SpeedViews:
         # View 2: Faturamento diario
         faturamento_diario = (df_base
             .withWatermark("timestamp", "10 seconds")
-            .groupBy(window(col("timestamp"), "10 seconds"), col("data")).agg(
+            .groupBy(window(col("timestamp"), "10 seconds"), col("data")
+            ).agg(
                 max('id_venda').alias('maior_id'),
                 count('id_venda').alias('qtd_vendas'),
                 sum('valor_total').alias('total_faturado'),
                 round(avg('valor_total'), 2).alias('ticket_medio')
-                )
+            ).select(
+                col('window.start').alias('janela_inicio'),
+                col('window.end').alias('janela_fim'),
+                col('data'),
+                col('maior_id'),
+                col('qtd_vendas'),
+                col('total_faturado'),
+                col('ticket_medio')
             )
+        )
         # Cada uma dessas views pode ter sua própria escrita:
         to_faturamento_diario = (faturamento_diario.writeStream
             .outputMode("append")
-            .format("parquet")
-            .option("path", "/home/cj/lisarbcj/lab/jobs/views/speed/faturamento_diario")
+            .format("iceberg")
             .option("checkpointLocation", "/home/cj/lisarbcj/lab/jobs/views/speed/checkpoints_fd")
-            .start())  
+            .toTable("nessie.speed.faturamento_diario")
+        )
 
-        # Agora você deriva quantas views quiser a partir de df_base:
         # View 2: Ticket médio por cliente
         ticket_medio_cliente = (df_base
             .withWatermark("timestamp", "10 seconds")
@@ -107,15 +156,22 @@ class SpeedViews:
                 sum("valor_total").alias("total_gasto"),
                 round(avg("valor_total"), 2).alias("ticket_medio")
                 )
+            ).select(
+                col('window.start').alias('janela_inicio'),
+                col('window.end').alias('janela_fim'),
+                col('hash_id_cliente'),
+                col('maior_id'),
+                col('qtd_vendas'),
+                col('total_gasto'),
+                col('ticket_medio')
             )
         # Cada uma dessas views pode ter sua própria escrita:
         to_ticket_medio_cliente = (ticket_medio_cliente.writeStream
             .outputMode("append")
-            .format("parquet")
-            .option("path", "/home/cj/lisarbcj/lab/jobs/views/speed/ticket_medio_cliente")
+            .format("iceberg")
             .option("checkpointLocation", "/home/cj/lisarbcj/lab/jobs/views/speed/checkpoints_tmc")
-            .start())     
-
+            .toTable("nessie.speed.ticket_medio_cliente")
+        )
 
         # View 3: Vendas por vendedor
         vendas_por_vendedor = (df_base
@@ -126,18 +182,26 @@ class SpeedViews:
                 sum("valor_total").alias("total_vendido"),
                 round(avg("valor_total"), 2).alias("ticket_medio")
                 )
+            ).select(
+                col('window.start').alias('janela_inicio'),
+                col('window.end').alias('janela_fim'),
+                col('hash_id_vendedor'),
+                col('maior_id'),
+                col('qtd_vendas'),
+                col('total_vendido'),
+                col('ticket_medio')
             )
         # Cada uma dessas views pode ter sua própria escrita:
         to_vendas_por_vendedor = (vendas_por_vendedor.writeStream
             .outputMode("append")
-            .format("parquet")
-            .option("path", "/home/cj/lisarbcj/lab/jobs/views/speed/vendas_por_vendedor")
+            .format("iceberg")
             .option("checkpointLocation", "/home/cj/lisarbcj/lab/jobs/views/speed/checkpoints_vpc")
-            .start())
+            .toTable("nessie.speed.vendas_por_vendedor")
+        )
         
         to_faturamento_diario.awaitTermination()
         to_ticket_medio_cliente.awaitTermination()
         to_vendas_por_vendedor.awaitTermination()
 
-sparkSession = Spark('speed')
-SpeedViews(sparkSession).Run()
+# sparkSession = Spark('speed').get()
+# SpeedViews(sparkSession).Run()

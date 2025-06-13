@@ -8,9 +8,9 @@ class Notificador:
             datefmt='%Y-%m-%d %H:%M:%S'
         )
 
-    def LofLevel(self, newLevel):
+    def lof_level(self, newLevel):
         logging.basicConfig(level=newLevel)
     
-    def Mostrar(self, nivel, mensagem):
+    def mostrar(self, nivel, mensagem):
         getattr(logging, nivel)(mensagem)
 

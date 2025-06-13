@@ -1,146 +1,151 @@
-import os, findspark
-import pyspark.sql.functions as F
+import os
+import findspark
+from pyspark.sql import functions as F
+from pyspark.sql.types import (
+    StructType, StructField, StringType, IntegerType,
+    TimestampType, DecimalType, DateType
+)
 from src.notificador import Notificador
-from pyspark.sql.types import StructType, StructField, StringType, IntegerType, TimestampType, DecimalType, DateType
-
-findspark.add_packages('mysql:mysql-connector-java:8.0.11')
 
 class Ingesta:
-    def __init__(self, sparkSession):
+    def __init__(self, spark_session):
+        self.spark_session = spark_session
         self.dir_path = os.getcwd()
-        self.sparkSession = sparkSession
-        self.firstDatetime = '2025-03-01 00:00:00.000'
-        self.cleanTime = 30
-        self.actors_id = {
+        self.first_datetime = '2025-03-01 00:00:00'
+        self.clean_time = 30  # dias
+
+        self.bases = {
             "vendedores": "id_vendedor",
             "vendas": "id_venda",
             "produtos": "id_produto",
             "clientes": "id_cliente",
             "itens_venda": "id_venda"
         }
-        self.pathNewDataMap = './lab/jobs/new_data/new_data_map'
-        self.pathNewData = './lab/jobs/new_data'
-        self.pathData = './lab/jobs/data'
+
+        self.path_new_data = 'nessie.new_data'
+        self.path_new_data_map = f'{self.path_new_data}.new_data_map'
+        self.path_data = 'nessie.data'
         self.notificador = Notificador()
 
-    def GetLastIngestaDatetime(self, tabela):
-        pathData = f'{self.pathData}/{tabela}'
-        os.makedirs(pathData, exist_ok=True)
-        try:
-            masterDataSet_df = self.sparkSession.spark.read.parquet(f'{pathData}')
-            valid_columns = list(set(masterDataSet_df.columns) & set(['atualizacao', 'criacao']))
-            last_datetime = (masterDataSet_df
-                .select(valid_columns)
-                .withColumn('date', F.coalesce(valid_columns[0], valid_columns[-1]).cast('timestamp'))
-                .drop(*valid_columns)
-                .select(F.max(F.col('date')))
-            ).collect()[0][0]
-            self.notificador.Mostrar('info', f'Maior data encontrada no Master Dataset {last_datetime}')
-            return str(last_datetime)
-        except Exception as e:
-            self.notificador.Mostrar('info', f'Master Dataset "{tabela}" não encontrado - {e}')
-            return self.firstDatetime
-        
-    def GetNewData(self, tabela, last_datetime): # Read from MySQL Table
-        newDataMap_df = None
-        try:
-            newDataMap_df = (
-                self.sparkSession.spark.read.parquet(f'{self.pathNewDataMap}')
-                    .where((F.col('table') == tabela) &
-                        (F.to_timestamp(F.col('date')).alias('date') > F.to_timestamp(F.lit(last_datetime)).alias('date')))
-                    .sort('date'))
-        except Exception as e:
-            self.notificador.Mostrar('info', f'New data para tabela "new_data_map" não encontrada - {e}\n')
-            return {"full_response_df": None, "pathList": []}
-        pathList = []
-        rows = newDataMap_df.collect()
-        for row in rows:
-            pathList.append(row['path'])
-        full_response_df = self.sparkSession.spark.createDataFrame([], self.GetSchema(tabela))
-        for path in pathList:
-            try:
-                response_df = (self.sparkSession.spark.read.parquet(f'{path}'))
-                full_response_df = full_response_df.unionByName(response_df)
-            except Exception as e:
-                self.notificador.Mostrar('info', f'New data para tabela "{tabela}" não encontrada - {e}\n')
-                return {"full_response_df": None, "pathList": []}
-        self.notificador.Mostrar('info', f'{full_response_df.count()} registros encontrados para base "{tabela}"')
-        return {"full_response_df": full_response_df, "pathList": pathList}
+        # Garante que o namespace exista
+        self.spark_session.sql(f"CREATE NAMESPACE IF NOT EXISTS {self.path_data}")
 
-    def SaveData(self, df, tabela):
-        strTableDir = f'{self.pathData}/{tabela}'
-        try:
-            df.write.mode("overwrite").parquet(strTableDir)
-            self.notificador.Mostrar('info', f'Master Dataset "{tabela}" salvo com sucesso\n')
-            return 0
-        except Exception as e:
-            self.notificador.Mostrar('info', f'Master Dataset "{tabela}" com erro ao salvar - {e}')
-            return 1
+    def get_last_ingesta_datetime(self, tabela):
+        full_table = f'{self.path_data}.{tabela}'
+        if self.spark_session._jsparkSession.catalog().tableExists(full_table):
+            df = self.spark_session.read.table(full_table)
+            valid_cols = list(set(df.columns) & {"atualizacao", "criacao"})
+            if valid_cols:
+                timestamp_col = F.coalesce(*[F.col(col) for col in valid_cols]).cast("timestamp")
+                latest = df.withColumn("ref_date", timestamp_col).agg(F.max("ref_date")).collect()
+                if latest and latest[0][0]:
+                    self.notificador.mostrar("info", f'Maior data no Master Dataset: {latest[0][0]}')
+                    return str(latest[0][0])
+        self.notificador.mostrar("info", f'Tabela "{tabela}" não encontrada. Usando data inicial.')
+        return self.first_datetime
 
-    def GetSchema(self, schemaName):
-        schemas = {}
-        schemas['vendedores'] = StructType([
-            StructField("id_vendedor", IntegerType(),True),
-            StructField("cpf", StringType(),True),
-            StructField("telefone", StringType(),True),
-            StructField("email", StringType(), True),
-            StructField("origem_racial", StringType(), True),
-            StructField("nome", StringType(), True),
-            StructField("criacao", TimestampType(), True),
-            StructField("atualizacao", TimestampType(), True),
-        ])
-        schemas['vendas'] = StructType([
-            StructField("id_venda", IntegerType(),True),
-            StructField("id_vendedor", IntegerType(),True),
-            StructField("id_cliente", IntegerType(),True),
-            StructField("data", DateType(), True),
-            StructField("total", DecimalType(10,2), True),
-            StructField("criacao", TimestampType(), True),
-        ])
-        schemas['produtos'] = StructType([
-            StructField("id_produto", IntegerType(),True),
-            StructField("produto", StringType(),True),
-            StructField("preco", DecimalType(10,2),True),
-            StructField("criacao", TimestampType(), True),
-            StructField("atualizacao", TimestampType(), True),
-        ])
-        schemas['clientes'] = StructType([
-            StructField("id_cliente", IntegerType(),True),
-            StructField("cpf", StringType(),True),
-            StructField("telefone", StringType(),True),
-            StructField("email", StringType(), True),
-            StructField("cliente", StringType(), True),
-            StructField("estado", StringType(), True),
-            StructField("origem_racial", StringType(), True),
-            StructField("sexo", StringType(), True),
-            StructField("status", StringType(), True),
-            StructField("criacao", TimestampType(), True),
-            StructField("atualizacao", TimestampType(), True),
-        ])
-        schemas['itens_venda'] = StructType([
-            StructField("id_produto", IntegerType(),True),
-            StructField("id_venda", IntegerType(),True),
-            StructField("quantidade", IntegerType(),True),
-            StructField("valor_unitario", DecimalType(10,2), True),
-            StructField("valor_total", DecimalType(10,2), True),
-            StructField("desconto", DecimalType(10,2), True),
-            StructField("criacao", TimestampType(), True),
-        ])
-        schemas['new_data_map'] = StructType([
-            StructField("table", StringType(),True),
-            StructField("date", StringType(),True),
-            StructField("path", StringType(),True),
-        ])
-        return schemas[schemaName]
+    def get_new_data(self, tabela, last_datetime):
+        if not self.spark_session._jsparkSession.catalog().tableExists(self.path_new_data_map):
+            self.notificador.mostrar("info", f'New data map não encontrado para tabela "{tabela}".')
+            return {"full_response_df": None, "path_list": []}
 
-    def Run(self):
-        tabelas = list(self.actors_id.keys())
-        for tabela in tabelas:
-            self.notificador.Mostrar('info', f'Iniciando ingestão da tabela "{tabela}"')
-            last_date = self.GetLastIngestaDatetime(tabela)
-            newData = self.GetNewData(tabela, last_date)
-            pathList = newData['full_response_df']
-            last_date = newData['pathList']
-            if pathList == None or pathList.count() == 0:
+        df_map = self.spark_session.read.table(self.path_new_data_map)
+        filtered = df_map.filter(
+            (F.col("table") == tabela) &
+            (F.to_timestamp("date") > F.to_timestamp(F.lit(last_datetime)))
+        ).sort("date")
+
+        rows = filtered.collect()
+        if not rows:
+            self.notificador.mostrar("info", f'Nenhum novo dado encontrado para "{tabela}".')
+            return {"full_response_df": None, "path_list": []}
+
+        path_list = [row["path"] for row in rows]
+        full_df = self.spark_session.createDataFrame([], self.get_schema(tabela))
+
+        for path in path_list:
+            if self.spark_session._jsparkSession.catalog().tableExists(path):
+                df = self.spark_session.read.table(path)
+                full_df = full_df.unionByName(df)
+
+        self.notificador.mostrar("info", f'{full_df.count()} registros encontrados para "{tabela}".')
+        return {"full_response_df": full_df, "path_list": path_list}
+
+    def save_data(self, df, tabela):
+        target_table = f'{self.path_data}.{tabela}'
+        if self.spark_session._jsparkSession.catalog().tableExists(target_table):
+            df.writeTo(target_table).append()
+            self.notificador.mostrar("info", f'Master Dataset "{target_table}" atualizado com sucesso.')
+        else:
+            df.writeTo(target_table).using("iceberg").createOrReplace()
+            self.notificador.mostrar("info", f'Master Dataset "{target_table}" criado com sucesso.')
+
+    def get_schema(self, tabela):
+        schemas = {
+            'vendedores': StructType([
+                StructField("id_vendedor", IntegerType(), True),
+                StructField("cpf", StringType(), True),
+                StructField("telefone", StringType(), True),
+                StructField("email", StringType(), True),
+                StructField("origem_racial", StringType(), True),
+                StructField("nome", StringType(), True),
+                StructField("criacao", TimestampType(), True),
+                StructField("atualizacao", TimestampType(), True),
+            ]),
+            'vendas': StructType([
+                StructField("id_venda", IntegerType(), True),
+                StructField("id_vendedor", IntegerType(), True),
+                StructField("id_cliente", IntegerType(), True),
+                StructField("data", DateType(), True),
+                StructField("total", DecimalType(10, 2), True),
+                StructField("criacao", TimestampType(), True),
+            ]),
+            'produtos': StructType([
+                StructField("id_produto", IntegerType(), True),
+                StructField("produto", StringType(), True),
+                StructField("preco", DecimalType(10, 2), True),
+                StructField("criacao", TimestampType(), True),
+                StructField("atualizacao", TimestampType(), True),
+            ]),
+            'clientes': StructType([
+                StructField("id_cliente", IntegerType(), True),
+                StructField("cpf", StringType(), True),
+                StructField("telefone", StringType(), True),
+                StructField("email", StringType(), True),
+                StructField("cliente", StringType(), True),
+                StructField("estado", StringType(), True),
+                StructField("origem_racial", StringType(), True),
+                StructField("sexo", StringType(), True),
+                StructField("status", StringType(), True),
+                StructField("criacao", TimestampType(), True),
+                StructField("atualizacao", TimestampType(), True),
+            ]),
+            'itens_venda': StructType([
+                StructField("id_produto", IntegerType(), True),
+                StructField("id_venda", IntegerType(), True),
+                StructField("quantidade", IntegerType(), True),
+                StructField("valor_unitario", DecimalType(10, 2), True),
+                StructField("valor_total", DecimalType(10, 2), True),
+                StructField("desconto", DecimalType(10, 2), True),
+                StructField("criacao", TimestampType(), True),
+            ]),
+            'new_data_map': StructType([
+                StructField("table", StringType(), True),
+                StructField("date", StringType(), True),
+                StructField("path", StringType(), True),
+            ]),
+        }
+        return schemas[tabela]
+
+    def run(self):
+        for tabela in self.bases.keys():
+            self.notificador.mostrar("info", f'Iniciando ingestão para tabela: "{tabela}"\n')
+            last_datetime = self.get_last_ingesta_datetime(tabela)
+            new_data = self.get_new_data(tabela, last_datetime)
+            df = new_data["full_response_df"]
+
+            if df is None or df.count() == 0:
+                self.notificador.mostrar("info", f'Nenhum dado novo para "{tabela}". Ignorando...\n')
                 continue
-            self.SaveData(pathList, tabela)
+
+            self.save_data(df, tabela)
