@@ -23,7 +23,7 @@ services:
     volumes:
       - ./kafka/data/zookeeper/data:/data
       - ./kafka/data/zookeeper/datalog:/datalog
-  
+
   kafka:
     image: confluentinc/cp-kafka:5.3.0
     hostname: kafka
@@ -47,7 +47,7 @@ services:
     depends_on:
       zookeeper:
         condition: service_healthy
-  
+
   kafdrop:
     image: obsidiandynamics/kafdrop
     hostname: kafdrop
@@ -107,10 +107,10 @@ services:
     depends_on:
       - namenode
 
-  spark-master:
+  spark_master:
     image: bitnami/spark:3.5.1
     hostname: spark_master
-    container_name: spark-master
+    container_name: spark_master
     ports:
       - "7077:7077"
       - "8080:8080"
@@ -120,28 +120,28 @@ services:
     environment:
       - SPARK_MODE=master
 
-  spark-worker-1:
+  spark_worker_1:
     image: bitnami/spark:3.5.1
     hostname: spark_worker_1
-    container_name: spark-worker-1
+    container_name: spark_worker_1
     networks:
       loja:
         ipv4_address: 172.28.0.17
     environment:
       - SPARK_MODE=worker
-      - SPARK_MASTER_URL=spark://spark-master:7077
+      - SPARK_MASTER_URL=spark://spark_master:7077
 
-  spark-worker-2:
+  spark_worker_2:
     image: bitnami/spark:3.5.1
     hostname: spark_worker_2
-    container_name: spark-worker-2
+    container_name: spark_worker_2
     networks:
       loja:
         ipv4_address: 172.28.0.18
     environment:
       - SPARK_MODE=worker
-      - SPARK_MASTER_URL=spark://spark-master:7077
-  
+      - SPARK_MASTER_URL=spark://spark_master:7077
+
   mysql:
     image: mysql:8.3.0
     hostname: mysql
@@ -195,9 +195,98 @@ services:
       - mysql
       - kafka
 
+  airflow_init:
+    image: apache/airflow:2.8.1
+    hostname: airflow_init
+    container_name: airflow_init
+    networks:
+      loja:
+        ipv4_address: 172.28.0.21
+    environment:
+      - _AIRFLOW_WWW_USER_USERNAME=admin
+      - _AIRFLOW_WWW_USER_PASSWORD=admin
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=mysql+mysqlconnector://airflow:airflow@mysql:3306/airflow
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_POOL_SIZE=3
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_MAX_OVERFLOW=5
+      - TZ=America/Sao_Paulo
+    command: ["bash", "-c", "airflow db init && airflow users create --username admin --firstname Admin --lastname User --role Admin --email admin@example.com --password admin"]
+    depends_on:
+      - mysql
+    user: "${AIRFLOW_UID:-50000}:0"
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+
+  airflow_webserver:
+    image: apache/airflow:2.8.1
+    hostname: airflow_init
+    container_name: airflow_webserver
+    ports:
+      - "9090:9090"
+    networks:
+      loja:
+        ipv4_address: 172.28.0.22
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=mysql+mysqlconnector://airflow:airflow@mysql:3306/airflow
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_POOL_SIZE=3
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_MAX_OVERFLOW=5
+      - TZ=America/Sao_Paulo
+    command: webserver -p 9090
+    restart: always
+    depends_on:
+      mysql:
+        condition: service_healthy
+      kafka:
+        condition: service_started
+    user: "${AIRFLOW_UID:-50000}:0"
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+
+  airflow_scheduler:
+    image: apache/airflow:2.8.1
+    hostname: airflow_init
+    container_name: airflow_scheduler
+    networks:
+      loja:
+        ipv4_address: 172.28.0.23
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=mysql+mysqlconnector://airflow:airflow@mysql:3306/airflow
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_POOL_SIZE=3
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_MAX_OVERFLOW=5
+      - TZ=America/Sao_Paulo
+    command: scheduler
+    restart: always
+    depends_on:
+      mysql:
+        condition: service_healthy
+      kafka:
+        condition: service_started
+    user: "${AIRFLOW_UID:-50000}:0"
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+
+  adminer:
+    image: adminer
+    hostname: airflow_init
+    container_name: adminer
+    ports:
+      - "8081:8081"
+    restart: always
+
+
+
 volumes:
   hadoop_namenode: null
   hadoop_datanode: null
+  mysql: null
 
 networks:
   loja:

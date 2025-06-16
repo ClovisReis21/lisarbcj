@@ -12,7 +12,6 @@ class SpeedViews:
         self.sparkSession = sparkSession
         self.notificador = Notificador()
         self.batch_path = "nessie.batch.faturamento_diario"
-        # Garante que o namespace exista
         self.sparkSession.sql(f"CREATE NAMESPACE IF NOT EXISTS nessie.speed")
         self.sparkSession.sql("""
             CREATE TABLE IF NOT EXISTS nessie.speed.faturamento_diario (
@@ -98,7 +97,6 @@ class SpeedViews:
     def Run(self):
         self.notificador.mostrar('info', f'Iniciando subcrição no kafka...\n')
 
-        # 1. Obtem maior id_venda da batch
         maior_id_venda_batch = self.obterMaiorIdVenda()
 
         df_stream = self.sparkSession.readStream \
@@ -120,7 +118,6 @@ class SpeedViews:
 
         df_base.printSchema()
 
-        # View 2: Faturamento diario
         faturamento_diario = (df_base
             .withWatermark("timestamp", "10 seconds")
             .groupBy(window(col("timestamp"), "10 seconds"), col("data")
@@ -139,7 +136,6 @@ class SpeedViews:
                 col('ticket_medio')
             )
         )
-        # Cada uma dessas views pode ter sua própria escrita:
         to_faturamento_diario = (faturamento_diario.writeStream
             .outputMode("append")
             .format("iceberg")
@@ -147,7 +143,6 @@ class SpeedViews:
             .toTable("nessie.speed.faturamento_diario")
         )
 
-        # View 2: Ticket médio por cliente
         ticket_medio_cliente = (df_base
             .withWatermark("timestamp", "10 seconds")
             .groupBy(window(col("timestamp"), "10 seconds"), col("hash_id_cliente")).agg(
@@ -165,7 +160,6 @@ class SpeedViews:
                 col('total_gasto'),
                 col('ticket_medio')
             )
-        # Cada uma dessas views pode ter sua própria escrita:
         to_ticket_medio_cliente = (ticket_medio_cliente.writeStream
             .outputMode("append")
             .format("iceberg")
@@ -173,7 +167,6 @@ class SpeedViews:
             .toTable("nessie.speed.ticket_medio_cliente")
         )
 
-        # View 3: Vendas por vendedor
         vendas_por_vendedor = (df_base
             .withWatermark("timestamp", "10 seconds")
             .groupBy(window(col("timestamp"), "10 seconds"), col("hash_id_vendedor")).agg(
@@ -191,7 +184,6 @@ class SpeedViews:
                 col('total_vendido'),
                 col('ticket_medio')
             )
-        # Cada uma dessas views pode ter sua própria escrita:
         to_vendas_por_vendedor = (vendas_por_vendedor.writeStream
             .outputMode("append")
             .format("iceberg")
@@ -202,6 +194,3 @@ class SpeedViews:
         to_faturamento_diario.awaitTermination()
         to_ticket_medio_cliente.awaitTermination()
         to_vendas_por_vendedor.awaitTermination()
-
-# sparkSession = Spark('speed').get()
-# SpeedViews(sparkSession).Run()

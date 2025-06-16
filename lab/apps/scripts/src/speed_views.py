@@ -8,7 +8,7 @@ from pyspark.sql.functions import (
 from src.notificador import Notificador
 
 # Define pacote do Kafka (caso não seja passado via spark-submit externo)
-os.environ['PYSPARK_SUBMIT_ARGS'] = '--packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1 pyspark-shell'
+# os.environ['PYSPARK_SUBMIT_ARGS'] = '--packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1 pyspark-shell'
 
 class SpeedViews:
     def __init__(self, spark_session):

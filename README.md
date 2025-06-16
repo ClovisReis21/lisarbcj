@@ -33,7 +33,7 @@ Sertifique-se de que as dependências abaixo estejam instaladas
 $ sudo sh instalar-dependencias.sh
 ```
 ### usuários e ACL
-Certifique-se de que os executaveis possam ser acessados e executados pelo usuário logado.
+Certifique-se de que os executaveis possam ser acessados e executados pelos usuário envolvidos.
 
 ### iniciando o projeto
 Tendo dudo dado certo até aqui, tudo indica que o ambiente está montado, é hora de subir o projeto.
@@ -59,18 +59,13 @@ Caso queira acessar o banco de dados, utilize o exemplo abaixo:
 $ sudo mysql -h127.0.0.1 -P3306 -uroot -proot
 ```
 
-### observabilidade
-Alguns arquivos de saída são gerados conforme os jobs são executados: saida_extração.log, saida_ingesta.log, saida_batch.log, saida_gold_view.log e saida_gold_view.log
+### pipeline
+Acesse a aplicação pelo link: 
+```
+http://localhost:9090/
+```
 
 ### Recomendações
 * VSCode
 * Postman
 
-
-### parando o projeto
-Tendo dudo dado certo até aqui, é possível parar o projeto.
-Digite o seguinte comando:
-```
-$ sudo sh stop.sh
-```
-Aguarde até que todos os containers estejam parados.

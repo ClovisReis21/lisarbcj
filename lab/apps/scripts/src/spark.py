@@ -1,15 +1,19 @@
 from pyspark.sql import SparkSession
+import os
+
+os.environ['PYSPARK_SUBMIT_ARGS'] = '--packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1 pyspark-shell'
 
 class Spark:
     def __init__(self, appName):
-        print(f'Initializing Spark with appName: {appName}')
+        path = os.getcwd()
+        print(f'Initializing Spark with appName: {appName} -> {path}')
         self.spark = (SparkSession.builder
            .appName(appName)
             .config("spark.jars", ",".join([
-                "./jars/iceberg-spark-runtime-3.5_2.12-1.5.0.jar",
-                "./jars/nessie-spark-extensions-3.5_2.12-0.103.3.jar",
-                "./jars/iceberg-nessie-1.5.0.jar",
-                "./jars/mysql-connector-java-8.0.11.jar",
+                f"{path}/src/jars/iceberg-spark-runtime-3.5_2.12-1.5.0.jar",
+                f"{path}/src/jars/nessie-spark-extensions-3.5_2.12-0.103.3.jar",
+                f"{path}/src/jars/iceberg-nessie-1.5.0.jar",
+                f"{path}/src/jars/mysql-connector-java-8.0.11.jar",
             ]))
             .config("spark.sql.catalog.nessie", "org.apache.iceberg.spark.SparkCatalog")
             .config("spark.sql.catalog.nessie.catalog-impl", "org.apache.iceberg.nessie.NessieCatalog")
